@@ -1,0 +1,35 @@
+/*
+  Localozable.strings
+  VGPSDKResource
+
+  Created by  Tien Tran on 2/5/20.
+  Copyright © 2020  Tien Tran. All rights reserved.
+*/
+
+// ===== GLOBAL =====
+"back" = "Quay lại";
+
+// ===== LOGIN VIEW =====
+"login.right.normal" = "Tài khoản VGP";
+"login.right.facebook" = "Tài khoản Facebook";
+"login.right.quick" = "Tài khoản chơi nhanh";
+"login.right.apple" = "Tài khoản Apple";
+"login.right.login" = "Đăng nhập";
+"login.right.register" = "Đăng ký";
+"login.right.forgot_password" = "Quên mật khẩu";
+"login.right.username" = "Tên đăng nhập";
+"login.right.password" = "Mật khẩu";
+"login.right.repassword" = "Xác nhận mật khẩu";
+"login.right.email" = "Thư điện tử";
+
+// ===== FORGOT VIEW =====
+"forgot.right.txt" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
+// ===== PROFILE VIEW =====
+"profile.logout" = "Đăng xuất";
+"profile.edit_profile" = "Chỉnh sửa thông tin";
+
+// ===== PROTECT VIEW =====
+"profile.protect.text" = "Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo";
+"profile.protect.phone" = "Số điện thoại bảo mật";
+"profile.protect.email" = "Email bảo mật";

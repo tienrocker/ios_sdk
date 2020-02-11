@@ -1,0 +1,35 @@
+/* 
+  Localozable.strings
+  VGPSDKResource
+
+  Created by  Tien Tran on 2/5/20.
+  Copyright © 2020  Tien Tran. All rights reserved.
+*/
+
+// ===== GLOBAL =====
+"back" = "Back";
+
+// ===== LOGIN VIEW =====
+"login.right.normal" = "LOGIN with VGP";
+"login.right.facebook" = "Login with Facebook";
+"login.right.quick" = "Quickplay";
+"login.right.apple" = "Login with Apple";
+"login.right.login" = "Login";
+"login.right.register" = "Register";
+"login.right.forgot_password" = "Forgot password";
+"login.right.username" = "Username";
+"login.right.password" = "Password";
+"login.right.repassword" = "Confirm Password";
+"login.right.email" = "Email";
+
+// ===== FORGOT VIEW =====
+"forgot.right.txt" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
+// ===== PROFILE VIEW =====
+"profile.logout" = "Logout";
+"profile.edit_profile" = "Update account";
+
+// ===== PROTECT VIEW =====
+"profile.protect.text" = "Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo";
+"profile.protect.phone" = "Phone protect";
+"profile.protect.email" = "Email protect";
