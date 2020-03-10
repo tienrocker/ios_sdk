@@ -94,7 +94,7 @@
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
     [leftBackButtonText setTitleColor:VGP_MAIN_TEXT_COLOR forState:UIControlStateNormal];
     leftBackButtonText.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [leftBackButtonText.titleLabel setFont:[UIFont fontWithName:@"LexendDeca-Regular" size:15]];
+    [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_15];
     leftBackButtonText.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [panel addSubview:leftBackButtonText];
     leftBackButtonText.translatesAutoresizingMaskIntoConstraints = NO;
@@ -149,7 +149,7 @@
     
     rightPanelUsernameTextField = [[UITextField alloc] init];
     rightPanelUsernameTextField.placeholder = [VGPHelper localizationForString:@"login.right.username"];
-    rightPanelUsernameTextField.font = [UIFont systemFontOfSize:13];
+    rightPanelUsernameTextField.font = VGP_FONT_LABEL_13;
     rightPanelUsernameTextField.layer.sublayerTransform = CATransform3DMakeTranslation(width*.02,0,0);
     [rightPanel addSubview:rightPanelUsernameTextField];
     
@@ -171,7 +171,7 @@
     rightPanelPasswordTextField = [[UITextField alloc] init];
     rightPanelPasswordTextField.secureTextEntry = YES;
     rightPanelPasswordTextField.placeholder = [VGPHelper localizationForString:@"login.right.password"];
-    rightPanelPasswordTextField.font = [UIFont systemFontOfSize:13];
+    rightPanelPasswordTextField.font = VGP_FONT_LABEL_13;
     rightPanelPasswordTextField.layer.sublayerTransform = CATransform3DMakeTranslation(width*.02,0,0);
     [rightPanel addSubview:rightPanelPasswordTextField];
     
@@ -193,7 +193,7 @@
     rightPanelRePasswordTextField = [[UITextField alloc] init];
     rightPanelRePasswordTextField.secureTextEntry = YES;
     rightPanelRePasswordTextField.placeholder = [VGPHelper localizationForString:@"login.right.repassword"];
-    rightPanelRePasswordTextField.font = [UIFont systemFontOfSize:13];
+    rightPanelRePasswordTextField.font = VGP_FONT_LABEL_13;
     rightPanelRePasswordTextField.layer.sublayerTransform = CATransform3DMakeTranslation(width*.02,0,0);
     [rightPanel addSubview:rightPanelRePasswordTextField];
     
@@ -215,7 +215,7 @@
     rightPanelEmailTextField = [[UITextField alloc] init];
     rightPanelEmailTextField.secureTextEntry = YES;
     rightPanelEmailTextField.placeholder = [VGPHelper localizationForString:@"login.right.email"];
-    rightPanelEmailTextField.font = [UIFont systemFontOfSize:13];
+    rightPanelEmailTextField.font = VGP_FONT_LABEL_13;
     rightPanelEmailTextField.layer.sublayerTransform = CATransform3DMakeTranslation(width*.02,0,0);
     [rightPanel addSubview:rightPanelEmailTextField];
     
@@ -232,7 +232,7 @@
     [rightPanelRegisterButton setTitle:[VGPHelper localizationForString:@"login.right.register"] forState:UIControlStateNormal];
     [rightPanelRegisterButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     rightPanelRegisterButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [rightPanelRegisterButton.titleLabel setFont:[UIFont fontWithName:@"LexendDeca-Regular" size:15]];
+    [rightPanelRegisterButton.titleLabel setFont:VGP_FONT_LABEL_15];
     rightPanelRegisterButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [rightPanel addSubview:rightPanelRegisterButton];
     

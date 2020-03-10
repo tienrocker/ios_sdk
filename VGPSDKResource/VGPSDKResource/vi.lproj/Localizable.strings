@@ -8,6 +8,12 @@
 
 // ===== GLOBAL =====
 "back" = "Quay lại";
+"ok" = "Đồng ý";
+"cancel" = "Hủy";
+"update" = "Cập nhật";
+"send" = "Gửi";
+"verify" = "Xác thực";
+"verified" = "Đã xác thực";
 
 // ===== LOGIN VIEW =====
 "login.right.normal" = "Tài khoản VGP";
@@ -24,10 +30,26 @@
 
 // ===== FORGOT VIEW =====
 "forgot.right.txt" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+"forgot.right.phone.text1" = "Soạn tin theo cú pháp";
 
 // ===== PROFILE VIEW =====
 "profile.logout" = "Đăng xuất";
 "profile.edit_profile" = "Chỉnh sửa thông tin";
+"profile.info" = "Thông tin cá nhân";
+"profile.fullname" = "Họ và tên";
+"profile.gender" = "Giới tính";
+"profile.gender.select"= "Mời bạn chọn giới tính";
+"profile.gender.select.male" = "Nam";
+"profile.gender.select.female" = "Nữ";
+"profile.gender.select.other" = "Khác";
+"profile.birthday" = "Ngày sinh";
+"profile.address" = "Địa chỉ";
+"profile.security"= "Thông tin bảo mật";
+"profile.personal_identity" = "Chứng minh thư";
+"profile.date_of_issue" = "Ngày cấp";
+"profile.place_of_issue" = "Nơi cấp";
+"profile.phone" = "Điện thoại";
+"profile.email" = "Thư điện tử";
 
 // ===== PROTECT VIEW =====
 "profile.protect.text" = "Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo";

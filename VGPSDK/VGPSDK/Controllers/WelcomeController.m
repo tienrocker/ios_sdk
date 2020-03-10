@@ -32,6 +32,12 @@
 
 @implementation WelcomeController
 
+- (instancetype)init {
+    self = [super init];
+    self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -120,9 +126,9 @@
     [rightPanelLoginNormal setTitle:[VGPHelper localizationForString:@"login.right.normal"] forState:UIControlStateNormal];
     [rightPanelLoginNormal setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     rightPanelLoginNormal.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [rightPanelLoginNormal.titleLabel setFont:[UIFont fontWithName:@"LexendDeca-Regular" size:15]];
+    [rightPanelLoginNormal.titleLabel setFont:VGP_FONT_LABEL_13];
     rightPanelLoginNormal.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    rightPanelLoginNormal.contentEdgeInsets = UIEdgeInsetsMake(0, 50, 0, 0);
+    rightPanelLoginNormal.contentEdgeInsets = UIEdgeInsetsMake(0, 40, 0, 0);
     [rightPanel addSubview:rightPanelLoginNormal];
     
     rightPanelLoginNormal.translatesAutoresizingMaskIntoConstraints = NO;
@@ -136,9 +142,9 @@
     [rightPanelLoginFacebook setTitle:[VGPHelper localizationForString:@"login.right.facebook"] forState:UIControlStateNormal];
     [rightPanelLoginFacebook setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     rightPanelLoginFacebook.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [rightPanelLoginFacebook.titleLabel setFont:[UIFont fontWithName:@"LexendDeca-Regular" size:15]];
+    [rightPanelLoginFacebook.titleLabel setFont:VGP_FONT_LABEL_13];
     rightPanelLoginFacebook.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    rightPanelLoginFacebook.contentEdgeInsets = UIEdgeInsetsMake(0, 50, 0, 0);
+    rightPanelLoginFacebook.contentEdgeInsets = UIEdgeInsetsMake(0, 40, 0, 0);
     [rightPanel addSubview:rightPanelLoginFacebook];
     
     rightPanelLoginFacebook.translatesAutoresizingMaskIntoConstraints = NO;
@@ -152,9 +158,9 @@
     [rightPanelLoginQuick setTitle:[VGPHelper localizationForString:@"login.right.quick"] forState:UIControlStateNormal];
     [rightPanelLoginQuick setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     rightPanelLoginQuick.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [rightPanelLoginQuick.titleLabel setFont:[UIFont fontWithName:@"LexendDeca-Regular" size:15]];
+    [rightPanelLoginQuick.titleLabel setFont:VGP_FONT_LABEL_13];
     rightPanelLoginQuick.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    rightPanelLoginQuick.contentEdgeInsets = UIEdgeInsetsMake(0, 50, 0, 0);
+    rightPanelLoginQuick.contentEdgeInsets = UIEdgeInsetsMake(0, 40, 0, 0);
     [rightPanel addSubview:rightPanelLoginQuick];
 
     rightPanelLoginQuick.translatesAutoresizingMaskIntoConstraints = NO;
@@ -168,9 +174,9 @@
     [rightPanelLoginApple setTitle:[VGPHelper localizationForString:@"login.right.apple"] forState:UIControlStateNormal];
     [rightPanelLoginApple setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     rightPanelLoginApple.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [rightPanelLoginApple.titleLabel setFont:[UIFont fontWithName:@"LexendDeca-Regular" size:15]];
+    [rightPanelLoginApple.titleLabel setFont:VGP_FONT_LABEL_13];
     rightPanelLoginApple.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    rightPanelLoginApple.contentEdgeInsets = UIEdgeInsetsMake(0, 50, 0, 0);
+    rightPanelLoginApple.contentEdgeInsets = UIEdgeInsetsMake(0, 40, 0, 0);
     [rightPanel addSubview:rightPanelLoginApple];
     
     rightPanelLoginApple.translatesAutoresizingMaskIntoConstraints = NO;

@@ -10,7 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface VGPSDKController : UIViewController
+@interface VGPSDKController : UIViewController <UITextFieldDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UIApplicationDelegate>
+
+@property (nonatomic) CGRect curentFrame;
 
 - (void)updateUIText;
 - (void)rightCloseButtonClick;

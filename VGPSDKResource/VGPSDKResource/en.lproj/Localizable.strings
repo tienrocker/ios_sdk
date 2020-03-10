@@ -8,6 +8,12 @@
 
 // ===== GLOBAL =====
 "back" = "Back";
+"ok" = "Ok";
+"cancel" = "Cancel";
+"update" = "Update";
+"send" = "Send";
+"verify" = "Verify";
+"verified" = "Verified";
 
 // ===== LOGIN VIEW =====
 "login.right.normal" = "LOGIN with VGP";
@@ -24,10 +30,26 @@
 
 // ===== FORGOT VIEW =====
 "forgot.right.txt" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+"forgot.right.phone.text1" = "Send SMS";
 
 // ===== PROFILE VIEW =====
 "profile.logout" = "Logout";
 "profile.edit_profile" = "Update account";
+"profile.info" = "User information";
+"profile.fullname" = "Full Name";
+"profile.gender" = "Gender";
+"profile.gender.select"= "Select your gender";
+"profile.gender.select.male" = "Male";
+"profile.gender.select.female" = "Female";
+"profile.gender.select.other" = "Other";
+"profile.birthday" = "Date of birth";
+"profile.address" = "Address";
+"profile.security" = "Security information";
+"profile.personal_identity" = "Pesonal identity";
+"profile.date_of_issue" = "Date of issue";
+"profile.place_of_issue" = "Place of issue";
+"profile.phone" = "Phone";
+"profile.email" = "Email";
 
 // ===== PROTECT VIEW =====
 "profile.protect.text" = "Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo";

@@ -21,7 +21,7 @@
     UIView *leftPanelImage;
 
     UIView *rightPanel;
-    UILabel *rightPanalUsernameLabel;
+    UILabel *rightPanelUsernameLabel;
     UILabel *rightPanelUserIDLabel;
     UIButton *rightPanelEditProfileButton;
     UIButton *rightPanelLogoutButton;
@@ -30,6 +30,11 @@
 
 @implementation ProfileController
 
+- (instancetype)init {
+    self = [super init];
+    self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -105,34 +110,34 @@
     [[rightPanel.widthAnchor constraintEqualToAnchor:panel.widthAnchor multiplier:.57] setActive:YES];
     [[rightPanel.heightAnchor constraintEqualToAnchor:leftPanel.heightAnchor] setActive:YES];
     
-    rightPanalUsernameLabel = [[UILabel alloc] init];
-    rightPanalUsernameLabel.text = [VGPUserData getUsername];
-    rightPanalUsernameLabel.textColor = VGP_MAIN_TEXT_COLOR;
-    rightPanalUsernameLabel.font = [UIFont fontWithName:@"LexendDeca-Regular" size:20];
-    rightPanalUsernameLabel.numberOfLines = 0;
-    rightPanalUsernameLabel.textAlignment = NSTextAlignmentCenter;
-    [rightPanel addSubview:rightPanalUsernameLabel];
+    rightPanelUsernameLabel = [[UILabel alloc] init];
+    rightPanelUsernameLabel.text = [VGPUserData getUsername];
+    rightPanelUsernameLabel.textColor = VGP_MAIN_TEXT_COLOR;
+    rightPanelUsernameLabel.font = VGP_FONT_LABEL_20;
+    rightPanelUsernameLabel.numberOfLines = 0;
+    rightPanelUsernameLabel.textAlignment = NSTextAlignmentCenter;
+    [rightPanel addSubview:rightPanelUsernameLabel];
     
-    rightPanalUsernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [[rightPanalUsernameLabel.topAnchor constraintEqualToAnchor:leftPanelImage.topAnchor constant:width*.01] setActive:YES];
-    [[rightPanalUsernameLabel.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor] setActive:YES];
-    [[rightPanalUsernameLabel.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:.8] setActive:YES];
-    [[rightPanalUsernameLabel.heightAnchor constraintEqualToConstant:width*.077] setActive:YES];
-    [rightPanalUsernameLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+    rightPanelUsernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [[rightPanelUsernameLabel.topAnchor constraintEqualToAnchor:leftPanelImage.topAnchor constant:width*.01] setActive:YES];
+    [[rightPanelUsernameLabel.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor] setActive:YES];
+    [[rightPanelUsernameLabel.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:.8] setActive:YES];
+    [[rightPanelUsernameLabel.heightAnchor constraintEqualToConstant:width*.077] setActive:YES];
+    [rightPanelUsernameLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     
     rightPanelUserIDLabel = [[UILabel alloc] init];
-    rightPanelUserIDLabel.text = [NSString stringWithFormat:@"Account ID %@", [VGPUserData getUserID]];
+    rightPanelUserIDLabel.text = [NSString stringWithFormat:@"Account ID %ld", (long)[VGPUserData getUserID]];
     rightPanelUserIDLabel.textColor = [UIColor grayColor];
-    rightPanelUserIDLabel.font = [UIFont fontWithName:@"LexendDeca-Regular" size:13];
+    rightPanelUserIDLabel.font = VGP_FONT_LABEL_13;
     rightPanelUserIDLabel.numberOfLines = 0;
     rightPanelUserIDLabel.textAlignment = NSTextAlignmentCenter;
     [rightPanel addSubview:rightPanelUserIDLabel];
     
     rightPanelUserIDLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [[rightPanelUserIDLabel.topAnchor constraintEqualToAnchor:rightPanalUsernameLabel.bottomAnchor constant:0] setActive:YES];
-    [[rightPanelUserIDLabel.centerXAnchor constraintEqualToAnchor:rightPanalUsernameLabel.centerXAnchor] setActive:YES];
-    [[rightPanelUserIDLabel.widthAnchor constraintEqualToAnchor:rightPanalUsernameLabel.widthAnchor multiplier:1] setActive:YES];
-    [[rightPanelUserIDLabel.heightAnchor constraintEqualToAnchor:rightPanalUsernameLabel.heightAnchor multiplier:.5] setActive:YES];
+    [[rightPanelUserIDLabel.topAnchor constraintEqualToAnchor:rightPanelUsernameLabel.bottomAnchor constant:0] setActive:YES];
+    [[rightPanelUserIDLabel.centerXAnchor constraintEqualToAnchor:rightPanelUsernameLabel.centerXAnchor] setActive:YES];
+    [[rightPanelUserIDLabel.widthAnchor constraintEqualToAnchor:rightPanelUsernameLabel.widthAnchor multiplier:1] setActive:YES];
+    [[rightPanelUserIDLabel.heightAnchor constraintEqualToAnchor:rightPanelUsernameLabel.heightAnchor multiplier:.5] setActive:YES];
     [rightPanelUserIDLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     
     rightPanelEditProfileButton = [[UIButton alloc] init];
@@ -169,7 +174,7 @@
 }
 
 - (void)updateUIText {
-    rightPanelUserIDLabel.text = [NSString stringWithFormat:@"Account ID %@", [VGPUserData getUserID]];
+    rightPanelUserIDLabel.text = [NSString stringWithFormat:@"Account ID %ld", (long)[VGPUserData getUserID]];
     [rightPanelEditProfileButton setTitle:[VGPHelper localizationForString:@"profile.edit_profile"] forState:UIControlStateNormal];
     [rightPanelLogoutButton setTitle:[VGPHelper localizationForString:@"profile.logout"] forState:UIControlStateNormal];
 }

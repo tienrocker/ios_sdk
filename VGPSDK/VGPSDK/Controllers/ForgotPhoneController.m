@@ -1,18 +1,18 @@
 //
-//  ProtectController.m
+//  ForgotPhoneController.m
 //  VGPSDK
 //
-//  Created by  Tien Tran on 2/11/20.
+//  Created by  Tien Tran on 2/17/20.
 //  Copyright © 2020  Tien Tran. All rights reserved.
 //
 
-#import "ProtectController.h"
+#import "ForgotPhoneController.h"
 #import "VGPUI.h"
 #import "VGPInterface.h"
 #import "VGPHelper.h"
 #import "VGPUserData.h"
 
-@interface ProtectController () {
+@interface ForgotPhoneController () {
     UIImageView *imgLayout;
     UIView *panel;
     UIButton *rightCloseButton;
@@ -23,14 +23,14 @@
     UIView *leftPanelImage;
 
     UIView *rightPanel;
-    UILabel *rightPanelProtectAccountLabel;
-    UIButton *rightPanelProtectPhoneButton;
-    UIButton *rightPanelProtectEmailButton;
+    UILabel *rightPanelForgotPhoneText1Label;
+    UIButton *rightPanelForgotPhone1Button;
+    UIButton *rightPanelForgotPhone2Button;
 }
 
 @end
 
-@implementation ProtectController
+@implementation ForgotPhoneController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -134,70 +134,98 @@
     [[rightPanel.widthAnchor constraintEqualToAnchor:panel.widthAnchor multiplier:.57] setActive:YES];
     [[rightPanel.heightAnchor constraintEqualToAnchor:leftPanel.heightAnchor] setActive:YES];
     
-    rightPanelProtectAccountLabel = [[UILabel alloc] init];
-    rightPanelProtectAccountLabel.text = [VGPHelper localizationForString:@"profile.protect.text"];
-    rightPanelProtectAccountLabel.textColor = VGP_MAIN_TEXT_COLOR;
-    rightPanelProtectAccountLabel.font = VGP_FONT_LABEL_20;
-    rightPanelProtectAccountLabel.numberOfLines = 0;
-    rightPanelProtectAccountLabel.textAlignment = NSTextAlignmentCenter;
-    [rightPanel addSubview:rightPanelProtectAccountLabel];
+    rightPanelForgotPhoneText1Label = [[UILabel alloc] init];
+    rightPanelForgotPhoneText1Label.text = [VGPHelper localizationForString:@"forgot.right.phone.text1"];
+    rightPanelForgotPhoneText1Label.textColor = [UIColor blackColor];
+    rightPanelForgotPhoneText1Label.font = VGP_FONT_LABEL_13;
+    rightPanelForgotPhoneText1Label.numberOfLines = 0;
+    [rightPanelForgotPhoneText1Label setTextAlignment:NSTextAlignmentLeft];
+    [rightPanel addSubview:rightPanelForgotPhoneText1Label];
     
-    rightPanelProtectAccountLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [[rightPanelProtectAccountLabel.topAnchor constraintEqualToAnchor:leftPanelImage.topAnchor constant:0] setActive:YES];
-    [[rightPanelProtectAccountLabel.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor] setActive:YES];
-    [[rightPanelProtectAccountLabel.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:.8] setActive:YES];
-    [[rightPanelProtectAccountLabel.heightAnchor constraintEqualToConstant:width*.15] setActive:YES];
-    [rightPanelProtectAccountLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+    rightPanelForgotPhoneText1Label.translatesAutoresizingMaskIntoConstraints = NO;
+    [[rightPanelForgotPhoneText1Label.topAnchor constraintEqualToAnchor:leftPanelImage.topAnchor constant:0] setActive:YES];
+    [[rightPanelForgotPhoneText1Label.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor] setActive:YES];
+    [[rightPanelForgotPhoneText1Label.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:.8] setActive:YES];
+    [[rightPanelForgotPhoneText1Label.heightAnchor constraintEqualToConstant:width*0.05] setActive:YES];
+    [rightPanelForgotPhoneText1Label setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     
-    rightPanelProtectPhoneButton = [[UIButton alloc] init];
-    [rightPanelProtectPhoneButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-protect-byphone" andType:@"tiff"] forState:UIControlStateNormal];
-    [rightPanelProtectPhoneButton setTitle:[VGPHelper localizationForString:@"profile.protect.phone"] forState:UIControlStateNormal];
-    [rightPanelProtectPhoneButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
-    rightPanelProtectPhoneButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    rightPanelProtectPhoneButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    rightPanelProtectPhoneButton.contentEdgeInsets = UIEdgeInsetsMake(0, 50, 0, 0);
-    [rightPanel addSubview:rightPanelProtectPhoneButton];
+    rightPanelForgotPhone1Button = [[UIButton alloc] init];
+    rightPanelForgotPhone1Button.layer.cornerRadius = 5;
+    rightPanelForgotPhone1Button.layer.borderWidth = 2;
+    rightPanelForgotPhone1Button.layer.borderColor = VGP_MAIN_TEXT_COLOR.CGColor;
     
-    rightPanelProtectPhoneButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [[rightPanelProtectPhoneButton.centerXAnchor constraintEqualToAnchor:rightPanelProtectAccountLabel.centerXAnchor] setActive:YES];
-    [[rightPanelProtectPhoneButton.topAnchor constraintEqualToAnchor:rightPanelProtectAccountLabel.bottomAnchor constant:width*0.02] setActive:YES];
-    [[rightPanelProtectPhoneButton.widthAnchor constraintEqualToAnchor:rightPanelProtectAccountLabel.widthAnchor multiplier:1] setActive:YES];
-    [[rightPanelProtectPhoneButton.heightAnchor constraintEqualToConstant:width*.077] setActive:YES];
+    [rightPanelForgotPhone1Button setTitle:[VGPHelper localizationForString:@"profile.protect.phone"] forState:UIControlStateNormal];
+    [rightPanelForgotPhone1Button setTitleColor:VGP_MAIN_TEXT_COLOR forState:UIControlStateNormal];
+    rightPanelForgotPhone1Button.titleLabel.adjustsFontSizeToFitWidth = YES;
+    rightPanelForgotPhone1Button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    [rightPanel addSubview:rightPanelForgotPhone1Button];
     
-    rightPanelProtectEmailButton = [[UIButton alloc] init];
-    [rightPanelProtectEmailButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-protect-byemail" andType:@"tiff"] forState:UIControlStateNormal];
-    [rightPanelProtectEmailButton setTitle:[VGPHelper localizationForString:@"profile.protect.email"] forState:UIControlStateNormal];
-    [rightPanelProtectEmailButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
-    rightPanelProtectEmailButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    rightPanelProtectEmailButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    rightPanelProtectEmailButton.contentEdgeInsets = UIEdgeInsetsMake(0, 50, 0, 0);
-    [rightPanel addSubview:rightPanelProtectEmailButton];
+    rightPanelForgotPhone1Button.translatesAutoresizingMaskIntoConstraints = NO;
+    [[rightPanelForgotPhone1Button.centerXAnchor constraintEqualToAnchor:rightPanelForgotPhoneText1Label.centerXAnchor] setActive:YES];
+    [[rightPanelForgotPhone1Button.topAnchor constraintEqualToAnchor:rightPanelForgotPhoneText1Label.bottomAnchor constant:width*0.02] setActive:YES];
+    [[rightPanelForgotPhone1Button.widthAnchor constraintEqualToAnchor:rightPanelForgotPhoneText1Label.widthAnchor multiplier:1] setActive:YES];
+    [[rightPanelForgotPhone1Button.heightAnchor constraintEqualToConstant:width*.077] setActive:YES];
     
-    rightPanelProtectEmailButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [[rightPanelProtectEmailButton.topAnchor constraintEqualToAnchor:rightPanelProtectPhoneButton.bottomAnchor constant:width*0.01] setActive:YES];
-    [[rightPanelProtectEmailButton.leftAnchor constraintEqualToAnchor:rightPanelProtectPhoneButton.leftAnchor] setActive:YES];
-    [[rightPanelProtectEmailButton.widthAnchor constraintEqualToAnchor:rightPanelProtectPhoneButton.widthAnchor multiplier:1] setActive:YES];
-    [[rightPanelProtectEmailButton.heightAnchor constraintEqualToAnchor:rightPanelProtectPhoneButton.heightAnchor multiplier:1] setActive:YES];
+    rightPanelForgotPhoneText1Label = [[UILabel alloc] init];
+    rightPanelForgotPhoneText1Label.text = [VGPHelper localizationForString:@"forgot.right.phone.text1"];
+    rightPanelForgotPhoneText1Label.textColor = [UIColor blackColor];
+    rightPanelForgotPhoneText1Label.font = VGP_FONT_LABEL_13;
+    rightPanelForgotPhoneText1Label.numberOfLines = 0;
+    [rightPanelForgotPhoneText1Label setTextAlignment:NSTextAlignmentLeft];
+    [rightPanel addSubview:rightPanelForgotPhoneText1Label];
+    
+    rightPanelForgotPhoneText1Label.translatesAutoresizingMaskIntoConstraints = NO;
+    [[rightPanelForgotPhoneText1Label.topAnchor constraintEqualToAnchor:leftPanelImage.topAnchor constant:0] setActive:YES];
+    [[rightPanelForgotPhoneText1Label.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor] setActive:YES];
+    [[rightPanelForgotPhoneText1Label.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:.8] setActive:YES];
+    [[rightPanelForgotPhoneText1Label.heightAnchor constraintEqualToConstant:width*0.05] setActive:YES];
+    [rightPanelForgotPhoneText1Label setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+    
+    
+    rightPanelForgotPhone2Button = [[UIButton alloc] init];
+    [rightPanelForgotPhone2Button setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-forgot-byphone" andType:@"tiff"] forState:UIControlStateNormal];
+    [rightPanelForgotPhone2Button setTitle:[VGPHelper localizationForString:@"send"] forState:UIControlStateNormal];
+    [rightPanelForgotPhone2Button setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
+    rightPanelForgotPhone2Button.titleLabel.adjustsFontSizeToFitWidth = YES;
+    rightPanelForgotPhone2Button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    rightPanelForgotPhone2Button.contentEdgeInsets = UIEdgeInsetsMake(0, 50, 0, 0);
+    [rightPanel addSubview:rightPanelForgotPhone2Button];
+    
+    rightPanelForgotPhone2Button.translatesAutoresizingMaskIntoConstraints = NO;
+    [[rightPanelForgotPhone2Button.topAnchor constraintEqualToAnchor:rightPanelForgotPhone1Button.bottomAnchor constant:width*0.01] setActive:YES];
+    [[rightPanelForgotPhone2Button.leftAnchor constraintEqualToAnchor:rightPanelForgotPhone1Button.leftAnchor] setActive:YES];
+    [[rightPanelForgotPhone2Button.widthAnchor constraintEqualToAnchor:rightPanelForgotPhone1Button.widthAnchor multiplier:1] setActive:YES];
+    [[rightPanelForgotPhone2Button.heightAnchor constraintEqualToAnchor:rightPanelForgotPhone1Button.heightAnchor multiplier:1] setActive:YES];
     
     // events
-    [rightPanelProtectPhoneButton addTarget:self action:@selector(rightPanelProtectPhoneButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [rightPanelProtectEmailButton addTarget:self action:@selector(rightPanelProtectEmailButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [rightPanelForgotPhone1Button addTarget:self action:@selector(rightPanelForgotPhone1ButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [rightPanelForgotPhone2Button addTarget:self action:@selector(rightPanelForgotPhone2ButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self updateUIText];
 }
 
 - (void)updateUIText {
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
-    rightPanelProtectAccountLabel.text = [VGPHelper localizationForString:@"profile.protect.text"];
-    [rightPanelProtectPhoneButton setTitle:[VGPHelper localizationForString:@"profile.protect.phone"] forState:UIControlStateNormal];
-    [rightPanelProtectEmailButton setTitle:[VGPHelper localizationForString:@"profile.protect.email"] forState:UIControlStateNormal];
+    rightPanelForgotPhoneText1Label.text = [VGPHelper localizationForString:@"forgot.right.phone.text1"];
+    [rightPanelForgotPhone1Button setTitle:[VGPHelper localizationForString:@"profile.protect.phone"] forState:UIControlStateNormal];
+    [rightPanelForgotPhone2Button setTitle:[VGPHelper localizationForString:@"send"] forState:UIControlStateNormal];
 }
 
-- (void)rightPanelProtectPhoneButtonClick {
-    MyLog(@"rightPanelProtectPhoneButtonClick");
+- (void)rightPanelForgotPhone1ButtonClick {
+    MyLog(@"rightPanelForgotPhone1ButtonClick");
+    [self composeSMS];
 }
 
-- (void)rightPanelProtectEmailButtonClick {
-    MyLog(@"rightPanelProtectEmailButtonClick");
+- (void)rightPanelForgotPhone2ButtonClick {
+    MyLog(@"rightPanelForgotPhone2ButtonClick");
+    [self composeSMS];
+}
+
+- (void)composeSMS {
+    NSString *phone = @"";
+    NSString *sendMessage = @"FORGOT PASSWORD";
+    NSString *sms = [NSString stringWithFormat:@"sms:%@&body=%@", phone, sendMessage];
+    NSString *url = [sms stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
 }
 
 @end

@@ -16,6 +16,7 @@
     LoginNormalController *loginNormalController;
     RegisterController *registerController;
     ForgotController *forgotController;
+    ForgotPhoneController *forgotPhoneController;
     ProfileController *profileController;
     ProfileEditController *profileEditController;
     ProtectController *protectController;
@@ -36,6 +37,9 @@ static VGPUI *sharedController = nil;
     if(flyButton == nil) flyButton = [FlyButton sharedInstance];
     return flyButton;
 }
+- (UIViewController *)MainViewController {
+    return mainViewController;
+}
 - (WelcomeController *)WelcomeViewController {
     if(welcomeViewController == nil) welcomeViewController = [[WelcomeController alloc] init];
     return welcomeViewController;
@@ -51,6 +55,10 @@ static VGPUI *sharedController = nil;
 - (ForgotController *)ForgotController {
     if(forgotController == nil) forgotController = [[ForgotController alloc] init];
     return forgotController;
+}
+- (ForgotPhoneController *)ForgotPhoneController {
+    if(forgotPhoneController == nil) forgotPhoneController = [[ForgotPhoneController alloc] init];
+    return forgotPhoneController;
 }
 - (ProfileController *)ProfileController {
     if(profileController == nil) profileController = [[ProfileController alloc] init];
@@ -106,6 +114,14 @@ static VGPUI *sharedController = nil;
     [flyButton hideButton];
     if(mainViewController == nil) mainViewController = [VGPHelper topViewController];
     [[VGPHelper topViewController] presentViewController:[[VGPUI sharedInstance] ForgotController] animated:YES completion:completion];
+}
+- (void)showForgotPhoneController {
+    [self showForgotPhoneController:nil];
+}
+- (void)showForgotPhoneController:(void (^ __nullable)(void))completion {
+    [flyButton hideButton];
+    if(mainViewController == nil) mainViewController = [VGPHelper topViewController];
+    [[VGPHelper topViewController] presentViewController:[[VGPUI sharedInstance] ForgotPhoneController] animated:YES completion:completion];
 }
 - (void)showProfileController {
     [self showProfileController:nil];

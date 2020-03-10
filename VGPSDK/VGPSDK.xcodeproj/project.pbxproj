@@ -17,6 +17,8 @@
 		FF3E417223E97E8700788AC6 /* ForgotController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3E417023E97E8700788AC6 /* ForgotController.m */; };
 		FF54344323E9410000CED1C9 /* LoginNormalController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF54344123E9410000CED1C9 /* LoginNormalController.h */; };
 		FF54344423E9410000CED1C9 /* LoginNormalController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF54344223E9410000CED1C9 /* LoginNormalController.m */; };
+		FF64709A23FA8A1B005FC356 /* ForgotPhoneController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF64709823FA8A1B005FC356 /* ForgotPhoneController.h */; };
+		FF64709B23FA8A1B005FC356 /* ForgotPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF64709923FA8A1B005FC356 /* ForgotPhoneController.m */; };
 		FF6C26A023EA677E0047B871 /* ProfileController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF6C269E23EA677E0047B871 /* ProfileController.h */; };
 		FF6C26A123EA677E0047B871 /* ProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6C269F23EA677E0047B871 /* ProfileController.m */; };
 		FF6C26AB23EA76AA0047B871 /* VGPUI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF6C26A923EA76AA0047B871 /* VGPUI.h */; };
@@ -49,6 +51,8 @@
 		FF3E417023E97E8700788AC6 /* ForgotController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ForgotController.m; sourceTree = "<group>"; };
 		FF54344123E9410000CED1C9 /* LoginNormalController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginNormalController.h; sourceTree = "<group>"; };
 		FF54344223E9410000CED1C9 /* LoginNormalController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginNormalController.m; sourceTree = "<group>"; };
+		FF64709823FA8A1B005FC356 /* ForgotPhoneController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForgotPhoneController.h; sourceTree = "<group>"; };
+		FF64709923FA8A1B005FC356 /* ForgotPhoneController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ForgotPhoneController.m; sourceTree = "<group>"; };
 		FF6C269E23EA677E0047B871 /* ProfileController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileController.h; sourceTree = "<group>"; };
 		FF6C269F23EA677E0047B871 /* ProfileController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileController.m; sourceTree = "<group>"; };
 		FF6C26A923EA76AA0047B871 /* VGPUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VGPUI.h; sourceTree = "<group>"; };
@@ -147,6 +151,8 @@
 				FF3E416C23E9780B00788AC6 /* RegisterController.m */,
 				FF3E416F23E97E8700788AC6 /* ForgotController.h */,
 				FF3E417023E97E8700788AC6 /* ForgotController.m */,
+				FF64709823FA8A1B005FC356 /* ForgotPhoneController.h */,
+				FF64709923FA8A1B005FC356 /* ForgotPhoneController.m */,
 				FF6C269E23EA677E0047B871 /* ProfileController.h */,
 				FF6C269F23EA677E0047B871 /* ProfileController.m */,
 				FFA8B6C623F299F400BD9A46 /* ProfileEditController.h */,
@@ -189,6 +195,7 @@
 				FF85146F23E7C9B70077F238 /* VGPSDK.h in Headers */,
 				FF6C26AB23EA76AA0047B871 /* VGPUI.h in Headers */,
 				FF54344323E9410000CED1C9 /* LoginNormalController.h in Headers */,
+				FF64709A23FA8A1B005FC356 /* ForgotPhoneController.h in Headers */,
 				FF3E416D23E9780B00788AC6 /* RegisterController.h in Headers */,
 				FF6C26A023EA677E0047B871 /* ProfileController.h in Headers */,
 				FFBBFBD223EBCC860041364F /* FlyButton.h in Headers */,
@@ -277,6 +284,7 @@
 				FF769B0A23E7F90F007FAE7F /* VGPInterface.m in Sources */,
 				FF54344423E9410000CED1C9 /* LoginNormalController.m in Sources */,
 				FFBBFBD723EBFB4D0041364F /* UIData.m in Sources */,
+				FF64709B23FA8A1B005FC356 /* ForgotPhoneController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -150,4 +150,12 @@ static NSBundle *bundleTranslation = nil;
     [[NSUserDefaults standardUserDefaults] setObject:value forKey:name];
 }
 
++ (NSString *)formatDate:(NSDate *)date {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+    NSString *formattedDate = [dateFormatter stringFromDate:date];
+    return formattedDate;
+}
+
 @end

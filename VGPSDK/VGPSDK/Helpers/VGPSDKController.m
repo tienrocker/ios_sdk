@@ -10,7 +10,7 @@
 #import "VGPHelper.h"
 #import "VGPUI.h"
 
-@interface VGPSDKController ()
+@interface VGPSDKController()
 
 @end
 
@@ -18,8 +18,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor clearColor];
     //self.view.layer.zPosition = 200;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUIText) name:VGP_UPDATE_LANGUAGE object:nil];
+    
+    UITapGestureRecognizer *cancelInput = [[UITapGestureRecognizer alloc] init];
+    [cancelInput addTarget:self action:@selector(cancelInput:)];
+    [self.view addGestureRecognizer:cancelInput];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    self.curentFrame = self.view.frame;
 }
 
 - (void)updateUIText {
@@ -35,6 +44,25 @@
 {
     MyLog(@"leftBackButtonClick");
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - TextField Delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    MyLog(@"textField %@", textField);
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    self.view.frame = CGRectOffset(self.view.frame, 0, DIS_MOVE_POPUP);
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    self.view.frame = self.curentFrame;
+}
+
+- (void)cancelInput:(UITapGestureRecognizer *)gesture {
+    
 }
 
 @end

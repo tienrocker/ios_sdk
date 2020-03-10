@@ -23,7 +23,7 @@
     UIView *leftPanelImage;
 
     UIView *rightPanel;
-    UILabel *rightPanalForgotAccountLabel;
+    UILabel *rightPanelForgotAccountLabel;
     UIButton *rightPanelForgotPhoneButton;
     UIButton *rightPanelForgotEmailButton;
 }
@@ -90,7 +90,7 @@
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
     [leftBackButtonText setTitleColor:VGP_MAIN_TEXT_COLOR forState:UIControlStateNormal];
     leftBackButtonText.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [leftBackButtonText.titleLabel setFont:[UIFont fontWithName:@"LexendDeca-Regular" size:15]];
+    [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_15];
     leftBackButtonText.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [panel addSubview:leftBackButtonText];
     leftBackButtonText.translatesAutoresizingMaskIntoConstraints = NO;
@@ -134,21 +134,21 @@
     [[rightPanel.widthAnchor constraintEqualToAnchor:panel.widthAnchor multiplier:.57] setActive:YES];
     [[rightPanel.heightAnchor constraintEqualToAnchor:leftPanel.heightAnchor] setActive:YES];
     
-    rightPanalForgotAccountLabel = [[UILabel alloc] init];
-    rightPanalForgotAccountLabel.backgroundColor = [UIColor redColor];
-    rightPanalForgotAccountLabel.text = [VGPHelper localizationForString:@"forgot.right.txt"];
-    rightPanalForgotAccountLabel.textColor = [UIColor blackColor];
-    rightPanalForgotAccountLabel.font = [UIFont fontWithName:@"LexendDeca-Regular" size:15];
-    rightPanalForgotAccountLabel.numberOfLines = 0;
-    [rightPanalForgotAccountLabel setTextAlignment:NSTextAlignmentLeft];
-    [rightPanel addSubview:rightPanalForgotAccountLabel];
+    rightPanelForgotAccountLabel = [[UILabel alloc] init];
+    rightPanelForgotAccountLabel.backgroundColor = [UIColor redColor];
+    rightPanelForgotAccountLabel.text = [VGPHelper localizationForString:@"forgot.right.txt"];
+    rightPanelForgotAccountLabel.textColor = [UIColor blackColor];
+    rightPanelForgotAccountLabel.font = VGP_FONT_LABEL_15;
+    rightPanelForgotAccountLabel.numberOfLines = 0;
+    [rightPanelForgotAccountLabel setTextAlignment:NSTextAlignmentLeft];
+    [rightPanel addSubview:rightPanelForgotAccountLabel];
     
-    rightPanalForgotAccountLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [[rightPanalForgotAccountLabel.topAnchor constraintEqualToAnchor:leftPanelImage.topAnchor constant:0] setActive:YES];
-    [[rightPanalForgotAccountLabel.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor] setActive:YES];
-    [[rightPanalForgotAccountLabel.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:.8] setActive:YES];
-    [[rightPanalForgotAccountLabel.heightAnchor constraintEqualToConstant:width*.15] setActive:YES];
-    [rightPanalForgotAccountLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+    rightPanelForgotAccountLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [[rightPanelForgotAccountLabel.topAnchor constraintEqualToAnchor:leftPanelImage.topAnchor constant:0] setActive:YES];
+    [[rightPanelForgotAccountLabel.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor] setActive:YES];
+    [[rightPanelForgotAccountLabel.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:.8] setActive:YES];
+    [[rightPanelForgotAccountLabel.heightAnchor constraintEqualToConstant:width*.15] setActive:YES];
+    [rightPanelForgotAccountLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     
     rightPanelForgotPhoneButton = [[UIButton alloc] init];
     [rightPanelForgotPhoneButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-forgot-byphone" andType:@"tiff"] forState:UIControlStateNormal];
@@ -160,9 +160,9 @@
     [rightPanel addSubview:rightPanelForgotPhoneButton];
     
     rightPanelForgotPhoneButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [[rightPanelForgotPhoneButton.centerXAnchor constraintEqualToAnchor:rightPanalForgotAccountLabel.centerXAnchor] setActive:YES];
-    [[rightPanelForgotPhoneButton.topAnchor constraintEqualToAnchor:rightPanalForgotAccountLabel.bottomAnchor constant:width*0.02] setActive:YES];
-    [[rightPanelForgotPhoneButton.widthAnchor constraintEqualToAnchor:rightPanalForgotAccountLabel.widthAnchor multiplier:1] setActive:YES];
+    [[rightPanelForgotPhoneButton.centerXAnchor constraintEqualToAnchor:rightPanelForgotAccountLabel.centerXAnchor] setActive:YES];
+    [[rightPanelForgotPhoneButton.topAnchor constraintEqualToAnchor:rightPanelForgotAccountLabel.bottomAnchor constant:width*0.02] setActive:YES];
+    [[rightPanelForgotPhoneButton.widthAnchor constraintEqualToAnchor:rightPanelForgotAccountLabel.widthAnchor multiplier:1] setActive:YES];
     [[rightPanelForgotPhoneButton.heightAnchor constraintEqualToConstant:width*.077] setActive:YES];
     
     rightPanelForgotEmailButton = [[UIButton alloc] init];
@@ -188,13 +188,14 @@
 
 - (void)updateUIText {
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
-    rightPanalForgotAccountLabel.text = [VGPHelper localizationForString:@"profile.protect.text"];
+    rightPanelForgotAccountLabel.text = [VGPHelper localizationForString:@"profile.protect.text"];
     [rightPanelForgotPhoneButton setTitle:[VGPHelper localizationForString:@"profile.protect.phone"] forState:UIControlStateNormal];
     [rightPanelForgotEmailButton setTitle:[VGPHelper localizationForString:@"profile.protect.email"] forState:UIControlStateNormal];
 }
 
 - (void)rightPanelForgotPhoneButtonClick {
     MyLog(@"rightPanelForgotPhoneButtonClick");
+    [[VGPUI sharedInstance] showForgotPhoneController];
 }
 
 - (void)rightPanelForgotEmailButtonClick {

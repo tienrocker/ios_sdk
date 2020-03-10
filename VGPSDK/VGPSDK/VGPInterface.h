@@ -21,7 +21,8 @@
 + (VGPInterface *_Nonnull)sharedInstance;
 
 #pragma mark Data
-//- (VGPUserInfo *) getUserInfo;
+- (NSInteger)getUserID;
+- (NSString *_Nullable)getUsername;
 
 #pragma mark Handler User Interface
 - (void)loginGame;

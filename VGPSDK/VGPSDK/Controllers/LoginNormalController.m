@@ -22,10 +22,13 @@
     UIView *leftPanelImage;
     
     UIView *rightPanel;
+    
     UIImageView *rightPanelUsernameTextFieldBackground;
     UITextField IBOutlet *rightPanelUsernameTextField;
+    
     UIImageView *rightPanelPasswordTextFieldBackground;
     UITextField IBOutlet *rightPanelPasswordTextField;
+    
     UIButton *rightPanelLoginButton;
     UIButton *rightPanelRegisterButton;
     UIButton *rightPanelForgotPasswordButton;
@@ -93,7 +96,7 @@
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
     [leftBackButtonText setTitleColor:VGP_MAIN_TEXT_COLOR forState:UIControlStateNormal];
     leftBackButtonText.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [leftBackButtonText.titleLabel setFont:[UIFont fontWithName:@"LexendDeca-Regular" size:15]];
+    [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_15];
     leftBackButtonText.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [panel addSubview:leftBackButtonText];
     leftBackButtonText.translatesAutoresizingMaskIntoConstraints = NO;
@@ -148,7 +151,7 @@
     
     rightPanelUsernameTextField = [[UITextField alloc] init];
     rightPanelUsernameTextField.placeholder = [VGPHelper localizationForString:@"login.right.username"];
-    rightPanelUsernameTextField.font = [UIFont systemFontOfSize:13];
+    rightPanelUsernameTextField.font = VGP_FONT_LABEL_13;
     rightPanelUsernameTextField.layer.sublayerTransform = CATransform3DMakeTranslation(width*.02,0,0);
     [rightPanel addSubview:rightPanelUsernameTextField];
     
@@ -170,7 +173,7 @@
     rightPanelPasswordTextField = [[UITextField alloc] init];
     rightPanelPasswordTextField.secureTextEntry = YES;
     rightPanelPasswordTextField.placeholder = [VGPHelper localizationForString:@"login.right.password"];
-    rightPanelPasswordTextField.font = [UIFont systemFontOfSize:13];
+    rightPanelPasswordTextField.font = VGP_FONT_LABEL_13;
     rightPanelPasswordTextField.layer.sublayerTransform = CATransform3DMakeTranslation(width*.02,0,0);
     [rightPanel addSubview:rightPanelPasswordTextField];
     
@@ -186,7 +189,7 @@
     [rightPanelLoginButton setTitle:[VGPHelper localizationForString:@"login.right.login"] forState:UIControlStateNormal];
     [rightPanelLoginButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     rightPanelLoginButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [rightPanelLoginButton.titleLabel setFont:[UIFont fontWithName:@"LexendDeca-Regular" size:15]];
+    [rightPanelLoginButton.titleLabel setFont:VGP_FONT_LABEL_15];
     rightPanelLoginButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [rightPanel addSubview:rightPanelLoginButton];
     
@@ -201,7 +204,7 @@
     [rightPanelRegisterButton setTitle:[VGPHelper localizationForString:@"login.right.register"] forState:UIControlStateNormal];
     [rightPanelRegisterButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     rightPanelRegisterButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [rightPanelRegisterButton.titleLabel setFont:[UIFont fontWithName:@"LexendDeca-Regular" size:15]];
+    [rightPanelRegisterButton.titleLabel setFont:VGP_FONT_LABEL_15];
     rightPanelRegisterButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [rightPanel addSubview:rightPanelRegisterButton];
     
@@ -216,7 +219,7 @@
     [rightPanelForgotPasswordButton setTitle:[VGPHelper localizationForString:@"login.right.forgot_password"] forState:UIControlStateNormal];
     [rightPanelForgotPasswordButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     rightPanelForgotPasswordButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [rightPanelForgotPasswordButton.titleLabel setFont:[UIFont fontWithName:@"LexendDeca-Regular" size:15]];
+    [rightPanelForgotPasswordButton.titleLabel setFont:VGP_FONT_LABEL_15];
     rightPanelForgotPasswordButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [rightPanel addSubview:rightPanelForgotPasswordButton];
     
@@ -245,7 +248,7 @@
 {
     MyLog(@"rightPanelLoginButtonClick");
     
-    [VGPUserData setUserID:@"DUMMY_123123"];
+    [VGPUserData setUserID:1234321];
     [VGPUserData setUsername:@"DUMMY_name"];
     
     [[VGPUI sharedInstance] showProfileController:^{

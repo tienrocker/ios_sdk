@@ -20,9 +20,12 @@ static VGPInterface *sharedController = nil;
 }
 
 #pragma mark Data
-//- (VGPUserdata *) getUserData {
-    
-//}
+- (NSInteger)getUserID {
+    return [VGPUserData getUserID];
+}
+- (NSString *)getUsername {
+    return [VGPUserData getUsername];
+}
 
 #pragma mark Handler User Interface
 - (void)loginGame {
@@ -30,8 +33,8 @@ static VGPInterface *sharedController = nil;
 }
 - (void)loginGame:(void (^ __nullable)(void))completion {
     [self showFlyButton];
-    //[[VGPUI sharedInstance] showWelcomeViewController:completion];
-    [[VGPUI sharedInstance] showProfileEditController:completion];
+    [[VGPUI sharedInstance] showWelcomeViewController:completion];
+    // [[VGPUI sharedInstance] showProfileEditController:completion];
 }
 - (void)logoutGame {
     [self logoutGame:nil];

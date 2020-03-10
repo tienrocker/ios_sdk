@@ -1,8 +1,8 @@
 //
-//  ProfileController.h
+//  ForgotPhoneController.h
 //  VGPSDK
 //
-//  Created by  Tien Tran on 2/5/20.
+//  Created by  Tien Tran on 2/17/20.
 //  Copyright © 2020  Tien Tran. All rights reserved.
 //
 
@@ -10,9 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ProfileController : VGPSDKController
-
-- (void)rightPanelEditProfileButtonClick;
+@interface ForgotPhoneController : VGPSDKController
 
 @end
 

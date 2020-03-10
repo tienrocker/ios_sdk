@@ -41,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)getNSUserDefaults:(NSString *)name;
 + (void)setNSUserDefaults:(NSString *)name value:(NSString *)value;
 
++ (NSString *)formatDate:(NSDate *)date;
+
 @end
 
 NS_ASSUME_NONNULL_END
