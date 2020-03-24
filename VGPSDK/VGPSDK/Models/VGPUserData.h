@@ -12,10 +12,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #define VGP_USER_DATE_FORMAT @"yyyy/MM/dd"
+#define VGP_USER_TOKEN @"VGP_USER_TOKEN"
 #define VGP_USER_USERID @"VGP_USER_USERID"
 #define VGP_USER_USERNAME @"VGP_USER_USERNAME"
 #define VGP_USER_EMAIL @"VGP_USER_EMAIL"
+#define VGP_USER_EMAIL_IS_VERIFIED @"VGP_USER_EMAIL_IS_VERIFIED"
 #define VGP_USER_PHONE @"VGP_USER_PHONE"
+#define VGP_USER_PHONE_IS_VERIFIED @"VGP_USER_PHONE_IS_VERIFIED"
 
 #define VGP_USER_AVATAR @"VGP_USER_AVATAR"
 
@@ -34,54 +37,69 @@ NS_ASSUME_NONNULL_BEGIN
 #define VGP_USER_ADDRESS @"VGP_USER_ADDRESS"
 #define VGP_USER_PROVIDER @"VGP_USER_PROVIDER"
 
-#define VGP_USER_THIRDPARTYCONNECT @"VGP_USER_THIRDPARTYCONNECT"
+#define VGP_USER_IS_CONNECT_FACEBOOK @"VGP_USER_IS_CONNECT_FACEBOOK"
+#define VGP_USER_IS_CONNECT_QUICKPLAY @"VGP_USER_IS_CONNECT_QUICKPLAY"
+#define VGP_USER_IS_CONNECT_APPLE @"VGP_USER_IS_CONNECT_APPLE"
 
 #define VGP_USER_CANUPDATEUSERNAME @"VGP_USER_CANUPDATEUSERNAME"
 #define VGP_USER_REQUIREINITPASSWORD @"VGP_USER_REQUIREINITPASSWORD"
 
-
 @interface VGPUserData : NSObject
 
++ (void)setUserData:data;
++ (void)clearUserData;
+
++ (NSString *)getToken;
++ (void)setToken:(nullable NSString *)token;
 + (NSInteger)getUserID;
 + (void)setUserID:(NSInteger)userID;
 + (NSString *)getUsername;
-+ (void)setUsername:(NSString *)username;
++ (void)setUsername:(nullable NSString *)username;
 + (NSString *)getEmail;
-+ (void)setEmail:(NSString *)email;
++ (void)setEmail:(nullable NSString *)email;
++ (BOOL)getEmailVerified;
++ (void)setEmailVerified:(BOOL)value;
 + (NSString *)getPhone;
-+ (void)setPhone:(NSString *)phone;
++ (void)setPhone:(nullable NSString *)phone;
++ (BOOL)getPhoneVerified;
++ (void)setPhoneVerified:(BOOL)value;
 
 + (NSString *)getAvatar;
-+ (void)setAvatar:(NSString *)avatar;
++ (void)setAvatar:(nullable NSString *)avatar;
 
 + (NSString *)getName;
-+ (void)setName:(NSString *)name;
++ (void)setName:(nullable NSString *)name;
 + (NSString *)getFirstName;
-+ (void)setFirstName:(NSString *)firstName;
++ (void)setFirstName:(nullable NSString *)firstName;
 + (NSString *)getMiddleName;
-+ (void)setMiddleName:(NSString *)middleName;
++ (void)setMiddleName:(nullable NSString *)middleName;
 + (NSString *)getLastName;
-+ (void)setLastName:(NSString *)lastName;
++ (void)setLastName:(nullable NSString *)lastName;
 
 + (NSInteger)getGender;
 + (void)setGender:(NSInteger)gender;
++ (NSString *)getGenderText;
 + (NSDate *)getBirthDay; // format yyyy/MM/dd
-+ (void)setBirthDay:(NSString *)birthDay;
++ (void)setBirthDay:(nullable NSString *)birthDay;
 
 + (NSString *)getPersonalIdentity;
-+ (void)setPersonalIdentity:(NSString *)personalIdentity;
++ (void)setPersonalIdentity:(nullable NSString *)personalIdentity;
 + (NSDate *)getDateOfIssue;
-+ (void)setDateOfIssue:(NSString *)dateOfIssue; // format yyyy/MM/dd
++ (void)setDateOfIssue:(nullable NSString *)dateOfIssue; // format yyyy/MM/dd
 + (NSString *)getPlaceOfIssue;
-+ (void)setPlaceOfIssue:(NSString *)placeOfIssue;
++ (void)setPlaceOfIssue:(nullable NSString *)placeOfIssue;
 
 + (NSString *)getAddress;
-+ (void)setAddress:(NSString *)address;
++ (void)setAddress:(nullable NSString *)address;
 + (NSString *)getProvider;
-+ (void)setProvider:(NSString *)provider;
++ (void)setProvider:(nullable NSString *)provider;
 
-+ (NSArray *)getThirdPartyConnect;
-+ (void)setThirdPartyConnect:(NSArray *)thirdPartyConnect;
++ (BOOL)getIsConnectFacebook;
++ (void)setIsConnectFacebook:(BOOL)value;
++ (BOOL)getIsConnectQuickplay;
++ (void)setIsConnectQuickplay:(BOOL)value;
++ (BOOL)getIsConnectApple;
++ (void)setIsConnectApple:(BOOL)value;
 
 + (BOOL)getCanUpdateUsername;
 + (void)setCanUpdateUsername:(BOOL)canUpdateUsername;

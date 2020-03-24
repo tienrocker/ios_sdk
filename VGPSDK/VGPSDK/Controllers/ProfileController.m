@@ -24,17 +24,12 @@
     UILabel *rightPanelUsernameLabel;
     UILabel *rightPanelUserIDLabel;
     UIButton *rightPanelEditProfileButton;
+    UIButton *rightPanelLinkButton;
     UIButton *rightPanelLogoutButton;
 }
 @end
 
 @implementation ProfileController
-
-- (instancetype)init {
-    self = [super init];
-    self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -153,6 +148,19 @@
     [[rightPanelEditProfileButton.widthAnchor constraintEqualToAnchor:rightPanelUserIDLabel.widthAnchor multiplier:1] setActive:YES];
     [[rightPanelEditProfileButton.heightAnchor constraintEqualToConstant:width*.077] setActive:YES];
     
+    rightPanelLinkButton = [[UIButton alloc] init];
+    [rightPanelLinkButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-pink" andType:@"tiff"] forState:UIControlStateNormal];
+    [rightPanelLinkButton setTitle:[VGPHelper localizationForString:@"profile.link"] forState:UIControlStateNormal];
+    [rightPanelLinkButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
+    rightPanelLinkButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    [rightPanel addSubview:rightPanelLinkButton];
+    
+    rightPanelLinkButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [[rightPanelLinkButton.topAnchor constraintEqualToAnchor:rightPanelEditProfileButton.bottomAnchor constant:width*0.01] setActive:YES];
+    [[rightPanelLinkButton.leftAnchor constraintEqualToAnchor:rightPanelEditProfileButton.leftAnchor] setActive:YES];
+    [[rightPanelLinkButton.widthAnchor constraintEqualToAnchor:rightPanelEditProfileButton.widthAnchor multiplier:1] setActive:YES];
+    [[rightPanelLinkButton.heightAnchor constraintEqualToAnchor:rightPanelEditProfileButton.heightAnchor multiplier:1] setActive:YES];
+    
     rightPanelLogoutButton = [[UIButton alloc] init];
     [rightPanelLogoutButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-pink" andType:@"tiff"] forState:UIControlStateNormal];
     [rightPanelLogoutButton setTitle:[VGPHelper localizationForString:@"profile.logout"] forState:UIControlStateNormal];
@@ -161,33 +169,35 @@
     [rightPanel addSubview:rightPanelLogoutButton];
     
     rightPanelLogoutButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [[rightPanelLogoutButton.topAnchor constraintEqualToAnchor:rightPanelEditProfileButton.bottomAnchor constant:width*0.01] setActive:YES];
-    [[rightPanelLogoutButton.leftAnchor constraintEqualToAnchor:rightPanelEditProfileButton.leftAnchor] setActive:YES];
-    [[rightPanelLogoutButton.widthAnchor constraintEqualToAnchor:rightPanelEditProfileButton.widthAnchor multiplier:1] setActive:YES];
-    [[rightPanelLogoutButton.heightAnchor constraintEqualToAnchor:rightPanelEditProfileButton.heightAnchor multiplier:1] setActive:YES];
+    [[rightPanelLogoutButton.topAnchor constraintEqualToAnchor:rightPanelLinkButton.bottomAnchor constant:width*0.01] setActive:YES];
+    [[rightPanelLogoutButton.leftAnchor constraintEqualToAnchor:rightPanelLinkButton.leftAnchor] setActive:YES];
+    [[rightPanelLogoutButton.widthAnchor constraintEqualToAnchor:rightPanelLinkButton.widthAnchor multiplier:1] setActive:YES];
+    [[rightPanelLogoutButton.heightAnchor constraintEqualToAnchor:rightPanelLinkButton.heightAnchor multiplier:1] setActive:YES];
     
     // events
     [rightPanelEditProfileButton addTarget:self action:@selector(rightPanelEditProfileButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [rightPanelLinkButton addTarget:self action:@selector(rightPanelLinkButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [rightPanelLogoutButton addTarget:self action:@selector(rightPanelLogoutButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self updateUIText];
 }
 
 - (void)updateUIText {
     rightPanelUserIDLabel.text = [NSString stringWithFormat:@"Account ID %ld", (long)[VGPUserData getUserID]];
     [rightPanelEditProfileButton setTitle:[VGPHelper localizationForString:@"profile.edit_profile"] forState:UIControlStateNormal];
+    [rightPanelLinkButton setTitle:[VGPHelper localizationForString:@"profile.link"] forState:UIControlStateNormal];
     [rightPanelLogoutButton setTitle:[VGPHelper localizationForString:@"profile.logout"] forState:UIControlStateNormal];
 }
 
-- (void)rightPanelEditProfileButtonClick
-{
+- (void)rightPanelEditProfileButtonClick {
     MyLog(@"rightPanelEditProfileButtonClick");
     [[VGPUI sharedInstance] showProfileEditController];
 }
 
-- (void)rightPanelLogoutButtonClick
-{
-    MyLog(@"rightPanelLogoutButtonClick");
+- (void)rightPanelLinkButtonClick {
+    
+}
+
+- (void)rightPanelLogoutButtonClick {
+    MyLog(@"rightPanelLinkButtonClick");
     /**
          @TODO:
          - CLEAR USER PROFILE

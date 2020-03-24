@@ -3,24 +3,26 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FF06BCE823F16CEA006CD40B /* Pods_SDK_Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF769B0523E7DD80007FAE7F /* Pods_SDK_Client.framework */; };
-		FF06BCE923F16CEA006CD40B /* Pods_SDK_Client.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF769B0523E7DD80007FAE7F /* Pods_SDK_Client.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1560ABE27574E78A2083AF23 /* Pods_UIClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5A07794ABF3F12288E17643 /* Pods_UIClient.framework */; };
 		FF06BCEB23F16D33006CD40B /* LexendDeca-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF06BCEA23F16D33006CD40B /* LexendDeca-Regular.ttf */; };
 		FF06BCED23F16DEB006CD40B /* VGPSDK.bundle in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = FF06BCEC23F16DEB006CD40B /* VGPSDK.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF06BCF123F16E36006CD40B /* VGPSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FF06BCEC23F16DEB006CD40B /* VGPSDK.bundle */; };
+		FF1470532419F79300802877 /* Pods_UIClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D5A07794ABF3F12288E17643 /* Pods_UIClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FF1470552419FCBD00802877 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF1470542419FCBD00802877 /* GoogleService-Info.plist */; };
+		FF1470582419FD1400802877 /* vgp_config.json in Resources */ = {isa = PBXBuildFile; fileRef = FF1470572419FD1400802877 /* vgp_config.json */; };
 		FF85150C23E7DA080077F238 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF85150B23E7DA080077F238 /* AppDelegate.m */; };
 		FF85151223E7DA080077F238 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF85151123E7DA080077F238 /* ViewController.m */; };
 		FF85151523E7DA080077F238 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF85151323E7DA080077F238 /* Main.storyboard */; };
 		FF85151723E7DA0A0077F238 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF85151623E7DA0A0077F238 /* Assets.xcassets */; };
 		FF85151A23E7DA0A0077F238 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF85151823E7DA0A0077F238 /* LaunchScreen.storyboard */; };
 		FF85151D23E7DA0A0077F238 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF85151C23E7DA0A0077F238 /* main.m */; };
+		FFDBDC19241F742C00F37575 /* VGPSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF769B0723E7DD80007FAE7F /* VGPSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FFF53454241F236900E671B1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF53453241F236900E671B1 /* StoreKit.framework */; };
 		FFF5BD4923E921C400D5AE9E /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF5BD4823E921C400D5AE9E /* SceneDelegate.m */; };
-		FFF5BD4A23E9225700D5AE9E /* VGPSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF769B0723E7DD80007FAE7F /* VGPSDK.framework */; };
-		FFF5BD4B23E9225700D5AE9E /* VGPSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF769B0723E7DD80007FAE7F /* VGPSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,8 +43,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FF06BCE923F16CEA006CD40B /* Pods_SDK_Client.framework in Embed Frameworks */,
-				FFF5BD4B23E9225700D5AE9E /* VGPSDK.framework in Embed Frameworks */,
+				FFDBDC19241F742C00F37575 /* VGPSDK.framework in Embed Frameworks */,
+				FF1470532419F79300802877 /* Pods_UIClient.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -50,12 +52,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FF06BCE523F16CD1006CD40B /* VGPSDK.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = VGPSDK.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		526DF6DEFCFF539FB77388C6 /* Pods-UIClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIClient.debug.xcconfig"; path = "Target Support Files/Pods-UIClient/Pods-UIClient.debug.xcconfig"; sourceTree = "<group>"; };
+		559F1BC7CBB6EC0F459B4F96 /* Pods-UIClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIClient.release.xcconfig"; path = "Target Support Files/Pods-UIClient/Pods-UIClient.release.xcconfig"; sourceTree = "<group>"; };
+		D5A07794ABF3F12288E17643 /* Pods_UIClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UIClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF06BCEA23F16D33006CD40B /* LexendDeca-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LexendDeca-Regular.ttf"; sourceTree = "<group>"; };
 		FF06BCEC23F16DEB006CD40B /* VGPSDK.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = VGPSDK.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF1470542419FCBD00802877 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FF1470572419FD1400802877 /* vgp_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = vgp_config.json; sourceTree = "<group>"; };
 		FF769B0523E7DD80007FAE7F /* Pods_SDK_Client.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_SDK_Client.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF769B0723E7DD80007FAE7F /* VGPSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VGPSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FF85150723E7DA080077F238 /* UIClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF85150723E7DA080077F238 /* Tieu Dao Giang Ho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tieu Dao Giang Ho.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF85150A23E7DA080077F238 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FF85150B23E7DA080077F238 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		FF85151023E7DA080077F238 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -65,6 +71,8 @@
 		FF85151923E7DA0A0077F238 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FF85151B23E7DA0A0077F238 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF85151C23E7DA0A0077F238 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FFF53452241F235A00E671B1 /* Tieu Dao Giang Ho.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Tieu Dao Giang Ho.entitlements"; sourceTree = "<group>"; };
+		FFF53453241F236900E671B1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		FFF5BD4723E921C400D5AE9E /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		FFF5BD4823E921C400D5AE9E /* SceneDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,21 +82,39 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF06BCE823F16CEA006CD40B /* Pods_SDK_Client.framework in Frameworks */,
-				FFF5BD4A23E9225700D5AE9E /* VGPSDK.framework in Frameworks */,
+				FFF53454241F236900E671B1 /* StoreKit.framework in Frameworks */,
+				1560ABE27574E78A2083AF23 /* Pods_UIClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3257B05FC29E26C1F8A5702B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				526DF6DEFCFF539FB77388C6 /* Pods-UIClient.debug.xcconfig */,
+				559F1BC7CBB6EC0F459B4F96 /* Pods-UIClient.release.xcconfig */,
+			);
+			name = Pods;
+			path = ../Pods;
+			sourceTree = "<group>";
+		};
+		FF1470522419E95700802877 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				FF769B0523E7DD80007FAE7F /* Pods_SDK_Client.framework */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		FF769B0423E7DD80007FAE7F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FFF53453241F236900E671B1 /* StoreKit.framework */,
 				FF06BCEC23F16DEB006CD40B /* VGPSDK.bundle */,
-				FF06BCE523F16CD1006CD40B /* VGPSDK.bundle */,
-				FF769B0523E7DD80007FAE7F /* Pods_SDK_Client.framework */,
 				FF769B0723E7DD80007FAE7F /* VGPSDK.framework */,
+				D5A07794ABF3F12288E17643 /* Pods_UIClient.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -99,13 +125,15 @@
 				FF85150923E7DA080077F238 /* UIClient */,
 				FF85150823E7DA080077F238 /* Products */,
 				FF769B0423E7DD80007FAE7F /* Frameworks */,
+				3257B05FC29E26C1F8A5702B /* Pods */,
+				FF1470522419E95700802877 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
 		FF85150823E7DA080077F238 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FF85150723E7DA080077F238 /* UIClient.app */,
+				FF85150723E7DA080077F238 /* Tieu Dao Giang Ho.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -113,18 +141,21 @@
 		FF85150923E7DA080077F238 /* UIClient */ = {
 			isa = PBXGroup;
 			children = (
-				FF06BCEA23F16D33006CD40B /* LexendDeca-Regular.ttf */,
 				FF85150A23E7DA080077F238 /* AppDelegate.h */,
 				FF85150B23E7DA080077F238 /* AppDelegate.m */,
+				FF85151623E7DA0A0077F238 /* Assets.xcassets */,
+				FF1470542419FCBD00802877 /* GoogleService-Info.plist */,
+				FF85151B23E7DA0A0077F238 /* Info.plist */,
+				FF85151823E7DA0A0077F238 /* LaunchScreen.storyboard */,
+				FF06BCEA23F16D33006CD40B /* LexendDeca-Regular.ttf */,
+				FF85151C23E7DA0A0077F238 /* main.m */,
+				FF85151323E7DA080077F238 /* Main.storyboard */,
 				FFF5BD4723E921C400D5AE9E /* SceneDelegate.h */,
 				FFF5BD4823E921C400D5AE9E /* SceneDelegate.m */,
+				FFF53452241F235A00E671B1 /* Tieu Dao Giang Ho.entitlements */,
+				FF1470572419FD1400802877 /* vgp_config.json */,
 				FF85151023E7DA080077F238 /* ViewController.h */,
 				FF85151123E7DA080077F238 /* ViewController.m */,
-				FF85151323E7DA080077F238 /* Main.storyboard */,
-				FF85151623E7DA0A0077F238 /* Assets.xcassets */,
-				FF85151823E7DA0A0077F238 /* LaunchScreen.storyboard */,
-				FF85151B23E7DA0A0077F238 /* Info.plist */,
-				FF85151C23E7DA0A0077F238 /* main.m */,
 			);
 			path = UIClient;
 			sourceTree = "<group>";
@@ -136,11 +167,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FF85152023E7DA0A0077F238 /* Build configuration list for PBXNativeTarget "UIClient" */;
 			buildPhases = (
+				1495E1D683FFA92541FCC17F /* [CP] Check Pods Manifest.lock */,
 				FF85150323E7DA080077F238 /* Sources */,
 				FF85150423E7DA080077F238 /* Frameworks */,
 				FF85150523E7DA080077F238 /* Resources */,
 				FFF5BD4C23E9225700D5AE9E /* Embed Frameworks */,
 				FF06BCEE23F16DEB006CD40B /* Embed PlugIns */,
+				7685C15EA708ECD010CF21B7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -148,7 +181,7 @@
 			);
 			name = UIClient;
 			productName = UIClient;
-			productReference = FF85150723E7DA080077F238 /* UIClient.app */;
+			productReference = FF85150723E7DA080077F238 /* Tieu Dao Giang Ho.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -189,14 +222,58 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF06BCF123F16E36006CD40B /* VGPSDK.bundle in Resources */,
+				FF1470582419FD1400802877 /* vgp_config.json in Resources */,
 				FF85151A23E7DA0A0077F238 /* LaunchScreen.storyboard in Resources */,
 				FF85151723E7DA0A0077F238 /* Assets.xcassets in Resources */,
 				FF06BCEB23F16D33006CD40B /* LexendDeca-Regular.ttf in Resources */,
 				FF85151523E7DA080077F238 /* Main.storyboard in Resources */,
+				FF1470552419FCBD00802877 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1495E1D683FFA92541FCC17F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-UIClient-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7685C15EA708ECD010CF21B7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UIClient/Pods-UIClient-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UIClient/Pods-UIClient-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-UIClient/Pods-UIClient-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FF85150323E7DA080077F238 /* Sources */ = {
@@ -282,7 +359,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -334,7 +411,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -344,36 +421,46 @@
 		};
 		FF85152123E7DA0A0077F238 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 526DF6DEFCFF539FB77388C6 /* Pods-UIClient.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QM7CPNUGQN;
+				CODE_SIGN_ENTITLEMENTS = "UIClient/Tieu Dao Giang Ho.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 869F5E9CXU;
 				INFOPLIST_FILE = UIClient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = VGP.UIClient;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = dev.tieudao.giangho;
+				PRODUCT_NAME = "Tieu Dao Giang Ho";
+				PROVISIONING_PROFILE_SPECIFIER = dev.tieudao.giangho;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		FF85152223E7DA0A0077F238 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 559F1BC7CBB6EC0F459B4F96 /* Pods-UIClient.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QM7CPNUGQN;
+				CODE_SIGN_ENTITLEMENTS = "UIClient/Tieu Dao Giang Ho.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 869F5E9CXU;
 				INFOPLIST_FILE = UIClient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = VGP.UIClient;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = dev.tieudao.giangho;
+				PRODUCT_NAME = "Tieu Dao Giang Ho";
+				PROVISIONING_PROFILE_SPECIFIER = dis.tieudao.giangho;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

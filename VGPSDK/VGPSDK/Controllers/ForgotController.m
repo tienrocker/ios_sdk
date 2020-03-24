@@ -95,8 +95,8 @@
     [panel addSubview:leftBackButtonText];
     leftBackButtonText.translatesAutoresizingMaskIntoConstraints = NO;
     [[leftBackButtonText.topAnchor constraintEqualToAnchor:leftBackButtonImg.topAnchor constant:0] setActive:YES];
-    [[leftBackButtonText.leftAnchor constraintEqualToAnchor:leftBackButtonImg.rightAnchor constant:width*.02] setActive:YES];
-    [[leftBackButtonText.widthAnchor constraintEqualToConstant:width*.94] setActive:YES];
+    [[leftBackButtonText.leftAnchor constraintEqualToAnchor:leftBackButtonImg.rightAnchor constant:0] setActive:YES];
+    [[leftBackButtonText.widthAnchor constraintEqualToConstant:width*.5] setActive:YES];
     [[leftBackButtonText.heightAnchor constraintEqualToAnchor:leftBackButtonImg.heightAnchor multiplier:1] setActive:YES];
     
     [leftBackButtonImg addTarget:self action:@selector(leftBackButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -183,7 +183,6 @@
     // events
     [rightPanelForgotPhoneButton addTarget:self action:@selector(rightPanelForgotPhoneButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [rightPanelForgotEmailButton addTarget:self action:@selector(rightPanelForgotEmailButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self updateUIText];
 }
 
 - (void)updateUIText {

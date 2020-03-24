@@ -10,6 +10,8 @@
 #import "VGPInterface.h"
 #import "VGPHelper.h"
 #import "VGPUI.h"
+#import "VGPLogger.h"
+#import "VGPAPI.h"
 
 @interface RegisterController () {
     UIImageView *imgLayout;
@@ -99,8 +101,8 @@
     [panel addSubview:leftBackButtonText];
     leftBackButtonText.translatesAutoresizingMaskIntoConstraints = NO;
     [[leftBackButtonText.topAnchor constraintEqualToAnchor:leftBackButtonImg.topAnchor constant:0] setActive:YES];
-    [[leftBackButtonText.leftAnchor constraintEqualToAnchor:leftBackButtonImg.rightAnchor constant:width*.02] setActive:YES];
-    [[leftBackButtonText.widthAnchor constraintEqualToConstant:width*.94] setActive:YES];
+    [[leftBackButtonText.leftAnchor constraintEqualToAnchor:leftBackButtonImg.rightAnchor constant:0] setActive:YES];
+    [[leftBackButtonText.widthAnchor constraintEqualToConstant:width*.5] setActive:YES];
     [[leftBackButtonText.heightAnchor constraintEqualToAnchor:leftBackButtonImg.heightAnchor multiplier:1] setActive:YES];
     
     [leftBackButtonImg addTarget:self action:@selector(leftBackButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -148,9 +150,12 @@
     [[rightPanelUsernameTextFieldBackground.heightAnchor constraintEqualToConstant:width*.0615] setActive:YES];
     
     rightPanelUsernameTextField = [[UITextField alloc] init];
+    rightPanelUsernameTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    if (@available(iOS 11.0, *)) rightPanelUsernameTextField.textContentType = UITextContentTypeUsername;
     rightPanelUsernameTextField.placeholder = [VGPHelper localizationForString:@"login.right.username"];
     rightPanelUsernameTextField.font = VGP_FONT_LABEL_13;
     rightPanelUsernameTextField.layer.sublayerTransform = CATransform3DMakeTranslation(width*.02,0,0);
+    rightPanelUsernameTextField.delegate = self;
     [rightPanel addSubview:rightPanelUsernameTextField];
     
     rightPanelUsernameTextField.translatesAutoresizingMaskIntoConstraints = NO;
@@ -170,9 +175,11 @@
     
     rightPanelPasswordTextField = [[UITextField alloc] init];
     rightPanelPasswordTextField.secureTextEntry = YES;
+    if (@available(iOS 11.0, *)) rightPanelPasswordTextField.textContentType = UITextContentTypePassword;
     rightPanelPasswordTextField.placeholder = [VGPHelper localizationForString:@"login.right.password"];
     rightPanelPasswordTextField.font = VGP_FONT_LABEL_13;
     rightPanelPasswordTextField.layer.sublayerTransform = CATransform3DMakeTranslation(width*.02,0,0);
+    rightPanelPasswordTextField.delegate = self;
     [rightPanel addSubview:rightPanelPasswordTextField];
     
     rightPanelPasswordTextField.translatesAutoresizingMaskIntoConstraints = NO;
@@ -195,6 +202,7 @@
     rightPanelRePasswordTextField.placeholder = [VGPHelper localizationForString:@"login.right.repassword"];
     rightPanelRePasswordTextField.font = VGP_FONT_LABEL_13;
     rightPanelRePasswordTextField.layer.sublayerTransform = CATransform3DMakeTranslation(width*.02,0,0);
+    rightPanelRePasswordTextField.delegate = self;
     [rightPanel addSubview:rightPanelRePasswordTextField];
     
     rightPanelRePasswordTextField.translatesAutoresizingMaskIntoConstraints = NO;
@@ -213,10 +221,13 @@
     [[rightPanelEmailTextFieldBackground.heightAnchor constraintEqualToAnchor:rightPanelRePasswordTextFieldBackground.heightAnchor multiplier:1] setActive:YES];
     
     rightPanelEmailTextField = [[UITextField alloc] init];
-    rightPanelEmailTextField.secureTextEntry = YES;
+    rightPanelEmailTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    rightPanelEmailTextField.keyboardType = UIKeyboardTypeEmailAddress;
+    if (@available(iOS 10.0, *)) rightPanelEmailTextField.textContentType = UITextContentTypeEmailAddress;
     rightPanelEmailTextField.placeholder = [VGPHelper localizationForString:@"login.right.email"];
     rightPanelEmailTextField.font = VGP_FONT_LABEL_13;
     rightPanelEmailTextField.layer.sublayerTransform = CATransform3DMakeTranslation(width*.02,0,0);
+    rightPanelEmailTextField.delegate = self;
     [rightPanel addSubview:rightPanelEmailTextField];
     
     rightPanelEmailTextField.translatesAutoresizingMaskIntoConstraints = NO;
@@ -224,7 +235,6 @@
     [[rightPanelEmailTextField.topAnchor constraintEqualToAnchor:rightPanelEmailTextFieldBackground.topAnchor] setActive:YES];
     [[rightPanelEmailTextField.widthAnchor constraintEqualToAnchor:rightPanelEmailTextFieldBackground.widthAnchor multiplier:1] setActive:YES];
     [[rightPanelEmailTextField.heightAnchor constraintEqualToAnchor:rightPanelEmailTextFieldBackground.heightAnchor multiplier:1] setActive:YES];
-    
     
     // BUTTON
     rightPanelRegisterButton = [[UIButton alloc] init];
@@ -244,8 +254,6 @@
     
     // events
     [rightPanelRegisterButton addTarget:self action:@selector(rightPanelRegisterButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self updateUIText];
 }
 
 - (void)updateUIText {
@@ -259,7 +267,62 @@
 
 - (void)rightPanelRegisterButtonClick
 {
-    MyLog(@"rightPanelRegisterButtonClick");
+    [self showLoadingView];
+    [[VGPLogger sharedInstance] registerClick];
+    
+    NSString *username = [rightPanelUsernameTextField text];
+    NSString *password = [rightPanelPasswordTextField text];
+    NSString *re_password = [rightPanelRePasswordTextField text];
+    NSString *email = [rightPanelEmailTextField text];
+    
+    if(![password isEqualToString:re_password]) {
+        [self hideLoadingView];
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[VGPHelper localizationForString:@"register.password.confirm.error"]];
+        return;
+    }
+    
+    [VGPAPI registerWithEmail:username password:password email:email success:^(id  _Nonnull responseObject) {
+        [self hideLoadingView];
+    } failure:^(NSError * _Nonnull error) {
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[error localizedDescription]];
+        [self hideLoadingView];
+    }];
+}
+
+#pragma mark - TextField Delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    MyLog(@"textField %@", textField);
+    [textField resignFirstResponder];
+    if(textField == rightPanelUsernameTextField) [rightPanelPasswordTextField becomeFirstResponder];
+    if(textField == rightPanelPasswordTextField) [rightPanelRePasswordTextField becomeFirstResponder];
+    if(textField == rightPanelRePasswordTextField) [rightPanelEmailTextField becomeFirstResponder];
+    
+    if(textField == rightPanelRePasswordTextField) {
+        [self rightPanelRegisterButtonClick];
+    }
+    
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if(textField == rightPanelRePasswordTextField || textField == rightPanelEmailTextField) {
+        self.view.frame = CGRectOffset(self.view.frame, 0, DIS_MOVE_POPUP * 2);
+    } else {
+        self.view.frame = CGRectOffset(self.view.frame, 0, DIS_MOVE_POPUP);
+    }
+    
+    if(textField == rightPanelEmailTextField) {
+        textField.returnKeyType = UIReturnKeyGo;
+    } else {
+        textField.returnKeyType = UIReturnKeyNext;
+    }
+}
+
+- (void)cancelInput:(UITapGestureRecognizer *)gesture {
+    [rightPanelUsernameTextField resignFirstResponder];
+    [rightPanelPasswordTextField resignFirstResponder];
+    [rightPanelRePasswordTextField resignFirstResponder];
+    [rightPanelEmailTextField resignFirstResponder];
 }
 
 @end

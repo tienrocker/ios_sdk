@@ -9,14 +9,24 @@
 #import "VGPInterface.h"
 #import "VGPHelper.h"
 #import "VGPUI.h"
+#import "VGPConfig.h"
+#import "VGPDeviceData.h"
+#import "VGPLogger.h"
+#import "FBSDKSharingCallback.h"
+#import "VGPAPI.h"
 
 @implementation VGPInterface
 
 static VGPInterface *sharedController = nil;
+
 + (VGPInterface *)sharedInstance
 {
     if (!sharedController) sharedController = [[VGPInterface alloc] init];
     return sharedController;
+}
+
+- (void)load {
+    
 }
 
 #pragma mark Data
@@ -32,87 +42,384 @@ static VGPInterface *sharedController = nil;
     [self loginGame:nil];
 }
 - (void)loginGame:(void (^ __nullable)(void))completion {
-    [self showFlyButton];
-    [[VGPUI sharedInstance] showWelcomeViewController:completion];
-    // [[VGPUI sharedInstance] showProfileEditController:completion];
+    
+    if(VGP_CONFIG_LOADED == NO) {
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"notification"] message:[VGPHelper localizationForString:@"notification"]];
+        return;
+    }
+    
+    /**
+     @TODO: nếu người dùng đã lưu đăng nhập trước đó thì call login bằng token lên server, trường hợp người dùng hết hạn đăng nhập thì bắt đăng nhập lại
+     */
+    if([VGPUserData getUserID] == 0) {
+        [[VGPUI sharedInstance] showWelcomeController:completion];
+    } else {
+        [VGPAPI tokenLogin:^(id  _Nonnull responseObject) {
+            
+            // [[VGPUI sharedInstance] showProfileEditController:completion];
+            // [[VGPUI sharedInstance] showVerifyPhoneController:completion];
+            
+        } failure:^(NSError * _Nonnull error) {
+            [[VGPUI sharedInstance] showWelcomeController:completion];
+        }];
+    }
 }
 - (void)logoutGame {
     [self logoutGame:nil];
 }
 - (void)logoutGame:(void (^ __nullable)(void))completion {
-    [self hideFlyButton];
-    [[VGPUI sharedInstance] dismiss:completion];
+    
+    if(VGP_CONFIG_LOADED == NO) {
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"notification"] message:[VGPHelper localizationForString:@"notification"]];
+        return;
+    }
+    
+    [VGPUserData clearUserData];
+    [VGPHelper onLogoutSuccess];
 }
-- (void)showFlyButton{
+- (void)showProfile {
+    [self showProfile:nil];
+}
+- (void)showProfile:(void (^ __nullable)(void))completion {
+    
+    if(VGP_CONFIG_LOADED == NO) {
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"notification"] message:[VGPHelper localizationForString:@"notification"]];
+        return;
+    }
+    
+    if([VGPUserData getUserID] == 0) {
+        [[VGPUI sharedInstance] showWelcomeController:completion];
+    } else {
+        [[VGPUI sharedInstance] showProfileController:completion];
+    }
+}
+- (void)showFlyButton {
+    if(VGP_CONFIG_LOADED == NO) return;
     [[[VGPUI sharedInstance] FlyButton] showButton];
 }
-- (void)hideFlyButton{
+- (void)hideFlyButton {
     [[[VGPUI sharedInstance] FlyButton] hideButton];
 }
 
-#pragma mark Events
-- (void)completeMobileTutorial{}
-- (void)logLevelUp:(int) level{}
-- (void)logCreatedCharacter{}
-- (void)logUnlockAchievement:(int) vipLevel{}
-- (void)logUserHadPurchase{}
-- (void)logPurchase:(int) money{}
-- (void)shareFacebookImage:(NSString *)url{}
-- (void)shareFacebookImageLocal:(UIImage *) image{}
+#pragma mark Marketing Events
+
+- (void)setGameVersion:(NSString*)code{
+    [VGPLogger setGameVersion:code];
+}
+- (void)setGameCode:(NSString*)code{
+    [VGPLogger setGameCode:code];
+}
+- (void)startMobileTutorial {
+    [[VGPLogger sharedInstance] tutorialBegin];
+}
+- (void)completeMobileTutorial {
+    [[VGPLogger sharedInstance] tutorialComplete];
+}
+- (void)logLevelUp:(int) level {
+    [[VGPLogger sharedInstance] characterLevelup:(int)level];
+}
+- (void)logCreatedCharacter {
+    [[VGPLogger sharedInstance] characterCreated];
+}
+- (void)logUnlockAchievement:(int) vipLevel {
+    [[VGPLogger sharedInstance] characterVipLevelup:vipLevel];
+}
+- (void)purchaseViewDisplay {
+    [[VGPLogger sharedInstance] purchaseViewDisplay];
+}
+- (void)logUserHadPurchase {
+    [[VGPLogger sharedInstance] userHadPurchase];
+}
+- (void)logPurchase:(int) money {
+    [[VGPLogger sharedInstance] userPurchase:money];
+    [self logUserHadPurchase];
+}
+
+- (void)resourceStartDownload{
+    [[VGPLogger sharedInstance] resourceStartDownload];
+}
+- (void)resourceProcessDownload:(int)percent{
+    [[VGPLogger sharedInstance] resourceProcessDownload:percent];
+}
+- (void)resourceDownloadSuccess{
+    [[VGPLogger sharedInstance] resourceDownloadSuccess];
+}
+- (void)resourceDownloadError{
+    [[VGPLogger sharedInstance] resourceDownloadError];
+}
+
+- (void)resourceStartUnpack{
+    [[VGPLogger sharedInstance] resourceStartUnpack];
+}
+- (void)resourceUnpackSuccess{
+    [[VGPLogger sharedInstance] resourceUnpackSuccess];
+}
+- (void)resourceUnpackError{
+    [[VGPLogger sharedInstance] resourceUnpackError];
+}
+
+FBSDKSharingCallback *fbscb;
+- (void)shareFacebookImage:(NSString *) url {
+    NSURL *_url = [NSURL URLWithString:url];
+    NSData * data = [NSData dataWithContentsOfURL:_url];
+    UIImage * image = [UIImage imageWithData:data];
+    if (image)
+    {
+        FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+        photo.image = image;
+        FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+        content.photos = @[photo];
+        
+        FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
+        dialog.fromViewController = [VGPHelper topViewController];
+        
+        if(fbscb == nil) fbscb = [[FBSDKSharingCallback alloc] init];
+        dialog.delegate = fbscb;
+        dialog.shareContent = content;
+        dialog.mode = FBSDKShareDialogModeShareSheet;
+        [dialog show];
+    }
+    else
+    {
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:@"share_facebook_error"];
+    }
+}
+
+- (void)shareFacebookImageLocal:(UIImage *) image {
+    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+    photo.image = image;
+    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+    content.photos = @[photo];
+    
+    FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
+    dialog.fromViewController = [VGPHelper topViewController];
+    
+    if(fbscb == nil) fbscb = [[FBSDKSharingCallback alloc] init];
+    dialog.delegate = fbscb;
+    dialog.shareContent = content;
+    dialog.mode = FBSDKShareDialogModeShareSheet;
+    [dialog show];
+}
 
 #pragma mark Init Application
 
-- (void)applicationDidFinishLaunching:(UIApplication *)application {
-    MyLog(@"applicationDidFinishLaunching");
-}
-- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(nullable NSDictionary<UIApplicationLaunchOptionsKey, id> *)launchOptions {
-    MyLog(@"willFinishLaunchingWithOptions");
-    return YES;
-}
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(nullable NSDictionary<UIApplicationLaunchOptionsKey, id> *)launchOptions {
+NSString *const kGCMMessageIDKey = @"gcm.message_id";
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     MyLog(@"didFinishLaunchingWithOptions");
-    return YES;
+    
+    if([VGP_GAMEID length] == 0) return YES;
+    
+    [AppsFlyerTracker sharedTracker].appleAppID = VGP_APPS_FLYER_TRACKER_APPID;
+    [AppsFlyerTracker sharedTracker].appsFlyerDevKey = VGP_APPS_FLYER_TRACKER_DEVKEY;
+    [AppsFlyerTracker sharedTracker].delegate = self;
+    [AppsFlyerTracker sharedTracker].isDebug = false;
+    
+    [FIRApp configure];
+    [FIRMessaging messaging].delegate = self;
+    
+    MyLog(@"AppsFlyerTracker inited with ID: \"%@\"", [AppsFlyerTracker sharedTracker].appleAppID);
+    MyLog(@"FIREBASE inited with client id: \"%@\"", [[FIRApp defaultApp].options clientID]);
+    
+    if (@available(iOS 10.0, *)) {
+      // iOS 10 or later
+      // For iOS 10 display notification (sent via APNS)
+      [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+      UNAuthorizationOptions authOptions = UNAuthorizationOptionAlert | UNAuthorizationOptionSound | UNAuthorizationOptionBadge;
+      [[UNUserNotificationCenter currentNotificationCenter]
+          requestAuthorizationWithOptions:authOptions
+          completionHandler:^(BOOL granted, NSError * _Nullable error) {
+          if(error) MyLog(@"error %@", error);
+          }];
+    } else {
+      // iOS 10 notifications aren't available; fall back to iOS 8-9 notifications.
+      UIUserNotificationType allNotificationTypes = (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+      UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+      [application registerUserNotificationSettings:settings];
+    }
+    [application registerForRemoteNotifications];
+    
+    // load vgp config
+    [VGPAPI getServerInfo];
+    
+    return [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     MyLog(@"applicationDidBecomeActive");
+    [[AppsFlyerTracker sharedTracker] trackAppLaunch];
+    [FIRAnalytics logEventWithName:kFIREventAppOpen parameters:nil];
+    [FBSDKAppEvents activateApp];
 }
 - (void)applicationWillResignActive:(UIApplication *)application {
     MyLog(@"applicationWillResignActive");
 }
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    MyLog(@"application handleOpenURL");
+    MyLog(@"xxxxxxxxxxxx");
+    [[AppsFlyerTracker sharedTracker] handleOpenUrl:url options:nil];
     return YES;
 }
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(id)annotation {
-    MyLog(@"application openURL sourceApplication");
+// Open URI-scheme for iOS 9 and above
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    //[[AppsFlyerTracker sharedTracker] handleOpenUrl:url options:options];
+    return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
+  ];
+}
+// Open URI-scheme for iOS 8 and below
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString*)sourceApplication annotation:(id)annotation {
+    [[AppsFlyerTracker sharedTracker] handleOpenURL:url sourceApplication:sourceApplication withAnnotation:annotation];
     return YES;
+}
+// Open Universal Links
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler{
+    [[AppsFlyerTracker sharedTracker] continueUserActivity:userActivity restorationHandler:restorationHandler];
+    return YES;
+}
+
+- (void)application:(UIApplication *_Nonnull)application didChangeStatusBarOrientation:(UIInterfaceOrientation)oldStatusBarOrientation{
+    MyLog(@"application didChangeStatusBarOrientation");
+    [[NSNotificationCenter defaultCenter] postNotificationName:VGP_EVENT_UPDATE_LAYOUT object:nil userInfo:nil];
 }
 
 #pragma mark Register Push notification
 
+// [START receive_message]
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+  // If you are receiving a notification message while your app is in the background,
+  // this callback will not be fired till the user taps on the notification launching the application.
+  // TODO: Handle data of notification
+
+  // With swizzling disabled you must let Messaging know about the message, for Analytics
+  // [[FIRMessaging messaging] appDidReceiveMessage:userInfo];
+
+  // Print message ID.
+  if (userInfo[kGCMMessageIDKey]) {
+    NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
+  }
+
+  // Print full message.
+  NSLog(@"%@", userInfo);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+    fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+  // If you are receiving a notification message while your app is in the background,
+  // this callback will not be fired till the user taps on the notification launching the application.
+  // TODO: Handle data of notification
+
+  // With swizzling disabled you must let Messaging know about the message, for Analytics
+  // [[FIRMessaging messaging] appDidReceiveMessage:userInfo];
+
+  // Print message ID.
+  if (userInfo[kGCMMessageIDKey]) {
+    NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
+  }
+
+  // Print full message.
+  NSLog(@"%@", userInfo);
+
+  completionHandler(UIBackgroundFetchResultNewData);
+}
+// [END receive_message]
+
+// [START ios_10_message_handling]
+// Receive displayed notifications for iOS 10 devices.
+// Handle incoming notification messages while app is in the foreground.
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+       willPresentNotification:(UNNotification *)notification
+         withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler  API_AVAILABLE(ios(10.0)){
+  NSDictionary *userInfo = notification.request.content.userInfo;
+
+  // With swizzling disabled you must let Messaging know about the message, for Analytics
+  // [[FIRMessaging messaging] appDidReceiveMessage:userInfo];
+
+  // Print message ID.
+  if (userInfo[kGCMMessageIDKey]) {
+    NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
+  }
+
+  // Print full message.
+  NSLog(@"%@", userInfo);
+
+  // Change this to your preferred presentation option
+  completionHandler(UNNotificationPresentationOptionNone);
+}
+
+// Handle notification messages after display notification is tapped by the user.
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+didReceiveNotificationResponse:(UNNotificationResponse *)response
+         withCompletionHandler:(void(^)(void))completionHandler  API_AVAILABLE(ios(10.0)){
+  NSDictionary *userInfo = response.notification.request.content.userInfo;
+  if (userInfo[kGCMMessageIDKey]) {
+    NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
+  }
+
+  // Print full message.
+  NSLog(@"%@", userInfo);
+
+  completionHandler();
+}
+
+// [END ios_10_message_handling]
+
+// [START refresh_token]
+- (void)messaging:(FIRMessaging *)messaging didReceiveRegistrationToken:(NSString *)fcmToken {
+    NSLog(@"FCM registration token: %@", fcmToken);
+    // Notify about received token.
+    NSDictionary *dataDict = [NSDictionary dictionaryWithObject:fcmToken forKey:@"token"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:
+     @"FCMToken" object:nil userInfo:dataDict];
+    // TODO: If necessary send token to application server.
+    // Note: This callback is fired at each app startup and whenever a new token is generated.
+    [[FIRMessaging messaging] subscribeToTopic:[NSString stringWithFormat:@"news%@", VGP_GAMEID] completion:^(NSError * _Nullable error) {
+        MyLog(@"Subscribed to topic %@", [NSString stringWithFormat:@"news%@", VGP_GAMEID]);
+    }];
+}
+// [END refresh_token]
+
+// [START ios_10_data_message]
+// Receive data messages on iOS 10+ directly from FCM (bypassing APNs) when the app is in the foreground.
+// To enable direct data messages, you can set [Messaging messaging].shouldEstablishDirectChannel to YES.
+- (void)messaging:(FIRMessaging *)messaging didReceiveMessage:(FIRMessagingRemoteMessage *)remoteMessage {
+  NSLog(@"Received data message: %@", remoteMessage.appData);
+}
+// [END ios_10_data_message]
+
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
-    
-    NSString *token = @"";
-    if (@available(iOS 13.0, *)) {
-        token = [VGPHelper stringFromDeviceToken:deviceToken];
-    } else {
-        token = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-        token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
-    }
-    
-    NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken token: %@", token);
-    
-    //    if(token != nil && ![token isEqualToString:@""]) {
-    //        if (![[[VGPUserData sharedInstance] getDidRegisterForRemoteNotificationsWithDeviceToken] isEqualToString:token]) {
-    //            [[VGPUserData sharedInstance] setDevicePushTokenKey:token];
-    //            [[VGPSignUpAccount sharedInstance] pushNotificationServerWithDeviceToken:token];
-    //            [[VGPUserData sharedInstance] setDidRegisterForRemoteNotificationsWithDeviceToken:token];
-    //        }
-    //    }
+    [FIRMessaging messaging].APNSToken = deviceToken;
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error {
-    NSLog(@"Failed to get token, error: %@", error);
+    MyLog(@"Failed to get token, error: %@", error);
+}
+
+#pragma mark AppsFlyerTrackerDelegate methods
+
+- (void)onConversionDataReceived {
+    
+}
+/**
+ `conversionInfo` contains information about install.
+ Organic/non-organic, etc.
+ @param conversionInfo May contain <code>null</code> values for some keys. Please handle this case.
+ */
+- (void)onConversionDataSuccess:(NSDictionary *)conversionInfo {
+    id status = [conversionInfo objectForKey:@"af_status"];
+    if([status isEqualToString:@"Non-organic"]) {
+        id sourceID = [conversionInfo objectForKey:@"media_source"];
+        id campaign = [conversionInfo objectForKey:@"campaign"];
+        [VGPDeviceData setSourceID:sourceID];
+        [VGPDeviceData setCampaign:campaign];
+        MyLog(@"This is a none organic install. Media source: %@  Campaign: %@", sourceID, campaign);
+    } else if([status isEqualToString:@"Organic"]) {
+        MyLog(@"This is an organic install.");
+    }
+}
+
+/**
+ Any errors that occurred during the conversion request.
+ */
+- (void)onConversionDataFail:(NSError *)error {
+    MyLog(@"Failed to get data from AppsFlyer's server: %@", [error localizedDescription]);
 }
 
 @end

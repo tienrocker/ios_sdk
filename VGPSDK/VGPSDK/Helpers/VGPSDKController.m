@@ -7,8 +7,10 @@
 //
 
 #import "VGPSDKController.h"
+#import "VGPConfig.h"
 #import "VGPHelper.h"
 #import "VGPUI.h"
+#import "VGPLogger.h"
 
 @interface VGPSDKController()
 
@@ -16,11 +18,24 @@
 
 @implementation VGPSDKController
 
+- (instancetype)init {
+    self = [super init];
+    if (@available(iOS 13.0, *)) {
+        self.modalPresentationStyle = UIModalPresentationAutomatic;
+    } else {
+        self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor clearColor];
     //self.view.layer.zPosition = 200;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUIText) name:VGP_UPDATE_LANGUAGE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUIText) name:VGP_EVENT_UPDATE_LANGUAGE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUI) name:VGP_EVENT_UPDATE_LAYOUT object:nil];
+    
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess) name:VGP_EVENT_LOGIN_SUCCESS object:nil];
     
     UITapGestureRecognizer *cancelInput = [[UITapGestureRecognizer alloc] init];
     [cancelInput addTarget:self action:@selector(cancelInput:)];
@@ -28,20 +43,55 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     self.curentFrame = self.view.frame;
 }
 
-- (void)updateUIText {
-    
+- (void)viewWillAppear:(BOOL)animated {
+    [[[VGPUI sharedInstance] FlyButton] hideButton];
+    [super viewWillAppear:animated];
+    [self updateUI];
+    [self updateUIText];
 }
 
-- (void)rightCloseButtonClick
-{
+- (void)showLoadingView {
+    MyLog(@"showLoadingView");
+    
+    self->_loadingView = [[UIView alloc] init];
+    [self->_loadingView setFrame:CGRectMake(0, 0, [VGPHelper getScreenWidth], [VGPHelper getScreenHeight])];
+    self->_loadingView.backgroundColor = [UIColor clearColor];
+    self->_loadingIndicatorView.layer.zPosition = 101;
+    [[VGPHelper topViewController].view addSubview:self->_loadingView];
+    
+    self->_loadingIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self->_loadingIndicatorView.center = self.view.center;
+    self->_loadingIndicatorView.layer.zPosition = 102;
+    [self->_loadingIndicatorView startAnimating];
+    [self.view addSubview:self->_loadingIndicatorView];
+    
+    self->_loadingIndicatorView.hidden = NO;
+}
+- (void)hideLoadingView {
+    if(self->_loadingView) {
+        self->_loadingView.hidden = YES;
+        [self->_loadingView removeFromSuperview];
+    }
+    if(self->_loadingIndicatorView) {
+        [self->_loadingIndicatorView stopAnimating];
+        self->_loadingIndicatorView.hidden = YES;
+        [self->_loadingIndicatorView removeFromSuperview];
+    }
+}
+
+- (void)updateUI {}
+
+- (void)updateUIText {}
+
+- (void)rightCloseButtonClick {
     [[VGPUI sharedInstance] dismiss];
 }
 
-- (void)leftBackButtonClick
-{
+- (void)leftBackButtonClick {
     MyLog(@"leftBackButtonClick");
     [self dismissViewControllerAnimated:YES completion:nil];
 }

@@ -8,6 +8,10 @@
 
 #import "FlyButton.h"
 #import "VGPHelper.h"
+#import "VGPUI.h"
+#import "VGPAPI.h"
+#import "VGPUserData.h"
+#import "VGPInterface.h"
 
 #define DELTA  8
 static CGFloat WH_BUTTON = 30;
@@ -35,8 +39,6 @@ static FlyButton *sharedController = nil;
 }
 
 - (void)createButton {
-    MyLog(@"createButton");
-    
     MARGIN_LEFT = [VGPHelper getScreenWidth] * .03 + WH_BUTTON / 2; // 3%
     MARGIN_TOP = [VGPHelper getScreenHeight] * .03 + WH_BUTTON / 2;
     MARGIN_RIGHT = [VGPHelper getScreenWidth] - [VGPHelper getScreenWidth] * .03 - WH_BUTTON * 3 / 2;
@@ -62,7 +64,7 @@ static FlyButton *sharedController = nil;
     [self setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-float" andType:nil] forState:UIControlStateNormal];
     //self.backgroundColor = [UIColor blueColor];
     self.layer.zPosition = 100;
-    MyLog(@"[[UIApplication sharedApplication] keyWindow] %@", [[UIApplication sharedApplication] keyWindow]);
+    
     [[[UIApplication sharedApplication] keyWindow] addSubview:self];
     [self addTarget:self action:@selector(clickButton) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -253,6 +255,15 @@ static FlyButton *sharedController = nil;
         [self showPopup];
     }
     self.alpha = 1;
+    [[VGPInterface sharedInstance] showProfile];
+//    /**
+//    @TODO: nếu người dùng đã lưu đăng nhập trước đó thì hiện profile view
+//    */
+//    [VGPAPI tokenLogin:^(id  _Nonnull responseObject) {
+//        [[VGPInterface sharedInstance] showProfile];
+//    } failure:^(NSError * _Nonnull error) {
+//        [[VGPInterface sharedInstance] loginGame];
+//    }];
 }
 
 - (void)showPopup {
@@ -260,13 +271,17 @@ static FlyButton *sharedController = nil;
 }
 
 - (void)showButton {
-    MyLog(@"showButton");
-    self.hidden = NO;
+    if(self.hidden == YES) {
+        MyLog(@"showButton");
+        self.hidden = NO;
+    }
 }
 
 - (void)hideButton {
-    MyLog(@"hideButton");
-    self.hidden = YES;
+    if(self.hidden == NO) {
+        MyLog(@"hideButton");
+        self.hidden = YES;
+    }
 }
 
 @end

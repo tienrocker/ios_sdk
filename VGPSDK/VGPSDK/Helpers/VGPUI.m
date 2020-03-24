@@ -11,7 +11,6 @@
 @interface VGPUI ()
 {
     FlyButton *flyButton;
-    UIViewController *mainViewController;
     WelcomeController *welcomeViewController;
     LoginNormalController *loginNormalController;
     RegisterController *registerController;
@@ -19,6 +18,7 @@
     ForgotPhoneController *forgotPhoneController;
     ProfileController *profileController;
     ProfileEditController *profileEditController;
+    VerifyPhoneController *verifyPhoneControllerViewController;
     ProtectController *protectController;
 }
 
@@ -32,14 +32,15 @@ static VGPUI *sharedController = nil;
     return sharedController;
 }
 
-#pragma mark UI
+#pragma mark Global
+
 - (FlyButton *)FlyButton {
     if(flyButton == nil) flyButton = [FlyButton sharedInstance];
     return flyButton;
 }
-- (UIViewController *)MainViewController {
-    return mainViewController;
-}
+
+#pragma mark UI
+
 - (WelcomeController *)WelcomeViewController {
     if(welcomeViewController == nil) welcomeViewController = [[WelcomeController alloc] init];
     return welcomeViewController;
@@ -68,6 +69,10 @@ static VGPUI *sharedController = nil;
     if(profileEditController == nil) profileEditController = [[ProfileEditController alloc] init];
     return profileEditController;
 }
+- (VerifyPhoneController *)VerifyPhoneController {
+    if(verifyPhoneControllerViewController == nil) verifyPhoneControllerViewController = [[VerifyPhoneController alloc] init];
+    return verifyPhoneControllerViewController;
+}
 - (ProtectController *)ProtectController {
     if(protectController == nil) protectController = [[ProtectController alloc] init];
     return protectController;
@@ -78,73 +83,61 @@ static VGPUI *sharedController = nil;
     [self dismiss:nil];
 }
 - (void)dismiss:(void (^ __nullable)(void))completion {
-    mainViewController = nil;
-    [[[UIApplication sharedApplication] keyWindow].rootViewController dismissViewControllerAnimated:true completion:^{
-        if (completion) completion();
-    }];
+    [[[VGPUI sharedInstance] FlyButton] showButton];
+    [[[UIApplication sharedApplication] keyWindow].rootViewController dismissViewControllerAnimated:true completion:completion];
 }
-- (void)showWelcomeViewController {
-    [self showWelcomeViewController:nil];
+- (void)showWelcomeController {
+    [self showWelcomeController:nil];
 }
-- (void)showWelcomeViewController:(void (^ __nullable)(void))completion {
-    [flyButton hideButton];
-    if(mainViewController == nil) mainViewController = [VGPHelper topViewController];
+- (void)showWelcomeController:(void (^ __nullable)(void))completion {
     [[VGPHelper topViewController] presentViewController:[[VGPUI sharedInstance] WelcomeViewController] animated:YES completion:completion];
 }
 - (void)showLoginNormalController {
     [self showLoginNormalController:nil];
 }
 - (void)showLoginNormalController:(void (^ __nullable)(void))completion {
-    [flyButton hideButton];
-    if(mainViewController == nil) mainViewController = [VGPHelper topViewController];
     [[VGPHelper topViewController] presentViewController:[[VGPUI sharedInstance] LoginNormalController] animated:YES completion:completion];
 }
 - (void)showRegisterController {
     [self showRegisterController:nil];
 }
 - (void)showRegisterController:(void (^ __nullable)(void))completion {
-    [flyButton hideButton];
-    if(mainViewController == nil) mainViewController = [VGPHelper topViewController];
     [[VGPHelper topViewController] presentViewController:[[VGPUI sharedInstance] RegisterController] animated:YES completion:completion];
 }
 - (void)showForgotController {
     [self showForgotController:nil];
 }
 - (void)showForgotController:(void (^ __nullable)(void))completion {
-    [flyButton hideButton];
-    if(mainViewController == nil) mainViewController = [VGPHelper topViewController];
     [[VGPHelper topViewController] presentViewController:[[VGPUI sharedInstance] ForgotController] animated:YES completion:completion];
 }
 - (void)showForgotPhoneController {
     [self showForgotPhoneController:nil];
 }
 - (void)showForgotPhoneController:(void (^ __nullable)(void))completion {
-    [flyButton hideButton];
-    if(mainViewController == nil) mainViewController = [VGPHelper topViewController];
     [[VGPHelper topViewController] presentViewController:[[VGPUI sharedInstance] ForgotPhoneController] animated:YES completion:completion];
 }
 - (void)showProfileController {
     [self showProfileController:nil];
 }
 - (void)showProfileController:(void (^ __nullable)(void))completion {
-    [flyButton hideButton];
-    if(mainViewController == nil) mainViewController = [VGPHelper topViewController];
     [[VGPHelper topViewController] presentViewController:[[VGPUI sharedInstance] ProfileController] animated:YES completion:completion];
 }
 - (void)showProfileEditController {
     [self showProfileEditController:nil];
 }
 - (void)showProfileEditController:(void (^ __nullable)(void))completion {
-    [flyButton hideButton];
-    if(mainViewController == nil) mainViewController = [VGPHelper topViewController];
     [[VGPHelper topViewController] presentViewController:[[VGPUI sharedInstance] ProfileEditController] animated:YES completion:completion];
+}
+- (void)showVerifyPhoneController {
+    [self showVerifyPhoneController:nil];
+}
+- (void)showVerifyPhoneController:(void (^ __nullable)(void))completion {
+    [[VGPHelper topViewController] presentViewController:[[VGPUI sharedInstance] VerifyPhoneController] animated:YES completion:completion];
 }
 - (void)showProtectController {
     [self showProtectController:nil];
 }
 - (void)showProtectController:(void (^ __nullable)(void))completion {
-    [flyButton hideButton];
-    if(mainViewController == nil) mainViewController = [VGPHelper topViewController];
     [[VGPHelper topViewController] presentViewController:[[VGPUI sharedInstance] ProtectController] animated:YES completion:completion];
 }
 

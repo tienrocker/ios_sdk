@@ -13,10 +13,15 @@ NS_ASSUME_NONNULL_BEGIN
 @interface VGPSDKController : UIViewController <UITextFieldDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UIApplicationDelegate>
 
 @property (nonatomic) CGRect curentFrame;
-
+- (void)updateUI;
 - (void)updateUIText;
 - (void)rightCloseButtonClick;
 - (void)leftBackButtonClick;
+
+@property (strong, nonatomic) UIActivityIndicatorView *loadingIndicatorView;
+@property (strong, nonatomic) UIView *loadingView;
+- (void)showLoadingView;
+- (void)hideLoadingView;
 
 @end
 

@@ -10,6 +10,8 @@
 #import "VGPUI.h"
 #import "VGPInterface.h"
 #import "VGPHelper.h"
+#import "VGPLogger.h"
+#import "VGPAPI.h"
 
 @interface LoginNormalController () {
     UIImageView *imgLayout;
@@ -36,7 +38,6 @@
 @end
 
 @implementation LoginNormalController
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -78,7 +79,6 @@
     [[rightCloseButton.topAnchor constraintEqualToAnchor:panel.topAnchor constant:-width*0.04] setActive:YES];
     [[rightCloseButton.widthAnchor constraintEqualToConstant:width*0.08] setActive:YES];
     [[rightCloseButton.heightAnchor constraintEqualToConstant:width*0.08] setActive:YES];
-    [rightCloseButton addTarget:self action:@selector(rightCloseButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     leftBackButtonImg = [[UIButton alloc] init];
     leftBackButtonImg.layer.zPosition = 3;
@@ -101,8 +101,8 @@
     [panel addSubview:leftBackButtonText];
     leftBackButtonText.translatesAutoresizingMaskIntoConstraints = NO;
     [[leftBackButtonText.topAnchor constraintEqualToAnchor:leftBackButtonImg.topAnchor constant:0] setActive:YES];
-    [[leftBackButtonText.leftAnchor constraintEqualToAnchor:leftBackButtonImg.rightAnchor constant:width*.02] setActive:YES];
-    [[leftBackButtonText.widthAnchor constraintEqualToConstant:width*.94] setActive:YES];
+    [[leftBackButtonText.leftAnchor constraintEqualToAnchor:leftBackButtonImg.rightAnchor constant:0] setActive:YES];
+    [[leftBackButtonText.widthAnchor constraintEqualToConstant:width*.5] setActive:YES];
     [[leftBackButtonText.heightAnchor constraintEqualToAnchor:leftBackButtonImg.heightAnchor multiplier:1] setActive:YES];
     
     [leftBackButtonImg addTarget:self action:@selector(leftBackButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -150,9 +150,12 @@
     [[rightPanelUsernameTextFieldBackground.heightAnchor constraintEqualToConstant:width*.0615] setActive:YES];
     
     rightPanelUsernameTextField = [[UITextField alloc] init];
+    rightPanelUsernameTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    if (@available(iOS 11.0, *)) rightPanelUsernameTextField.textContentType = UITextContentTypeUsername;
     rightPanelUsernameTextField.placeholder = [VGPHelper localizationForString:@"login.right.username"];
     rightPanelUsernameTextField.font = VGP_FONT_LABEL_13;
     rightPanelUsernameTextField.layer.sublayerTransform = CATransform3DMakeTranslation(width*.02,0,0);
+    rightPanelUsernameTextField.delegate = self;
     [rightPanel addSubview:rightPanelUsernameTextField];
     
     rightPanelUsernameTextField.translatesAutoresizingMaskIntoConstraints = NO;
@@ -172,9 +175,11 @@
     
     rightPanelPasswordTextField = [[UITextField alloc] init];
     rightPanelPasswordTextField.secureTextEntry = YES;
+    if (@available(iOS 11.0, *)) rightPanelPasswordTextField.textContentType = UITextContentTypePassword;
     rightPanelPasswordTextField.placeholder = [VGPHelper localizationForString:@"login.right.password"];
     rightPanelPasswordTextField.font = VGP_FONT_LABEL_13;
     rightPanelPasswordTextField.layer.sublayerTransform = CATransform3DMakeTranslation(width*.02,0,0);
+    rightPanelPasswordTextField.delegate = self;
     [rightPanel addSubview:rightPanelPasswordTextField];
     
     rightPanelPasswordTextField.translatesAutoresizingMaskIntoConstraints = NO;
@@ -230,9 +235,14 @@
     [[rightPanelForgotPasswordButton.heightAnchor constraintEqualToAnchor:rightPanelRegisterButton.heightAnchor multiplier:1] setActive:YES];
     
     // events
+    [rightCloseButton addTarget:self action:@selector(rightCloseButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [rightPanelLoginButton addTarget:self action:@selector(rightPanelLoginButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [rightPanelRegisterButton addTarget:self action:@selector(rightPanelRegisterButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [rightPanelForgotPasswordButton addTarget:self action:@selector(rightPanelForgotPasswordButtonClick) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)updateUI {
+    
 }
 
 - (void)updateUIText {
@@ -246,13 +256,17 @@
 
 - (void)rightPanelLoginButtonClick
 {
-    MyLog(@"rightPanelLoginButtonClick");
+    [self showLoadingView];
+    [[VGPLogger sharedInstance] loginNormalClick];
     
-    [VGPUserData setUserID:1234321];
-    [VGPUserData setUsername:@"DUMMY_name"];
+    NSString *username = [rightPanelUsernameTextField text];
+    NSString *password = [rightPanelPasswordTextField text];
     
-    [[VGPUI sharedInstance] showProfileController:^{
-        // @TODO: TEST UI
+    [VGPAPI normalLogin:username password:password success:^(id  _Nonnull responseObject) {
+        [self hideLoadingView];
+    } failure:^(NSError * _Nonnull error) {
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[error localizedDescription]];
+        [self hideLoadingView];
     }];
 }
 
@@ -270,6 +284,20 @@
     [[VGPUI sharedInstance] showForgotController:^{
         // @TODO: TEST UI
     }];
+}
+
+#pragma mark - TextField Delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    MyLog(@"textField %@", textField);
+    [textField resignFirstResponder];
+    if(textField == rightPanelUsernameTextField) [rightPanelPasswordTextField becomeFirstResponder];
+    if(textField == rightPanelPasswordTextField) [self rightPanelLoginButtonClick];
+    return YES;
+}
+
+- (void)cancelInput:(UITapGestureRecognizer *)gesture {
+    [rightPanelUsernameTextField resignFirstResponder];
+    [rightPanelPasswordTextField resignFirstResponder];
 }
 
 @end

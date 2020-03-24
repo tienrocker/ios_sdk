@@ -17,6 +17,7 @@
 #import "ForgotPhoneController.h"
 #import "ProfileController.h"
 #import "ProfileEditController.h"
+#import "VerifyPhoneController.h"
 #import "ProtectController.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -32,9 +33,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (VGPUI *)sharedInstance;
 
-#pragma mark UI
+#pragma mark Global
 - (FlyButton *) FlyButton;
-- (UIViewController *)MainViewController;
+
+#pragma mark UI
 - (WelcomeController *)WelcomeViewController;
 - (LoginNormalController *)LoginNormalController;
 - (RegisterController *)RegisterController;
@@ -42,13 +44,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (ForgotPhoneController *)ForgotPhoneController;
 - (ProfileController *)ProfileController;
 - (ProfileEditController *)ProfileEditController;
+- (VerifyPhoneController *)VerifyPhoneController;
 - (ProtectController *)ProtectController;
 
 #pragma mark Events
 - (void)dismiss;
 - (void)dismiss:(void (^ __nullable)(void))completion;
-- (void)showWelcomeViewController;
-- (void)showWelcomeViewController:(void (^ __nullable)(void))completion;
+- (void)showWelcomeController;
+- (void)showWelcomeController:(void (^ __nullable)(void))completion;
 - (void)showLoginNormalController;
 - (void)showLoginNormalController:(void (^ __nullable)(void))completion;
 - (void)showRegisterController;
@@ -61,6 +64,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showProfileController:(void (^ __nullable)(void))completion;
 - (void)showProfileEditController;
 - (void)showProfileEditController:(void (^ __nullable)(void))completion;
+- (void)showVerifyPhoneController;
+- (void)showVerifyPhoneController:(void (^ __nullable)(void))completion;
 - (void)showProtectController;
 - (void)showProtectController:(void (^ __nullable)(void))completion;
 @end

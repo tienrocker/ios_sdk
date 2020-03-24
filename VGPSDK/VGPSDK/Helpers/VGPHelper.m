@@ -9,7 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "VGPHelper.h"
+#import "VGPConfig.h"
+#import "VGPLogger.h"
 #import "UIData.h"
+#import "VGPUI.h"
+#import "VGPUserData.h"
 
 @implementation VGPHelper
 
@@ -137,25 +141,66 @@ static NSBundle *bundleTranslation = nil;
 + (void)changeLocalization:(NSString *)localization {
     [UIData setLocalization:localization];
     bundleTranslation = nil;
-    [[NSNotificationCenter defaultCenter] postNotificationName:VGP_UPDATE_LANGUAGE object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:VGP_EVENT_UPDATE_LANGUAGE object:nil userInfo:nil];
 }
 
 + (NSString *)getNSUserDefaults:(NSString *)name {
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:name]) {
-        return [[NSUserDefaults standardUserDefaults] objectForKey:name];
-    }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:name]) return [[NSUserDefaults standardUserDefaults] objectForKey:name];
     return @"";
 }
 + (void)setNSUserDefaults:(NSString *)name value:(NSString *)value {
-    [[NSUserDefaults standardUserDefaults] setObject:value forKey:name];
+    if(value == nil) [[NSUserDefaults standardUserDefaults] removeObjectForKey:name];
+    else [[NSUserDefaults standardUserDefaults] setObject:value forKey:name];
 }
 
 + (NSString *)formatDate:(NSDate *)date {
+    return [self formatDate:date withDateFormat:nil];
+}
+
++ (NSString *)formatDate:(NSDate *)date withDateFormat:(NSString *)withDateFormat {
+    if(withDateFormat == nil) withDateFormat = @"dd-MM-yyyy";
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
-    [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+    [dateFormatter setDateFormat:withDateFormat];
     NSString *formattedDate = [dateFormatter stringFromDate:date];
     return formattedDate;
+}
+
++ (void)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message {
+    [self alertControllerWithTitle:title message:message handler:nil];
+}
++ (void)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message handler:(void (^ __nullable)(UIAlertAction *action))handler {
+    [self alertControllerWithTitle:title message:message actionWithTitle:[VGPHelper localizationForString:@"ok"] handler:handler];
+}
++ (void)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message actionWithTitle:(nullable NSString *)actionTitle handler:(void (^ __nullable)(UIAlertAction *action))handler {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle: UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:actionTitle style: UIAlertActionStyleDefault handler:handler];
+    [alertController addAction: action];
+    [[VGPHelper topViewController] presentViewController:alertController animated:YES completion:nil];
+}
+
+#pragma mark After login
+
++ (void)onRegisterSuccess {
+    [[VGPLogger sharedInstance] registerSuccess:nil];
+    [[VGPUI sharedInstance] dismiss];
+    
+    NSDictionary *data = @{@"id": @([VGPUserData getUserID]), @"token": [VGPUserData getToken]};
+    [[NSNotificationCenter defaultCenter] postNotificationName:VGP_EVENT_LOGIN_SUCCESS object:nil userInfo:data];
+}
+
++ (void)onLoginSuccess {
+    [[VGPLogger sharedInstance] loginSuccess:nil];
+    [[VGPUI sharedInstance] dismiss];
+    
+    NSDictionary *data = @{@"id": @([VGPUserData getUserID]), @"token": [VGPUserData getToken]};
+    [[NSNotificationCenter defaultCenter] postNotificationName:VGP_EVENT_LOGIN_SUCCESS object:nil userInfo:data];
+}
+
++ (void)onLogoutSuccess {
+    [[VGPUI sharedInstance] dismiss];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:VGP_EVENT_LOGOUT_SUCCESS object:nil userInfo:@{}];
 }
 
 @end

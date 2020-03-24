@@ -10,6 +10,7 @@
 #import "VGPUI.h"
 #import "VGPInterface.h"
 #import "VGPHelper.h"
+#import "VGPAPI.h"
 #import "VGPUserData.h"
 
 @interface ProfileEditController () {
@@ -23,6 +24,7 @@
     UIView *leftPanelImage;
     
     UIScrollView *scrollView;
+    NSDateFormatter *dateFormatter;
     
     // ================== BASIC ==================
     UIImageView *iconPersonalProfileTextLabel;
@@ -33,6 +35,7 @@
     UIImageView *nameInputBackground;
     UITextField *nameInputTextField;
     
+    NSNumber *genderValue;
     UILabel *genderLabel;
     UIImageView *genderInputBackground;
     UITextField *genderInputTextField;
@@ -84,6 +87,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if(dateFormatter == nil) {
+        dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:VGP_USER_DATE_FORMAT];
+    }
     
     CGFloat screenWidth = [VGPHelper getScreenWidth];
     // CGFloat screenHeight = [VGPHelper getScreenHeight];
@@ -138,7 +146,6 @@
     
     leftBackButtonText = [[UIButton alloc] init];
     leftBackButtonText.layer.zPosition = 3;
-    [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
     [leftBackButtonText setTitleColor:VGP_MAIN_TEXT_COLOR forState:UIControlStateNormal];
     leftBackButtonText.titleLabel.adjustsFontSizeToFitWidth = YES;
     [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_13];
@@ -147,7 +154,7 @@
     leftBackButtonText.translatesAutoresizingMaskIntoConstraints = NO;
     [[leftBackButtonText.topAnchor constraintEqualToAnchor:leftBackButtonImg.topAnchor constant:0] setActive:YES];
     [[leftBackButtonText.leftAnchor constraintEqualToAnchor:leftBackButtonImg.rightAnchor constant:padding] setActive:YES];
-    [[leftBackButtonText.widthAnchor constraintEqualToConstant:width*.94] setActive:YES];
+    [[leftBackButtonText.widthAnchor constraintEqualToConstant:width*.5] setActive:YES];
     [[leftBackButtonText.heightAnchor constraintEqualToAnchor:leftBackButtonImg.heightAnchor multiplier:1] setActive:YES];
     
     [leftBackButtonImg addTarget:self action:@selector(leftBackButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -177,17 +184,16 @@
     [[iconPersonalProfileTextLabel.heightAnchor constraintEqualToConstant:padding] setActive:YES];
     
     personalProfileTextLabel = [[UILabel alloc] init];
-    personalProfileTextLabel.text = [VGPHelper localizationForString:@"profile.info"];
     personalProfileTextLabel.adjustsFontSizeToFitWidth = YES;
-    [personalProfileTextLabel setFont:VGP_FONT_LABEL_13];
+    [personalProfileTextLabel setFont:VGP_FONT_LABEL_10];
     [personalProfileTextLabel setTextColor:[UIColor grayColor]];
     [personalProfileTextLabel setTextAlignment:NSTextAlignmentLeft];
     [scrollView addSubview:personalProfileTextLabel];
     personalProfileTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [[personalProfileTextLabel.topAnchor constraintEqualToAnchor:iconPersonalProfileTextLabel.topAnchor constant:0] setActive:YES];
     [[personalProfileTextLabel.leftAnchor constraintEqualToAnchor:iconPersonalProfileTextLabel.rightAnchor constant:width*.01] setActive:YES];
+    [[personalProfileTextLabel.centerYAnchor constraintEqualToAnchor:iconPersonalProfileTextLabel.centerYAnchor constant:0] setActive:YES];
     [[personalProfileTextLabel.widthAnchor constraintEqualToAnchor:scrollView.widthAnchor multiplier:1] setActive:YES];
-    [[personalProfileTextLabel.heightAnchor constraintEqualToAnchor:iconPersonalProfileTextLabel.heightAnchor multiplier:1] setActive:YES];
+    [[personalProfileTextLabel.heightAnchor constraintEqualToConstant:width*0.025] setActive:YES];
     
     personalProfileTextLabelNav = [[UIView alloc] init];
     personalProfileTextLabelNav.backgroundColor = [UIColor grayColor];
@@ -200,7 +206,6 @@
     
     // name
     nameLabel = [[UILabel alloc] init];
-    nameLabel.text = [NSString stringWithFormat:@"%@ *", [VGPHelper localizationForString:@"profile.fullname"]];
     nameLabel.textColor = VGP_MAIN_TEXT_COLOR;
     nameLabel.adjustsFontSizeToFitWidth = YES;
     [nameLabel setFont:VGP_FONT_LABEL_13];
@@ -221,7 +226,6 @@
     [[nameInputBackground.heightAnchor constraintEqualToAnchor:nameLabel.heightAnchor multiplier:1] setActive:YES];
     
     nameInputTextField = [[UITextField alloc] init];
-    nameInputTextField.placeholder = [VGPHelper localizationForString:@"profile.fullname"];
     nameInputTextField.font = VGP_FONT_LABEL_13;
     nameInputTextField.layer.sublayerTransform = CATransform3DMakeTranslation(padding,0,0);
     nameInputTextField.delegate = self;
@@ -235,7 +239,6 @@
     
     // gender
     genderLabel = [[UILabel alloc] init];
-    genderLabel.text = [VGPHelper localizationForString:@"profile.gender"];
     genderLabel.textColor = VGP_MAIN_TEXT_COLOR;
     genderLabel.adjustsFontSizeToFitWidth = YES;
     [genderLabel setFont:VGP_FONT_LABEL_13];
@@ -256,7 +259,6 @@
     [[genderInputBackground.heightAnchor constraintEqualToAnchor:nameInputBackground.heightAnchor multiplier:1] setActive:YES];
     
     genderInputTextField = [[UITextField alloc] init];
-    genderInputTextField.placeholder = [VGPHelper localizationForString:@"profile.gender"];
     genderInputTextField.font = VGP_FONT_LABEL_13;
     genderInputTextField.layer.sublayerTransform = CATransform3DMakeTranslation(padding,0,0);
     genderInputTextField.delegate = self;
@@ -280,7 +282,6 @@
     
     // date of birth
     birthdayLabel = [[UILabel alloc] init];
-    birthdayLabel.text = [NSString stringWithFormat:@"%@ *", [VGPHelper localizationForString:@"profile.dob"]];
     birthdayLabel.textColor = VGP_MAIN_TEXT_COLOR;
     birthdayLabel.adjustsFontSizeToFitWidth = YES;
     [birthdayLabel setFont:VGP_FONT_LABEL_13];
@@ -301,7 +302,6 @@
     [[birthdayInputBackground.heightAnchor constraintEqualToAnchor:nameInputBackground.heightAnchor multiplier:1] setActive:YES];
     
     birthdayInputTextField = [[UITextField alloc] init];
-    birthdayInputTextField.placeholder = [VGPHelper localizationForString:@"profile.birthday"];
     birthdayInputTextField.font = VGP_FONT_LABEL_13;
     birthdayInputTextField.layer.sublayerTransform = CATransform3DMakeTranslation(padding,0,0);
     birthdayInputTextField.delegate = self;
@@ -314,18 +314,14 @@
     [[birthdayInputTextField.heightAnchor constraintEqualToAnchor:birthdayInputBackground.heightAnchor multiplier:1] setActive:YES];
     
     birthdayPicker = [[UIDatePicker alloc]init];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = VGP_USER_DATE_FORMAT;
-    NSDate *birthdayValue = [dateFormatter dateFromString:@"2018/12/29"];
-    [birthdayPicker setDate:birthdayValue animated:YES];
+    [birthdayPicker setDate:[VGPUserData getBirthDay] animated:YES];
     [birthdayPicker setDatePickerMode:UIDatePickerModeDate];
     [birthdayPicker addTarget:self action:@selector(updateBirthdayInputTextField:) forControlEvents:UIControlEventValueChanged];
     [birthdayInputTextField setInputView:birthdayPicker];
-    birthdayInputTextField.text = @"2018/12/29";
+    birthdayInputTextField.text = [VGPHelper formatDate:birthdayPicker.date];
     
     // address
     addressLabel = [[UILabel alloc] init];
-    addressLabel.text = [NSString stringWithFormat:@"%@ *", [VGPHelper localizationForString:@"profile.address"]];
     addressLabel.textColor = VGP_MAIN_TEXT_COLOR;
     addressLabel.adjustsFontSizeToFitWidth = YES;
     [addressLabel setFont:VGP_FONT_LABEL_13];
@@ -346,7 +342,6 @@
     [[addressInputBackground.heightAnchor constraintEqualToAnchor:nameInputBackground.heightAnchor multiplier:1] setActive:YES];
     
     addressInputTextField = [[UITextField alloc] init];
-    addressInputTextField.placeholder = [VGPHelper localizationForString:@"profile.address"];
     addressInputTextField.font = VGP_FONT_LABEL_13;
     addressInputTextField.layer.sublayerTransform = CATransform3DMakeTranslation(padding,0,0);
     addressInputTextField.delegate = self;
@@ -368,17 +363,16 @@
     [[iconPersonalSecurityTextLabel.heightAnchor constraintEqualToAnchor:iconPersonalProfileTextLabel.heightAnchor multiplier:1] setActive:YES];
     
     personalSecurityTextLabel = [[UILabel alloc] init];
-    personalSecurityTextLabel.text = [VGPHelper localizationForString:@"profile.security"];
     personalSecurityTextLabel.adjustsFontSizeToFitWidth = YES;
     [personalSecurityTextLabel setFont:VGP_FONT_LABEL_10];
     [personalSecurityTextLabel setTextColor:[UIColor grayColor]];
     [personalSecurityTextLabel setTextAlignment:NSTextAlignmentLeft];
     [scrollView addSubview:personalSecurityTextLabel];
     personalSecurityTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [[personalSecurityTextLabel.topAnchor constraintEqualToAnchor:iconPersonalSecurityTextLabel.topAnchor constant:0] setActive:YES];
-    [[personalSecurityTextLabel.leftAnchor constraintEqualToAnchor:iconPersonalSecurityTextLabel.rightAnchor constant:width*.01] setActive:YES];
-    [[personalSecurityTextLabel.widthAnchor constraintEqualToAnchor:scrollView.widthAnchor multiplier:1] setActive:YES];
-    [[personalSecurityTextLabel.heightAnchor constraintEqualToAnchor:iconPersonalSecurityTextLabel.heightAnchor multiplier:1] setActive:YES];
+    [[personalSecurityTextLabel.centerYAnchor constraintEqualToAnchor:iconPersonalSecurityTextLabel.centerYAnchor constant:0] setActive:YES];
+    [[personalSecurityTextLabel.leftAnchor constraintEqualToAnchor:personalProfileTextLabel.leftAnchor constant:0] setActive:YES];
+    [[personalSecurityTextLabel.widthAnchor constraintEqualToAnchor:personalProfileTextLabel.widthAnchor multiplier:1] setActive:YES];
+    [[personalSecurityTextLabel.heightAnchor constraintEqualToAnchor:personalProfileTextLabel.heightAnchor multiplier:1] setActive:YES];
     
     personalSecurityTextLabelNav = [[UIView alloc] init];
     personalSecurityTextLabelNav.backgroundColor = [UIColor grayColor];
@@ -391,7 +385,6 @@
     
     // personal ID
     personalIDLabel = [[UILabel alloc] init];
-    personalIDLabel.text = [NSString stringWithFormat:@"%@ *", [VGPHelper localizationForString:@"profile.personal_identity"]];
     personalIDLabel.textColor = VGP_MAIN_TEXT_COLOR;
     personalIDLabel.adjustsFontSizeToFitWidth = YES;
     [personalIDLabel setFont:VGP_FONT_LABEL_13];
@@ -412,7 +405,6 @@
     [[personalIDInputBackground.heightAnchor constraintEqualToAnchor:nameInputBackground.heightAnchor multiplier:1] setActive:YES];
     
     personalIDInputTextField = [[UITextField alloc] init];
-    personalIDInputTextField.placeholder = [VGPHelper localizationForString:@"profile.personal_identity"];
     personalIDInputTextField.font = VGP_FONT_LABEL_13;
     personalIDInputTextField.layer.sublayerTransform = CATransform3DMakeTranslation(padding,0,0);
     personalIDInputTextField.delegate = self;
@@ -426,7 +418,6 @@
     
     // date
     dateIDLabel = [[UILabel alloc] init];
-    dateIDLabel.text = [NSString stringWithFormat:@"%@ *", [VGPHelper localizationForString:@"profile.date_of_issue"]];
     dateIDLabel.textColor = VGP_MAIN_TEXT_COLOR;
     dateIDLabel.adjustsFontSizeToFitWidth = YES;
     [dateIDLabel setFont:VGP_FONT_LABEL_13];
@@ -447,7 +438,6 @@
     [[dateIDInputBackground.heightAnchor constraintEqualToAnchor:nameInputBackground.heightAnchor multiplier:1] setActive:YES];
     
     dateIDInputTextField = [[UITextField alloc] init];
-    dateIDInputTextField.placeholder = [VGPHelper localizationForString:@"profile.date_of_issue"];
     dateIDInputTextField.font = VGP_FONT_LABEL_13;
     dateIDInputTextField.layer.sublayerTransform = CATransform3DMakeTranslation(padding,0,0);
     dateIDInputTextField.delegate = self;
@@ -460,16 +450,14 @@
     [[dateIDInputTextField.heightAnchor constraintEqualToAnchor:dateIDInputBackground.heightAnchor multiplier:1] setActive:YES];
     
     dateIDPicker = [[UIDatePicker alloc]init];
-    NSDate *dateIDValue = [dateFormatter dateFromString:@"2019/12/29"];
-    [dateIDPicker setDate:dateIDValue animated:YES];
+    [dateIDPicker setDate:[VGPUserData getDateOfIssue] animated:YES];
     [dateIDPicker setDatePickerMode:UIDatePickerModeDate];
     [dateIDPicker addTarget:self action:@selector(updateDateIDInputTextField:) forControlEvents:UIControlEventValueChanged];
     [dateIDInputTextField setInputView:dateIDPicker];
-    dateIDInputTextField.text = @"2019/12/29";
+    dateIDInputTextField.text = [VGPHelper formatDate:dateIDPicker.date];
     
     // place ID
     placeIDLabel = [[UILabel alloc] init];
-    placeIDLabel.text = [NSString stringWithFormat:@"%@ *", [VGPHelper localizationForString:@"profile.place_of_issue"]];
     placeIDLabel.textColor = VGP_MAIN_TEXT_COLOR;
     placeIDLabel.adjustsFontSizeToFitWidth = YES;
     [placeIDLabel setFont:VGP_FONT_LABEL_13];
@@ -490,7 +478,6 @@
     [[placeIDInputBackground.heightAnchor constraintEqualToAnchor:nameInputBackground.heightAnchor multiplier:1] setActive:YES];
     
     placeIDInputTextField = [[UITextField alloc] init];
-    placeIDInputTextField.placeholder = [VGPHelper localizationForString:@"profile.place_of_issue"];
     placeIDInputTextField.font = VGP_FONT_LABEL_13;
     placeIDInputTextField.layer.sublayerTransform = CATransform3DMakeTranslation(padding,0,0);
     placeIDInputTextField.delegate = self;
@@ -504,7 +491,6 @@
     
     // phone
     phoneLabel = [[UILabel alloc] init];
-    phoneLabel.text = [VGPHelper localizationForString:@"profile.phone"];
     phoneLabel.textColor = VGP_MAIN_TEXT_COLOR;
     phoneLabel.adjustsFontSizeToFitWidth = YES;
     [phoneLabel setFont:VGP_FONT_LABEL_13];
@@ -525,7 +511,7 @@
     [[phoneInputBackground.heightAnchor constraintEqualToAnchor:nameInputBackground.heightAnchor multiplier:1] setActive:YES];
     
     phoneInputTextField = [[UITextField alloc] init];
-    phoneInputTextField.placeholder = [VGPHelper localizationForString:@"profile.phone"];
+    phoneInputTextField.keyboardType = UIKeyboardTypeNumberPad;
     phoneInputTextField.font = VGP_FONT_LABEL_13;
     phoneInputTextField.layer.sublayerTransform = CATransform3DMakeTranslation(padding,0,0);
     phoneInputTextField.delegate = self;
@@ -538,15 +524,10 @@
     [[phoneInputTextField.heightAnchor constraintEqualToAnchor:phoneInputBackground.heightAnchor multiplier:1] setActive:YES];
     
     phoneButton = [[UIButton alloc] init];
-    [phoneButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-orange-mini" andType:@"tiff"] forState:UIControlStateNormal];
-    [phoneButton setTitle:[VGPHelper localizationForString:@"verify"] forState:UIControlStateNormal];
-    [phoneButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-grey-mini" andType:@"tiff"] forState:UIControlStateDisabled];
-    [phoneButton setTitle:[VGPHelper localizationForString:@"verified"] forState:UIControlStateDisabled];
-    [phoneButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     phoneButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     [phoneButton.titleLabel setFont:VGP_FONT_LABEL_10];
-    phoneButton.enabled = NO;
     phoneButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    [phoneButton addTarget:self action:@selector(phoneButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [scrollView addSubview:phoneButton];
     
     phoneButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -554,11 +535,9 @@
     [[phoneButton.rightAnchor constraintEqualToAnchor:personalSecurityTextLabelNav.rightAnchor constant:0] setActive:YES];
     [[phoneButton.widthAnchor constraintEqualToAnchor:nameInputBackground.widthAnchor multiplier:.2] setActive:YES];
     [[phoneButton.heightAnchor constraintEqualToAnchor:nameInputBackground.heightAnchor multiplier:1] setActive:YES];
-    [phoneButton addTarget:self action:@selector(phoneButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     // email
     emailLabel = [[UILabel alloc] init];
-    emailLabel.text = [VGPHelper localizationForString:@"profile.email"];
     emailLabel.textColor = VGP_MAIN_TEXT_COLOR;
     emailLabel.adjustsFontSizeToFitWidth = YES;
     [emailLabel setFont:VGP_FONT_LABEL_13];
@@ -579,7 +558,8 @@
     [[emailInputBackground.heightAnchor constraintEqualToAnchor:phoneInputBackground.heightAnchor multiplier:1] setActive:YES];
     
     emailInputTextField = [[UITextField alloc] init];
-    emailInputTextField.placeholder = [VGPHelper localizationForString:@"profile.email"];
+    emailInputTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    emailInputTextField.keyboardType = UIKeyboardTypeEmailAddress;
     emailInputTextField.font = VGP_FONT_LABEL_13;
     emailInputTextField.layer.sublayerTransform = CATransform3DMakeTranslation(padding,0,0);
     emailInputTextField.delegate = self;
@@ -592,14 +572,10 @@
     [[emailInputTextField.heightAnchor constraintEqualToAnchor:emailInputBackground.heightAnchor multiplier:1] setActive:YES];
     
     emailButton = [[UIButton alloc] init];
-    [emailButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-orange-mini" andType:@"tiff"] forState:UIControlStateNormal];
-    [emailButton setTitle:[VGPHelper localizationForString:@"verify"] forState:UIControlStateNormal];
-    [emailButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-grey-mini" andType:@"tiff"] forState:UIControlStateDisabled];
-    [emailButton setTitle:[VGPHelper localizationForString:@"verified"] forState:UIControlStateDisabled];
-    [emailButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     emailButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     [emailButton.titleLabel setFont:VGP_FONT_LABEL_10];
     emailButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    [emailButton addTarget:self action:@selector(emailButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [scrollView addSubview:emailButton];
     
     emailButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -607,11 +583,9 @@
     [[emailButton.leftAnchor constraintEqualToAnchor:phoneButton.leftAnchor constant:0] setActive:YES];
     [[emailButton.widthAnchor constraintEqualToAnchor:phoneButton.widthAnchor multiplier:1] setActive:YES];
     [[emailButton.heightAnchor constraintEqualToAnchor:phoneButton.heightAnchor multiplier:1] setActive:YES];
-    [emailButton addTarget:self action:@selector(emailButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     updateProfileButton = [[UIButton alloc] init];
     [updateProfileButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-orange" andType:@"tiff"] forState:UIControlStateNormal];
-    [updateProfileButton setTitle:[VGPHelper localizationForString:@"update"] forState:UIControlStateNormal];
     [updateProfileButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     updateProfileButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     [updateProfileButton.titleLabel setFont:VGP_FONT_LABEL_15];
@@ -624,8 +598,6 @@
     [[updateProfileButton.widthAnchor constraintEqualToAnchor:personalProfileTextLabelNav.widthAnchor multiplier:.5] setActive:YES];
     [[updateProfileButton.heightAnchor constraintEqualToAnchor:emailLabel.heightAnchor multiplier:1.5] setActive:YES];
     [updateProfileButton addTarget:self action:@selector(updateProfileButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self updateUIText];
 }
 
 - (void)updateUIText {
@@ -636,6 +608,60 @@
     genderLabel.text = [VGPHelper localizationForString:@"profile.gender"];
     birthdayLabel.text = [NSString stringWithFormat:@"%@ *", [VGPHelper localizationForString:@"profile.birthday"]];
     addressLabel.text = [VGPHelper localizationForString:@"profile.address"];
+    addressInputTextField.placeholder = [VGPHelper localizationForString:@"profile.address"];
+    
+    personalSecurityTextLabel.text = [VGPHelper localizationForString:@"profile.security"];
+    personalIDLabel.text = [VGPHelper localizationForString:@"profile.personal_identity"];
+    personalIDInputTextField.placeholder = [VGPHelper localizationForString:@"profile.personal_identity"];
+    dateIDLabel.text = [VGPHelper localizationForString:@"profile.date_of_issue"];
+    dateIDInputTextField.placeholder = [VGPHelper localizationForString:@"profile.date_of_issue"];
+    placeIDLabel.text = [VGPHelper localizationForString:@"profile.place_of_issue"];
+    placeIDInputTextField.placeholder = [VGPHelper localizationForString:@"profile.place_of_issue"];
+    phoneLabel.text = [VGPHelper localizationForString:@"profile.phone"];
+    phoneInputTextField.placeholder = [VGPHelper localizationForString:@"profile.phone"];
+    emailLabel.text = [VGPHelper localizationForString:@"profile.email"];
+    emailInputTextField.placeholder = [VGPHelper localizationForString:@"profile.email"];
+    [updateProfileButton setTitle:[VGPHelper localizationForString:@"update"] forState:UIControlStateNormal];
+    
+    nameInputTextField.text = [VGPUserData getName];
+    genderInputTextField.text = [VGPUserData getGenderText];
+    genderValue = [NSNumber numberWithInteger:[VGPUserData getGender]];
+    [birthdayPicker setDate:[VGPUserData getBirthDay] animated:YES];
+    birthdayInputTextField.text = [VGPHelper formatDate:birthdayPicker.date];
+    addressInputTextField.text = [VGPUserData getAddress];
+    
+    personalIDInputTextField.text = [VGPUserData getPersonalIdentity];
+    [dateIDPicker setDate:[VGPUserData getDateOfIssue] animated:YES];
+    dateIDInputTextField.text = [VGPHelper formatDate:dateIDPicker.date];
+    placeIDInputTextField.text = [VGPUserData getPlaceOfIssue];
+    phoneInputTextField.text = [VGPUserData getPhone];
+    emailInputTextField.text = [VGPUserData getEmail];
+    
+    [phoneButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-orange-mini" andType:@"tiff"] forState:UIControlStateNormal];
+    [phoneButton setTitle:[VGPHelper localizationForString:@"verify"] forState:UIControlStateNormal];
+    [phoneButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-grey-mini" andType:@"tiff"] forState:UIControlStateNormal];
+        [phoneButton setTitle:[VGPHelper localizationForString:@"verified"] forState:UIControlStateNormal];
+    
+    if([VGPUserData getPhoneVerified]) {
+        phoneButton.enabled = NO;
+    } else {
+        phoneButton.enabled = YES;
+        phoneInputTextField.enabled = YES;
+    }
+    
+    [emailButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-grey-mini" andType:@"tiff"] forState:UIControlStateDisabled];
+    [emailButton setTitle:[VGPHelper localizationForString:@"verified"] forState:UIControlStateDisabled];
+    emailInputTextField.enabled = NO;
+    [emailButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-orange-mini" andType:@"tiff"] forState:UIControlStateNormal];
+    [emailButton setTitle:[VGPHelper localizationForString:@"verify"] forState:UIControlStateNormal];
+    emailInputTextField.enabled = YES;
+    
+    if([VGPUserData getEmailVerified]) {
+        emailButton.enabled = NO;
+    } else {
+        emailButton.enabled = YES;
+        emailInputTextField.enabled = YES;
+    }
 }
 
 - (void) genderButtonClick {
@@ -644,17 +670,20 @@
     UIAlertAction *male = [UIAlertAction actionWithTitle:[VGPHelper localizationForString:@"profile.gender.select.male"]
                                                    style:UIAlertActionStyleDefault
                                                  handler:^(UIAlertAction *action) {
+        self->genderValue = [NSNumber numberWithInteger:0];
         self->genderInputTextField.text = [VGPHelper localizationForString:@"profile.gender.select.male"];
     }];
     UIAlertAction *female = [UIAlertAction actionWithTitle:[VGPHelper localizationForString:@"profile.gender.select.female"]
                                                      style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction *action) {
+        self->genderValue = [NSNumber numberWithInteger:1];
         self->genderInputTextField.text = [VGPHelper localizationForString:@"profile.gender.select.female"];
     }];
     
     UIAlertAction *other = [UIAlertAction actionWithTitle:[VGPHelper localizationForString:@"profile.gender.select.other"]
                                                     style:UIAlertActionStyleDefault
                                                   handler:^(UIAlertAction *action) {
+        self->genderValue = [NSNumber numberWithInteger:2];
         self->genderInputTextField.text = [VGPHelper localizationForString:@"profile.gender.select.other"];
     }];
     
@@ -677,15 +706,56 @@
 }
 
 - (void)phoneButtonClick {
-    MyLog(@"phoneButtonClick");
+    [self showLoadingView];
+    [self cancelInput:nil];
+    
+    NSString *phone = phoneInputTextField.text;
+    [VGPAPI updatePhone:phone success:^(id _Nonnull responseObject) {
+        [self hideLoadingView];
+        
+        [[VGPUI sharedInstance] showVerifyPhoneController];
+    } failure:^(NSError * _Nonnull error) {
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[error localizedDescription]];
+        [self hideLoadingView];
+    }];
 }
 
 - (void)emailButtonClick {
-    MyLog(@"emailButtonClick");
+    [self showLoadingView];
+    [self cancelInput:nil];
+    
+    NSString *email = emailInputTextField.text;
+    
+    [VGPAPI resendVerifyEmail:email success:^(id  _Nonnull responseObject) {
+        [self hideLoadingView];
+    } failure:^(NSError * _Nonnull error) {
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[error localizedDescription]];
+        [self hideLoadingView];
+    }];
 }
 
 - (void)updateProfileButtonClick {
-    MyLog(@"updateProfileButtonClick");
+    [self showLoadingView];
+    [self cancelInput:nil];
+    
+    NSString *name = nameInputTextField.text;
+    NSNumber *gender = genderValue;
+    NSString *birthday = [VGPHelper formatDate:birthdayPicker.date withDateFormat:@"yyyy/MM/dd" ];
+    NSString *address = addressInputTextField.text;
+    NSString *personal_identity = personalIDInputTextField.text;
+    NSString *place_of_issue = placeIDInputTextField.text;
+    NSString *date_of_issue = [VGPHelper formatDate:dateIDPicker.date withDateFormat:@"yyyy/MM/dd" ];
+    
+    [VGPAPI updateUserInfo:name gender:gender birthday:birthday address:address personal_identity:personal_identity place_of_issue:place_of_issue date_of_issue:date_of_issue success:^(id  _Nonnull responseObject) {
+        
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"notification"] message:[VGPHelper localizationForString:@"update.success"] handler:^(UIAlertAction * _Nonnull action) {
+           [self hideLoadingView];
+        }];
+        
+    } failure:^(NSError * _Nonnull error) {
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[error localizedDescription]];
+        [self hideLoadingView];
+    }];
 }
 
 - (void)updateBirthdayInputTextField:(id)sender {

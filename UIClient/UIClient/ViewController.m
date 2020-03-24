@@ -16,16 +16,24 @@
 @implementation ViewController
 
 - (void)viewDidLoad {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SDKReady) name:VGP_EVENT_INIT_READY object:nil];
     [super viewDidLoad];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
+- (void)SDKReady {
     [[VGPInterface sharedInstance] loginGame];
-    //[[VGPInterface sharedInstance] showFlyButton];
 }
 
 - (IBAction)loginClick:(UIButton *)sender {
     [[VGPInterface sharedInstance] loginGame];
+}
+
+- (IBAction)logoutClick:(UIButton *)sender {
+    [[VGPInterface sharedInstance] logoutGame];
 }
 
 @end

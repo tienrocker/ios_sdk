@@ -7,6 +7,7 @@
 //
 
 #import "VGPSDKController.h"
+#import <AuthenticationServices/AuthenticationServices.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

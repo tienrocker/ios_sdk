@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface VGPHelper : NSObject
 
 #define MyLog(x, ...) NSLog(@"VGPLOG %s %d: " x, __FUNCTION__, __LINE__, ##__VA_ARGS__)
-#define VGP_UPDATE_LANGUAGE @"VGP_UPDATE_LANGUAGE"
 //#define FW_BUNDLE [NSBundle bundleForClass:[self class]]
 #define FW_BUNDLE [NSBundle mainBundle]
 #define LAYOUT_WIDTH 650.0f
@@ -42,6 +41,16 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setNSUserDefaults:(NSString *)name value:(NSString *)value;
 
 + (NSString *)formatDate:(NSDate *)date;
++ (NSString *)formatDate:(NSDate *)date withDateFormat:(NSString *)withDateFormat;
+
++ (void)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message;
++ (void)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message handler:(void (^ __nullable)(UIAlertAction *action))handler;
++ (void)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message actionWithTitle:(nullable NSString *)actionTitle handler:(void (^ __nullable)(UIAlertAction *action))handler;
+
+#pragma mark After login
++ (void)onRegisterSuccess;
++ (void)onLoginSuccess;
++ (void)onLogoutSuccess;
 
 @end
 

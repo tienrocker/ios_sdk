@@ -18,3 +18,4 @@ FOUNDATION_EXPORT const unsigned char VGPSDKVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <VGPSDK/PublicHeader.h>
 
 #import <VGPSDK/VGPInterface.h>
+#import <VGPSDK/VGPConfig.h>

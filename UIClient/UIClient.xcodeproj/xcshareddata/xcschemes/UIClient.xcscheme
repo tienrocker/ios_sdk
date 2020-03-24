@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1120"
+   LastUpgradeVersion = "1130"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FF85150623E7DA080077F238"
-               BuildableName = "UIClient.app"
+               BuildableName = "Tieu Dao Giang Ho.app"
                BlueprintName = "UIClient"
                ReferencedContainer = "container:UIClient.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FF85150623E7DA080077F238"
-            BuildableName = "UIClient.app"
+            BuildableName = "Tieu Dao Giang Ho.app"
             BlueprintName = "UIClient"
             ReferencedContainer = "container:UIClient.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FF85150623E7DA080077F238"
-            BuildableName = "UIClient.app"
+            BuildableName = "Tieu Dao Giang Ho.app"
             BlueprintName = "UIClient"
             ReferencedContainer = "container:UIClient.xcodeproj">
          </BuildableReference>

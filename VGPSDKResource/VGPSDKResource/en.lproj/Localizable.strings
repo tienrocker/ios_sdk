@@ -7,13 +7,36 @@
 */
 
 // ===== GLOBAL =====
+"notification" = "Notification";
 "back" = "Back";
 "ok" = "Ok";
 "cancel" = "Cancel";
 "update" = "Update";
+"update.success" = "Update success";
 "send" = "Send";
 "verify" = "Verify";
+"verify.code" = "Verify code";
 "verified" = "Verified";
+"resend" = "Resend Code";
+"resend.success" = "Code sent";
+"error" = "Error";
+"error.ios13.require" = "This feature only support iOS 13 and above";
+
+// ===== CONFIG =====
+"config.error" = "VGP config error";
+"config.error.missing" = "VGP config is not valid";
+
+// ===== SERVER =====
+"network.error" = "Network error";
+"server.error" = "VGP server error";
+"server.info.error" = "VGP server info error";
+"server.setting.error" = "VGP server setting error";
+"server.checking" = "Checking version, please try again later.";
+
+// ===== SHARE FACEBOOK =====
+"share_facebook_success" = "Share success";
+"share_facebook_error" = "Share error";
+"share_facebook_cancel" = "Share cancel";
 
 // ===== LOGIN VIEW =====
 "login.right.normal" = "LOGIN with VGP";
@@ -28,14 +51,20 @@
 "login.right.repassword" = "Confirm Password";
 "login.right.email" = "Email";
 
+"login.apple.error" = "Error sign in with apple code: (%ld)";
+
+// ===== REGISTER VIEW =====
+"register.password.confirm.error" = "Password confirm not match";
+
 // ===== FORGOT VIEW =====
 "forgot.right.txt" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 "forgot.right.phone.text1" = "Send SMS";
 
 // ===== PROFILE VIEW =====
+"profile.link" = "Link account";
 "profile.logout" = "Logout";
-"profile.edit_profile" = "Update account";
-"profile.info" = "User information";
+"profile.edit_profile" = "Update Account";
+"profile.info" = "User Information";
 "profile.fullname" = "Full Name";
 "profile.gender" = "Gender";
 "profile.gender.select"= "Select your gender";
