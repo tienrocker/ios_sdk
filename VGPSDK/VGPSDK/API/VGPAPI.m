@@ -14,7 +14,7 @@
 
 #pragma mark Config
 
-+ (void)getServerInfo {
++ (void)getServerInfo{
     // get server info
     [VGPConfigAPI getServerInfo:^(id  _Nonnull responseObject) {
         NSDictionary *data = [responseObject objectForKey:@"data"];
@@ -42,7 +42,7 @@
 
 #pragma mark Account login
 
-+ (void)normalLogin:(NSString *)username password:(NSString *)password success:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure {
++ (void)normalLogin:(NSString *)username password:(NSString *)password success:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure{
     [VGPLoginAPI normalLogin:username password:password success:^(id  _Nonnull responseObject) {
         NSInteger code = [[responseObject objectForKey:@"code"] intValue];
         NSString *message = [responseObject objectForKey:@"message"];
@@ -65,7 +65,7 @@
         if(failure) failure(error);
     }];
 }
-+ (void)facebookLogin:(NSString *)facebook_id success:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure {
++ (void)facebookLogin:(NSString *)facebook_id success:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure{
     [VGPLoginAPI facebookLogin:facebook_id success:^(id  _Nonnull responseObject) {
         NSInteger code = [[responseObject objectForKey:@"code"] intValue];
         NSString *message = [responseObject objectForKey:@"message"];
@@ -88,7 +88,7 @@
         if(failure) failure(error);
     }];
 }
-+ (void)quickplayLogin:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure {
++ (void)quickplayLogin:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure{
     [VGPLoginAPI quickplayLogin:^(id  _Nonnull responseObject) {
         NSInteger code = [[responseObject objectForKey:@"code"] intValue];
         NSString *message = [responseObject objectForKey:@"message"];
@@ -111,7 +111,7 @@
         if(failure) failure(error);
     }];
 }
-+ (void)appleLogin:(NSString *)access_token success:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure {
++ (void)appleLogin:(NSString *)access_token success:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure{
     [VGPLoginAPI appleLogin:access_token success:^(id  _Nonnull responseObject) {
         NSInteger code = [[responseObject objectForKey:@"code"] intValue];
         NSString *message = [responseObject objectForKey:@"message"];
@@ -134,7 +134,7 @@
         if(failure) failure(error);
     }];
 }
-+ (void)tokenLogin:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure {
++ (void)tokenLogin:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure{
     
     if([[VGPUserData getToken] isEqualToString:@""]) {
         NSError* error = [NSError errorWithDomain:@"tokenLogin" code:0 userInfo:@{}];
@@ -167,7 +167,7 @@
 
 #pragma mark Account register
 
-+ (void)registerWithEmail:(NSString *)username password:(NSString *)password email:(NSString *)email success:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure {
++ (void)registerWithEmail:(NSString *)username password:(NSString *)password email:(NSString *)email success:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure{
     [VGPRegisterAPI registerWithEmail:username password:password email:email success:^(id  _Nonnull responseObject) {
         NSInteger code = [[responseObject objectForKey:@"code"] intValue];
         NSString *message = [responseObject objectForKey:@"message"];
@@ -189,7 +189,7 @@
 
 #pragma mark Account profile
 
-+ (void)getProfile:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure {
++ (void)getProfile:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure{
     [VGPProfileAPI getProfile:^(id  _Nonnull responseObject) {
         NSInteger code = [[responseObject objectForKey:@"code"] intValue];
         NSString *message = [responseObject objectForKey:@"message"];
@@ -207,7 +207,7 @@
     }];
 }
 
-+ (void)updateUserInfo:(NSString *)name gender:(NSNumber *)gender birthday:(NSString *)birthday address:(NSString *)address personal_identity:(NSString *)personal_identity place_of_issue:(NSString *)place_of_issue date_of_issue:(NSString *)date_of_issue success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure {
++ (void)updateUserInfo:(NSString *)name gender:(NSNumber *)gender birthday:(NSString *)birthday address:(NSString *)address personal_identity:(NSString *)personal_identity place_of_issue:(NSString *)place_of_issue date_of_issue:(NSString *)date_of_issue success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure{
     [VGPProfileAPI updateUserInfo:name gender:gender birthday:birthday address:address personal_identity:personal_identity place_of_issue:place_of_issue date_of_issue:date_of_issue success:^(id  _Nonnull responseObject) {
         NSInteger code = [[responseObject objectForKey:@"code"] intValue];
         NSString *message = [responseObject objectForKey:@"message"];
@@ -225,7 +225,7 @@
     }];
 }
 
-+ (void)updatePhone:(NSString *)phone success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure {
++ (void)updatePhone:(NSString *)phone success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure{
     [VGPProfileAPI updatePhone:phone success:^(id  _Nonnull responseObject) {
         NSInteger code = [[responseObject objectForKey:@"code"] intValue];
         NSString *message = [responseObject objectForKey:@"message"];
@@ -241,7 +241,7 @@
     }];
 }
 
-+ (void)resendVerifyPhone:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure {
++ (void)resendVerifyPhone:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure{
     [VGPProfileAPI resendVerifyPhone:^(id  _Nonnull responseObject) {
         NSInteger code = [[responseObject objectForKey:@"code"] intValue];
         NSString *message = [responseObject objectForKey:@"message"];
@@ -257,7 +257,7 @@
     }];
 }
 
-+ (void)verifyPhone:(NSString *)code success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure {
++ (void)verifyPhone:(NSString *)code success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure{
     [VGPProfileAPI verifyPhone:code success:^(id  _Nonnull responseObject) {
         NSInteger code = [[responseObject objectForKey:@"code"] intValue];
         NSString *message = [responseObject objectForKey:@"message"];
@@ -273,7 +273,7 @@
     }];
 }
 
-+ (void)resendVerifyEmail:(NSString *)email success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure {
++ (void)resendVerifyEmail:(NSString *)email success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure{
     [VGPProfileAPI resendVerifyEmail:email success:^(id  _Nonnull responseObject) {
         NSInteger code = [[responseObject objectForKey:@"code"] intValue];
         NSString *message = [responseObject objectForKey:@"message"];
@@ -282,6 +282,118 @@
         } else {
             if (code == 401) [[VGPInterface sharedInstance] logoutGame];
             NSError* error = [NSError errorWithDomain:@"verifyPhone" code:code userInfo:@{NSLocalizedDescriptionKey:message}];
+            if(failure) failure(error);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        if(failure) failure(error);
+    }];
+}
+
+#pragma mark Account protect
+
++ (void)protectAccount:(NSString *)username password:(NSString *)password success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure{
+    [VGPProfileAPI protectAccount:username password:password success:^(id  _Nonnull responseObject) {
+        NSInteger code = [[responseObject objectForKey:@"code"] intValue];
+        NSString *message = [responseObject objectForKey:@"message"];
+        if(code == 200) {
+            [VGPUserData setShowProtectDialog:NO];
+            if(success) success(responseObject);
+        } else {
+            if (code == 401) [[VGPInterface sharedInstance] logoutGame];
+            NSError* error = [NSError errorWithDomain:@"protectAccount" code:code userInfo:@{NSLocalizedDescriptionKey:message}];
+            if(failure) failure(error);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        if(failure) failure(error);
+    }];
+}
+
+#pragma mark Account link
+
++ (void)facebookLink:(NSString *)facebook_id success:(VGPLinkAPISuccess)success failure:(VGPLinkAPIFailure)failure{
+    [VGPLinkAPI facebookLink:facebook_id success:^(id  _Nonnull responseObject) {
+        NSInteger code = [[responseObject objectForKey:@"code"] intValue];
+        NSString *message = [responseObject objectForKey:@"message"];
+        if(code == 200) {
+            if(success) success(responseObject);
+        } else {
+            if (code == 401) [[VGPInterface sharedInstance] logoutGame];
+            NSError* error = [NSError errorWithDomain:@"facebookLink" code:code userInfo:@{NSLocalizedDescriptionKey:message}];
+            if(failure) failure(error);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        if(failure) failure(error);
+    }];
+}
++ (void)facebookUnLink:(NSString *)facebook_id success:(VGPLinkAPISuccess)success failure:(VGPLinkAPIFailure)failure{
+    [VGPLinkAPI facebookUnLink:facebook_id success:^(id  _Nonnull responseObject) {
+        NSInteger code = [[responseObject objectForKey:@"code"] intValue];
+        NSString *message = [responseObject objectForKey:@"message"];
+        if(code == 200) {
+            if(success) success(responseObject);
+        } else {
+            if (code == 401) [[VGPInterface sharedInstance] logoutGame];
+            NSError* error = [NSError errorWithDomain:@"facebookUnLink" code:code userInfo:@{NSLocalizedDescriptionKey:message}];
+            if(failure) failure(error);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        if(failure) failure(error);
+    }];
+}
++ (void)quickplayLink:(VGPLinkAPISuccess)success failure:(VGPLinkAPIFailure)failure{
+    [VGPLinkAPI quickplayLink:^(id  _Nonnull responseObject) {
+        NSInteger code = [[responseObject objectForKey:@"code"] intValue];
+        NSString *message = [responseObject objectForKey:@"message"];
+        if(code == 200) {
+            if(success) success(responseObject);
+        } else {
+            if (code == 401) [[VGPInterface sharedInstance] logoutGame];
+            NSError* error = [NSError errorWithDomain:@"quickplayLink" code:code userInfo:@{NSLocalizedDescriptionKey:message}];
+            if(failure) failure(error);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        if(failure) failure(error);
+    }];
+}
++ (void)quickplayUnLink:(VGPLinkAPISuccess)success failure:(VGPLinkAPIFailure)failure{
+    [VGPLinkAPI quickplayUnLink:^(id  _Nonnull responseObject) {
+        NSInteger code = [[responseObject objectForKey:@"code"] intValue];
+        NSString *message = [responseObject objectForKey:@"message"];
+        if(code == 200) {
+            if(success) success(responseObject);
+        } else {
+            if (code == 401) [[VGPInterface sharedInstance] logoutGame];
+            NSError* error = [NSError errorWithDomain:@"quickplayUnLink" code:code userInfo:@{NSLocalizedDescriptionKey:message}];
+            if(failure) failure(error);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        if(failure) failure(error);
+    }];
+}
++ (void)appleLink:(NSString *)user identityToken:(NSString *)identityToken success:(VGPLinkAPISuccess)success failure:(VGPLinkAPIFailure)failure{
+    [VGPLinkAPI appleLink:user identityToken:identityToken success:^(id  _Nonnull responseObject) {
+        NSInteger code = [[responseObject objectForKey:@"code"] intValue];
+        NSString *message = [responseObject objectForKey:@"message"];
+        if(code == 200) {
+            if(success) success(responseObject);
+        } else {
+            if (code == 401) [[VGPInterface sharedInstance] logoutGame];
+            NSError* error = [NSError errorWithDomain:@"appleLink" code:code userInfo:@{NSLocalizedDescriptionKey:message}];
+            if(failure) failure(error);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        if(failure) failure(error);
+    }];
+}
++ (void)appleUnLink:(NSString *)user identityToken:(NSString *)identityToken success:(VGPLinkAPISuccess)success failure:(VGPLinkAPIFailure)failure{
+    [VGPLinkAPI appleUnLink:user identityToken:identityToken success:^(id  _Nonnull responseObject) {
+        NSInteger code = [[responseObject objectForKey:@"code"] intValue];
+        NSString *message = [responseObject objectForKey:@"message"];
+        if(code == 200) {
+            if(success) success(responseObject);
+        } else {
+            if (code == 401) [[VGPInterface sharedInstance] logoutGame];
+            NSError* error = [NSError errorWithDomain:@"appleUnLink" code:code userInfo:@{NSLocalizedDescriptionKey:message}];
             if(failure) failure(error);
         }
     } failure:^(NSError * _Nonnull error) {

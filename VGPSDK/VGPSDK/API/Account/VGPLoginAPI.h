@@ -16,7 +16,6 @@ typedef void (^VGPLoginAPIFailure)(NSError *error);
 
 @interface VGPLoginAPI : NSObject
 
-
 + (void)normalLogin:(NSString *)username password:(NSString *)password success:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure;
 + (void)facebookLogin:(NSString *)facebook_id success:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure;
 + (void)quickplayLogin:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure;

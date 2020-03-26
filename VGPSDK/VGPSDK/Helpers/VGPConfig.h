@@ -21,14 +21,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface VGPConfig : NSObject
 
-extern NSString* VGP_SERVER;
-extern NSString* VGP_GAMEID;
-extern NSString* VGP_SDK_VERSION;
-extern NSString* VGP_APPTOKEN;
-extern NSString* VGP_ENDPOINT;
-extern NSString* VGP_APPS_FLYER_TRACKER_APPID;
-extern NSString* VGP_APPS_FLYER_TRACKER_DEVKEY;
+extern NSString *VGP_SERVER;
+extern NSString *VGP_GAMEID;
+extern NSString *VGP_SDK_VERSION;
+extern NSString *VGP_APPTOKEN;
+extern NSString *VGP_ENDPOINT;
+extern NSString *VGP_APPS_FLYER_TRACKER_APPID;
+extern NSString *VGP_APPS_FLYER_TRACKER_DEVKEY;
 extern BOOL VGP_CONFIG_LOADED;
+
+extern UIColor *VGP_MAIN_TEXT_COLOR;
+extern UIFont *VGP_FONT_LABEL_10;
+extern UIFont *VGP_FONT_LABEL_13;
+extern UIFont *VGP_FONT_LABEL_15;
+extern UIFont *VGP_FONT_LABEL_20;
 
 /*!
  @todo Autoload method

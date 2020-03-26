@@ -43,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define VGP_USER_CANUPDATEUSERNAME @"VGP_USER_CANUPDATEUSERNAME"
 #define VGP_USER_REQUIREINITPASSWORD @"VGP_USER_REQUIREINITPASSWORD"
+#define VGP_USER_SHOW_PROTECT_DIALOG @"VGP_USER_SHOW_PROTECT_DIALOG"
 
 @interface VGPUserData : NSObject
 
@@ -105,6 +106,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setCanUpdateUsername:(BOOL)canUpdateUsername;
 + (BOOL)getRequireInitPassword;
 + (void)setRequireInitPassword:(BOOL)requireInitPassword;
++ (BOOL)getShowProtectDialog;
++ (void)setShowProtectDialog:(BOOL)showProtectDialog;
 
 @end
 

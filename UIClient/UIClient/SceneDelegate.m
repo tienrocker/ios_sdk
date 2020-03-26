@@ -14,6 +14,16 @@
 }
 
 
+- (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts API_AVAILABLE(ios(13.0)){
+    [[VGPInterface sharedInstance] scene:scene openURLContexts:URLContexts];
+}
+
+
+- (void)scene:(UIScene *)scene continueUserActivity:(NSUserActivity *)userActivity  API_AVAILABLE(ios(13.0)){
+    [[VGPInterface sharedInstance] scene:scene continueUserActivity:(NSUserActivity *)userActivity];
+}
+    
+
 - (void)sceneDidDisconnect:(UIScene *)scene  API_AVAILABLE(ios(13.0)){
     // Called as the scene is being released by the system.
     // This occurs shortly after the scene enters the background, or when its session is discarded.

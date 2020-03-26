@@ -13,8 +13,8 @@
 #import "VGPUserData.h"
 #import "VGPInterface.h"
 
-#define DELTA  8
-static CGFloat WH_BUTTON = 30;
+static CGFloat DELTA = 1.5;
+static CGFloat WH_BUTTON = 40;
 static CGFloat MARGIN_LEFT = 0;
 static CGFloat MARGIN_TOP = 0;
 static CGFloat MARGIN_RIGHT = 0;
@@ -28,26 +28,21 @@ static CGFloat MARGIN_BOTTOM = 0;
 
 
 static FlyButton *sharedController = nil;
-+ (FlyButton *)sharedInstance {
++ (FlyButton *)sharedInstance{
     if (!sharedController) {
         sharedController = [FlyButton buttonWithType:UIButtonTypeCustom];
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) WH_BUTTON = WH_BUTTON * 2;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            WH_BUTTON = WH_BUTTON * 2;
+            DELTA = 2;
+        }
         [sharedController createButton];
     }
     
     return sharedController;
 }
 
-- (void)createButton {
-    MARGIN_LEFT = [VGPHelper getScreenWidth] * .03 + WH_BUTTON / 2; // 3%
-    MARGIN_TOP = [VGPHelper getScreenHeight] * .03 + WH_BUTTON / 2;
-    MARGIN_RIGHT = [VGPHelper getScreenWidth] - [VGPHelper getScreenWidth] * .03 - WH_BUTTON * 3 / 2;
-    MARGIN_BOTTOM = [VGPHelper getScreenHeight] - [VGPHelper getScreenHeight] * .03 - WH_BUTTON * 3 / 2;
-    
-    self.show = NO;
-    
-    MoveEnable = YES;
-    self.frame = [self convertRectWith:CGRectMake(MARGIN_LEFT, [VGPHelper getScreenHeight] / 2 - WH_BUTTON / 2, WH_BUTTON, WH_BUTTON)];
+- (void)createButton{
+    [self reFrame];
     
     if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0) {
         if(([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft)
@@ -69,13 +64,21 @@ static FlyButton *sharedController = nil;
     [self addTarget:self action:@selector(clickButton) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)removeButton {
+- (void)reFrame{
+    MARGIN_LEFT = [VGPHelper getScreenWidth] * .03 + WH_BUTTON / 2; // 3%
+    MARGIN_TOP = [VGPHelper getScreenHeight] * .03 + WH_BUTTON / 2;
+    MARGIN_RIGHT = [VGPHelper getScreenWidth] - [VGPHelper getScreenWidth] * .03 - WH_BUTTON * 3 / 2;
+    MARGIN_BOTTOM = [VGPHelper getScreenHeight] - [VGPHelper getScreenHeight] * .03 - WH_BUTTON * 3 / 2;
+    self.frame = [self convertRectWith:CGRectMake(MARGIN_LEFT, [VGPHelper getScreenHeight] / 2 - WH_BUTTON / 2, WH_BUTTON, WH_BUTTON)];
+}
+
+- (void)removeButton{
     if (self != nil) {
         [self removeFromSuperview];
     }
 }
 
-- (void)initFrameIfNeed {
+- (void)initFrameIfNeed{
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 8.0) {
         if(([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft)||([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight)) {
             if (([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft)) {
@@ -87,35 +90,25 @@ static FlyButton *sharedController = nil;
     }
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    MoveEnabled = NO;
-    isMoveLittle = NO;
-    self.alpha = 1;
-    
-    [super touchesBegan:touches withEvent:event];
-    if (!MoveEnable) return;
-    
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *touch = [touches anyObject];
     beginpoint = [touch locationInView:self];
+    isMoveLittle = NO;
     
     if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0) {
         if(([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft)||([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight)) {
             if (([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft)) {
                 beginpoint = CGPointMake(beginpoint.y, [VGPHelper getScreenWidth] - beginpoint.x);
             } else {
-                beginpoint = CGPointMake([VGPHelper getScreenHeight] -beginpoint.y, beginpoint.x);
+                beginpoint = CGPointMake([VGPHelper getScreenHeight] - beginpoint.y, beginpoint.x);
             }
         }
     }
+    
+    [super touchesBegan:touches withEvent:event];
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    
-    self.alpha = 1;
-    MoveEnabled = YES;
-    
-    if (!MoveEnable) return;
-    
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *touch = [touches anyObject];
     CGPoint currentPosition = [touch locationInView:self];
     if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0) {
@@ -149,19 +142,20 @@ static FlyButton *sharedController = nil;
         CGFloat y = self.frame.size.height/2;
         self.center = CGPointMake(x, y);
     }
+    
+    [super touchesMoved:touches withEvent:event];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    if (!MoveEnable) return;
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *touch = [touches anyObject];
     endpoint = [touch locationInView:self];
     [self moveButtonWhenEnTouch];
-    if ((fabs(endpoint.x - beginpoint.x)<DELTA) && (fabs(endpoint.y - beginpoint.y)<DELTA)) isMoveLittle = YES;
+    CGFloat distance = fabs(endpoint.x - beginpoint.x) + fabs(endpoint.y - beginpoint.y);
+    if (distance <= DELTA) isMoveLittle = YES;
     [super touchesEnded: touches withEvent: event];
-    [self performSelector:@selector(alphaButton)  withObject:nil afterDelay:2];
 }
 
-- (void)moveButtonWhenEnTouch {
+- (void)moveButtonWhenEnTouch{
     [UIView beginAnimations:@"move" context:nil];
     [UIView setAnimationDuration:0.3];
     [UIView setAnimationDelegate:self];
@@ -169,7 +163,7 @@ static FlyButton *sharedController = nil;
     [UIView commitAnimations];
 }
 
-- (CGRect)getFrameButton {
+- (CGRect)getFrameButton{
     float xP;
     float yP;
     
@@ -227,57 +221,43 @@ static FlyButton *sharedController = nil;
         }
     }
     
-    
     return CGRectMake(xP , yP, WH_BUTTON, WH_BUTTON);
 }
 
-- (void)alphaButton {
-    if (self.alpha != 0.5) {
-        self.alpha = 0.5;
-    }
-}
-
-- (CGRect)convertRectWith:(CGRect)oRect {
+- (CGRect)convertRectWith:(CGRect)oRect{
     return oRect;
 }
 
-- (void)moveButtonIfNeed {
+- (void)moveButtonIfNeed{
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 8.0) {
         self.frame = CGRectMake(self.frame.origin.y ,self.frame.origin.x, WH_BUTTON,WH_BUTTON);
     }
 }
 
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event{
 }
 
-- (void)clickButton {
-    if ((!MoveEnabled) || (isMoveLittle)) {
-        [self showPopup];
+- (void)clickButton{
+    if (isMoveLittle) {
+        /**
+        @TODO: nếu người dùng đã lưu đăng nhập trước đó thì hiện profile view
+        */
+        if([VGPUserData getToken]) {
+            [[VGPInterface sharedInstance] showProfile];
+        } else {
+            [[VGPInterface sharedInstance] loginGame];
+        }
     }
-    self.alpha = 1;
-    [[VGPInterface sharedInstance] showProfile];
-//    /**
-//    @TODO: nếu người dùng đã lưu đăng nhập trước đó thì hiện profile view
-//    */
-//    [VGPAPI tokenLogin:^(id  _Nonnull responseObject) {
-//        [[VGPInterface sharedInstance] showProfile];
-//    } failure:^(NSError * _Nonnull error) {
-//        [[VGPInterface sharedInstance] loginGame];
-//    }];
 }
 
-- (void)showPopup {
-    self.show = YES;
-}
-
-- (void)showButton {
+- (void)showButton{
     if(self.hidden == YES) {
         MyLog(@"showButton");
         self.hidden = NO;
     }
 }
 
-- (void)hideButton {
+- (void)hideButton{
     if(self.hidden == NO) {
         MyLog(@"hideButton");
         self.hidden = YES;

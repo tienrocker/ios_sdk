@@ -13,8 +13,5 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LoginNormalController : VGPSDKController
 
-- (void)rightPanelRegisterButtonClick;
-- (void)rightPanelForgotPasswordButtonClick;
-
 @end
 NS_ASSUME_NONNULL_END

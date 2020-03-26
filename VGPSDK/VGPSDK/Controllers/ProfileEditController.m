@@ -85,7 +85,7 @@
 
 @implementation ProfileEditController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
     [super viewDidLoad];
     
     if(dateFormatter == nil) {
@@ -136,7 +136,6 @@
     leftBackButtonImg = [[UIButton alloc] init];
     leftBackButtonImg.layer.zPosition = 3;
     [leftBackButtonImg setImage:[VGPHelper getUIImageWithImageName:@"btn-back" andType:@"tiff"] forState:UIControlStateNormal];
-    leftBackButtonText.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [panel addSubview:leftBackButtonImg];
     leftBackButtonImg.translatesAutoresizingMaskIntoConstraints = NO;
     [[leftBackButtonImg.leftAnchor constraintEqualToAnchor:panel.leftAnchor constant:padding] setActive:YES];
@@ -153,7 +152,7 @@
     [panel addSubview:leftBackButtonText];
     leftBackButtonText.translatesAutoresizingMaskIntoConstraints = NO;
     [[leftBackButtonText.topAnchor constraintEqualToAnchor:leftBackButtonImg.topAnchor constant:0] setActive:YES];
-    [[leftBackButtonText.leftAnchor constraintEqualToAnchor:leftBackButtonImg.rightAnchor constant:padding] setActive:YES];
+    [[leftBackButtonText.leftAnchor constraintEqualToAnchor:leftBackButtonImg.rightAnchor constant:0] setActive:YES];
     [[leftBackButtonText.widthAnchor constraintEqualToConstant:width*.5] setActive:YES];
     [[leftBackButtonText.heightAnchor constraintEqualToAnchor:leftBackButtonImg.heightAnchor multiplier:1] setActive:YES];
     
@@ -600,7 +599,7 @@
     [updateProfileButton addTarget:self action:@selector(updateProfileButtonClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)updateUIText {
+- (void)updateUIText{
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
     personalProfileTextLabel.text = [VGPHelper localizationForString:@"profile.info"];
     nameLabel.text = [NSString stringWithFormat:@"%@ *", [VGPHelper localizationForString:@"profile.fullname"]];
@@ -638,33 +637,33 @@
     emailInputTextField.text = [VGPUserData getEmail];
     
     [phoneButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-orange-mini" andType:@"tiff"] forState:UIControlStateNormal];
+    [phoneButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-grey-mini" andType:@"tiff"] forState:UIControlStateDisabled];
     [phoneButton setTitle:[VGPHelper localizationForString:@"verify"] forState:UIControlStateNormal];
-    [phoneButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-grey-mini" andType:@"tiff"] forState:UIControlStateNormal];
-        [phoneButton setTitle:[VGPHelper localizationForString:@"verified"] forState:UIControlStateNormal];
+    [phoneButton setTitle:[VGPHelper localizationForString:@"verified"] forState:UIControlStateDisabled];
     
     if([VGPUserData getPhoneVerified]) {
         phoneButton.enabled = NO;
+        phoneInputTextField.enabled = NO;
     } else {
         phoneButton.enabled = YES;
         phoneInputTextField.enabled = YES;
     }
     
-    [emailButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-grey-mini" andType:@"tiff"] forState:UIControlStateDisabled];
-    [emailButton setTitle:[VGPHelper localizationForString:@"verified"] forState:UIControlStateDisabled];
-    emailInputTextField.enabled = NO;
     [emailButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-orange-mini" andType:@"tiff"] forState:UIControlStateNormal];
+    [emailButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-grey-mini" andType:@"tiff"] forState:UIControlStateDisabled];
     [emailButton setTitle:[VGPHelper localizationForString:@"verify"] forState:UIControlStateNormal];
-    emailInputTextField.enabled = YES;
+        [emailButton setTitle:[VGPHelper localizationForString:@"verified"] forState:UIControlStateDisabled];
     
     if([VGPUserData getEmailVerified]) {
         emailButton.enabled = NO;
+        emailInputTextField.enabled = NO;
     } else {
         emailButton.enabled = YES;
         emailInputTextField.enabled = YES;
     }
 }
 
-- (void) genderButtonClick {
+- (void) genderButtonClick{
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:[VGPHelper localizationForString:@"profile.gender.select"] message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *male = [UIAlertAction actionWithTitle:[VGPHelper localizationForString:@"profile.gender.select.male"]
@@ -705,7 +704,7 @@
     [[VGPHelper topViewController] presentViewController:alertVC animated:YES completion:nil];
 }
 
-- (void)phoneButtonClick {
+- (void)phoneButtonClick{
     [self showLoadingView];
     [self cancelInput:nil];
     
@@ -720,7 +719,7 @@
     }];
 }
 
-- (void)emailButtonClick {
+- (void)emailButtonClick{
     [self showLoadingView];
     [self cancelInput:nil];
     
@@ -728,13 +727,14 @@
     
     [VGPAPI resendVerifyEmail:email success:^(id  _Nonnull responseObject) {
         [self hideLoadingView];
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"notification"] message:[VGPHelper localizationForString:@"checkemail"]];
     } failure:^(NSError * _Nonnull error) {
         [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[error localizedDescription]];
         [self hideLoadingView];
     }];
 }
 
-- (void)updateProfileButtonClick {
+- (void)updateProfileButtonClick{
     [self showLoadingView];
     [self cancelInput:nil];
     
@@ -758,20 +758,20 @@
     }];
 }
 
-- (void)updateBirthdayInputTextField:(id)sender {
+- (void)updateBirthdayInputTextField:(id)sender{
     MyLog(@"updateBirthdayInputTextField");
     UIDatePicker *picker = (UIDatePicker*)birthdayInputTextField.inputView;
     birthdayInputTextField.text = [VGPHelper formatDate:picker.date];
 }
 
-- (void)updateDateIDInputTextField:(id)sender {
+- (void)updateDateIDInputTextField:(id)sender{
     MyLog(@"updateDateIDInputTextField");
     UIDatePicker *picker = (UIDatePicker*)dateIDInputTextField.inputView;
     dateIDInputTextField.text = [VGPHelper formatDate:picker.date];
 }
 
 #pragma mark - TextField Delegate
-- (void)cancelInput:(UITapGestureRecognizer *)gesture {
+- (void)cancelInput:(UITapGestureRecognizer *)gesture{
     [nameInputTextField resignFirstResponder];
     [genderInputTextField resignFirstResponder];
     [birthdayInputTextField resignFirstResponder];

@@ -18,15 +18,11 @@
 #import "ProfileController.h"
 #import "ProfileEditController.h"
 #import "VerifyPhoneController.h"
-#import "ProtectController.h"
+#import "InitProfileController.h"
+#import "LinkAccountController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define VGP_MAIN_TEXT_COLOR [UIColor colorWithRed:(232/255.0) green:(141/255.0) blue:(80/255.0) alpha:1]
-#define VGP_FONT_LABEL_10 [UIFont fontWithName:@"LexendDeca-Regular" size:10]
-#define VGP_FONT_LABEL_13 [UIFont fontWithName:@"LexendDeca-Regular" size:13]
-#define VGP_FONT_LABEL_15 [UIFont fontWithName:@"LexendDeca-Regular" size:15]
-#define VGP_FONT_LABEL_20 [UIFont fontWithName:@"LexendDeca-Regular" size:20]
 #define DIS_MOVE_POPUP      -40
 
 @interface VGPUI : NSObject
@@ -45,7 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (ProfileController *)ProfileController;
 - (ProfileEditController *)ProfileEditController;
 - (VerifyPhoneController *)VerifyPhoneController;
-- (ProtectController *)ProtectController;
+- (InitProfileController *)InitProfileController;
+- (LinkAccountController *)LinkAccountController;
 
 #pragma mark Events
 - (void)dismiss;
@@ -66,8 +63,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showProfileEditController:(void (^ __nullable)(void))completion;
 - (void)showVerifyPhoneController;
 - (void)showVerifyPhoneController:(void (^ __nullable)(void))completion;
-- (void)showProtectController;
-- (void)showProtectController:(void (^ __nullable)(void))completion;
+- (void)showInitProfileController;
+- (void)showInitProfileController:(void (^ __nullable)(void))completion;
+- (void)showLinkAccountController;
+- (void)showLinkAccountController:(void (^ __nullable)(void))completion;
 @end
 
 NS_ASSUME_NONNULL_END

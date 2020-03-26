@@ -16,13 +16,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #define LoggerLog(x, ...) NSLog(@"VGP-EVENTLOG %s %d: " x, __FUNCTION__, __LINE__, ##__VA_ARGS__)
-typedef enum VGPLoginType : NSUInteger {
+typedef enum VGPLoginType : NSUInteger{
     kLoginTypeNormal,
     kLoginTypeQuickplay,
     kLoginTypeFacebook,
     kLoginTypeApple
 } VGPLoginType;
-typedef enum VGPRegisterType : NSUInteger {
+typedef enum VGPRegisterType : NSUInteger{
     kRegisterTypeNormal,
     kRegisterTypeQuickplay,
     kRegisterTypeFacebook,

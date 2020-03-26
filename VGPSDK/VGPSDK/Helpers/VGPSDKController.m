@@ -10,6 +10,7 @@
 #import "VGPConfig.h"
 #import "VGPHelper.h"
 #import "VGPUI.h"
+#import "UIData.h"
 #import "VGPLogger.h"
 
 @interface VGPSDKController()
@@ -18,7 +19,9 @@
 
 @implementation VGPSDKController
 
-- (instancetype)init {
+BOOL SHOW_BACK_BUTTON = NO;
+
+- (instancetype)init{
     self = [super init];
     if (@available(iOS 13.0, *)) {
         self.modalPresentationStyle = UIModalPresentationAutomatic;
@@ -28,7 +31,7 @@
     return self;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor clearColor];
     //self.view.layer.zPosition = 200;
@@ -42,20 +45,19 @@
     [self.view addGestureRecognizer:cancelInput];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     self.curentFrame = self.view.frame;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated{
     [[[VGPUI sharedInstance] FlyButton] hideButton];
     [super viewWillAppear:animated];
-    [self updateUI];
     [self updateUIText];
+    [self updateUI];
 }
 
-- (void)showLoadingView {
-    MyLog(@"showLoadingView");
+- (void)showLoadingView{
     
     self->_loadingView = [[UIView alloc] init];
     [self->_loadingView setFrame:CGRectMake(0, 0, [VGPHelper getScreenWidth], [VGPHelper getScreenHeight])];
@@ -71,7 +73,7 @@
     
     self->_loadingIndicatorView.hidden = NO;
 }
-- (void)hideLoadingView {
+- (void)hideLoadingView{
     if(self->_loadingView) {
         self->_loadingView.hidden = YES;
         [self->_loadingView removeFromSuperview];
@@ -83,21 +85,29 @@
     }
 }
 
-- (void)updateUI {}
+- (void)updateUI{}
 
-- (void)updateUIText {}
+- (void)updateUIText{}
 
-- (void)rightCloseButtonClick {
+- (void)rightCloseButtonClick{
     [[VGPUI sharedInstance] dismiss];
 }
 
-- (void)leftBackButtonClick {
+- (void)leftBackButtonClick{
     MyLog(@"leftBackButtonClick");
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)leftSupportButtonClick{
+    if([[UIData getLocalization] isEqualToString:@"en"]) {
+        [VGPHelper changeLocalization:@"vi"];
+    } else {
+        [VGPHelper changeLocalization:@"en"];
+    }
+}
+
 #pragma mark - TextField Delegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
     MyLog(@"textField %@", textField);
     [textField resignFirstResponder];
     return YES;
@@ -111,7 +121,7 @@
     self.view.frame = self.curentFrame;
 }
 
-- (void)cancelInput:(UITapGestureRecognizer *)gesture {
+- (void)cancelInput:(UITapGestureRecognizer *)gesture{
     
 }
 

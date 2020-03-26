@@ -1,5 +1,5 @@
 //
-//  ProtectController.h
+//  InitProfileController.h
 //  VGPSDK
 //
 //  Created by  Tien Tran on 2/11/20.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ProtectController : VGPSDKController
+@interface InitProfileController : VGPSDKController
 
 @end
 

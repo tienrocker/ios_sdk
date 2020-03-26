@@ -32,7 +32,7 @@
 
 @implementation ForgotPhoneController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
     [super viewDidLoad];
     
     CGFloat screenWidth = [VGPHelper getScreenWidth];
@@ -77,7 +77,6 @@
     leftBackButtonImg = [[UIButton alloc] init];
     leftBackButtonImg.layer.zPosition = 3;
     [leftBackButtonImg setImage:[VGPHelper getUIImageWithImageName:@"btn-back" andType:@"tiff"] forState:UIControlStateNormal];
-    leftBackButtonText.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [panel addSubview:leftBackButtonImg];
     leftBackButtonImg.translatesAutoresizingMaskIntoConstraints = NO;
     [[leftBackButtonImg.leftAnchor constraintEqualToAnchor:panel.leftAnchor constant:width*.02] setActive:YES];
@@ -202,24 +201,24 @@
     [rightPanelForgotPhone2Button addTarget:self action:@selector(rightPanelForgotPhone2ButtonClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)updateUIText {
+- (void)updateUIText{
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
     rightPanelForgotPhoneText1Label.text = [VGPHelper localizationForString:@"forgot.right.phone.text1"];
     [rightPanelForgotPhone1Button setTitle:[VGPHelper localizationForString:@"profile.protect.phone"] forState:UIControlStateNormal];
     [rightPanelForgotPhone2Button setTitle:[VGPHelper localizationForString:@"send"] forState:UIControlStateNormal];
 }
 
-- (void)rightPanelForgotPhone1ButtonClick {
+- (void)rightPanelForgotPhone1ButtonClick{
     MyLog(@"rightPanelForgotPhone1ButtonClick");
     [self composeSMS];
 }
 
-- (void)rightPanelForgotPhone2ButtonClick {
+- (void)rightPanelForgotPhone2ButtonClick{
     MyLog(@"rightPanelForgotPhone2ButtonClick");
     [self composeSMS];
 }
 
-- (void)composeSMS {
+- (void)composeSMS{
     NSString *phone = @"";
     NSString *sendMessage = @"FORGOT PASSWORD";
     NSString *sms = [NSString stringWithFormat:@"sms:%@&body=%@", phone, sendMessage];

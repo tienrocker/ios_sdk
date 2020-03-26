@@ -32,7 +32,7 @@
 
 @implementation ForgotController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
     [super viewDidLoad];
     
     CGFloat screenWidth = [VGPHelper getScreenWidth];
@@ -77,7 +77,6 @@
     leftBackButtonImg = [[UIButton alloc] init];
     leftBackButtonImg.layer.zPosition = 3;
     [leftBackButtonImg setImage:[VGPHelper getUIImageWithImageName:@"btn-back" andType:@"tiff"] forState:UIControlStateNormal];
-    leftBackButtonText.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [panel addSubview:leftBackButtonImg];
     leftBackButtonImg.translatesAutoresizingMaskIntoConstraints = NO;
     [[leftBackButtonImg.leftAnchor constraintEqualToAnchor:panel.leftAnchor constant:width*.02] setActive:YES];
@@ -185,19 +184,19 @@
     [rightPanelForgotEmailButton addTarget:self action:@selector(rightPanelForgotEmailButtonClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)updateUIText {
+- (void)updateUIText{
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
     rightPanelForgotAccountLabel.text = [VGPHelper localizationForString:@"profile.protect.text"];
     [rightPanelForgotPhoneButton setTitle:[VGPHelper localizationForString:@"profile.protect.phone"] forState:UIControlStateNormal];
     [rightPanelForgotEmailButton setTitle:[VGPHelper localizationForString:@"profile.protect.email"] forState:UIControlStateNormal];
 }
 
-- (void)rightPanelForgotPhoneButtonClick {
+- (void)rightPanelForgotPhoneButtonClick{
     MyLog(@"rightPanelForgotPhoneButtonClick");
     [[VGPUI sharedInstance] showForgotPhoneController];
 }
 
-- (void)rightPanelForgotEmailButtonClick {
+- (void)rightPanelForgotEmailButtonClick{
     MyLog(@"rightPanelForgotEmailButtonClick");
 }
 

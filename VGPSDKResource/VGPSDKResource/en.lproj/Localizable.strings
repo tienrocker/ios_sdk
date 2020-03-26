@@ -21,6 +21,8 @@
 "resend.success" = "Code sent";
 "error" = "Error";
 "error.ios13.require" = "This feature only support iOS 13 and above";
+"error.protect.account.require" = "This feature require init VGP account first";
+"checkemail" = "Sent verify email, please check your inbox";
 
 // ===== CONFIG =====
 "config.error" = "VGP config error";
@@ -39,9 +41,9 @@
 "share_facebook_cancel" = "Share cancel";
 
 // ===== LOGIN VIEW =====
-"login.right.normal" = "LOGIN with VGP";
+"login.right.normal" = "Login with VGP";
 "login.right.facebook" = "Login with Facebook";
-"login.right.quick" = "Quickplay";
+"login.right.quick" = "Login with Quickplay";
 "login.right.apple" = "Login with Apple";
 "login.right.login" = "Login";
 "login.right.register" = "Register";
@@ -52,6 +54,8 @@
 "login.right.email" = "Email";
 
 "login.apple.error" = "Error sign in with apple code: (%ld)";
+"init.account" = "Init Account";
+"error.init.account.require" = "Bạn cần khởi tạo tài khoản VGP để sử dụng tính năng này";
 
 // ===== REGISTER VIEW =====
 "register.password.confirm.error" = "Password confirm not match";

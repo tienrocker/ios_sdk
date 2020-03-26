@@ -16,7 +16,7 @@
 
 static VGPNetworkManager *sharedManager = nil;
 
-+ (VGPNetworkManager*)sharedManager {
++ (VGPNetworkManager*)sharedManager{
     static dispatch_once_t once;
     dispatch_once(&once, ^{
         sharedManager = [[VGPNetworkManager alloc] init];
@@ -24,7 +24,7 @@ static VGPNetworkManager *sharedManager = nil;
     return sharedManager;
 }
 
-- (AFHTTPSessionManager*)getNetworkingManager {
+- (AFHTTPSessionManager*)getNetworkingManager{
     if (self.networkingManager == nil) {
         self.networkingManager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         [self.networkingManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -35,14 +35,14 @@ static VGPNetworkManager *sharedManager = nil;
     return self.networkingManager;
 }
 
-- (id)getSecurityPolicy {
+- (id)getSecurityPolicy{
     AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
     securityPolicy.allowInvalidCertificates = YES;
     [securityPolicy setValidatesDomainName:NO];
     return securityPolicy;
 }
 
-- (void)GET:(NSString *)url param:(NSDictionary *)data success:(NetworkManagerSuccess)success failure:(NetworkManagerFailure)failure {
+- (void)GET:(NSString *)url param:(NSDictionary *)data success:(NetworkManagerSuccess)success failure:(NetworkManagerFailure)failure{
     url = [VGPNetworkManager addQueryStringToUrlString:url withDictionary:data];
     MyLog(@"url %@ data %@", url, data);
     
@@ -62,7 +62,7 @@ static VGPNetworkManager *sharedManager = nil;
     }];
 }
 
-- (void)POST:(NSString *)url param:(NSDictionary *)data success:(NetworkManagerSuccess)success failure:(NetworkManagerFailure)failure {
+- (void)POST:(NSString *)url param:(NSDictionary *)data success:(NetworkManagerSuccess)success failure:(NetworkManagerFailure)failure{
     url = [VGPNetworkManager addQueryStringToUrlString:url withDictionary:@{}];
     MyLog(@"url %@ data %@", url, data);
     
@@ -79,7 +79,7 @@ static VGPNetworkManager *sharedManager = nil;
     }];
 }
 
-+ (NSString*)addQueryStringToUrlString:(NSString *)urlString withDictionary:(NSDictionary *)dictionary {
++ (NSString*)addQueryStringToUrlString:(NSString *)urlString withDictionary:(NSDictionary *)dictionary{
     NSMutableString *urlWithQuerystring = [[NSMutableString alloc] initWithString:urlString];
     [urlWithQuerystring appendFormat:@"?app_token=%@&os=ios&lang=%@", [self urlEscapeString:VGP_APPTOKEN], [UIData getLocalization]];
     if([VGPUserData getToken]) [urlWithQuerystring appendFormat:@"&user_token=%@", [VGPUserData getToken]];
@@ -97,7 +97,7 @@ static VGPNetworkManager *sharedManager = nil;
     return urlWithQuerystring;
 }
 
-+ (NSString*)urlEscapeString:(NSString *)unencodedString {
++ (NSString*)urlEscapeString:(NSString *)unencodedString{
     CFStringRef originalStringRef = (__bridge_retained CFStringRef)unencodedString;
     NSString *s = (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,originalStringRef, NULL, (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ", kCFStringEncodingUTF8);
     CFRelease(originalStringRef);

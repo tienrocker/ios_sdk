@@ -15,13 +15,13 @@
 
 @implementation VGPProfileAPI
 
-+ (void)getProfile:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure {
++ (void)getProfile:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure{
     NSString *url = [NSString stringWithFormat:@"%@/account/user", VGP_ENDPOINT];
     NSDictionary *data = @{};
     [[VGPNetworkManager sharedManager] GET:url param:data success:success failure:failure];
 }
 
-+ (void)updateUserInfo:(NSString *)name gender:(NSNumber *)gender birthday:(NSString *)birthday address:(NSString *)address personal_identity:(NSString *)personal_identity place_of_issue:(NSString *)place_of_issue date_of_issue:(NSString *)date_of_issue success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure {
++ (void)updateUserInfo:(NSString *)name gender:(NSNumber *)gender birthday:(NSString *)birthday address:(NSString *)address personal_identity:(NSString *)personal_identity place_of_issue:(NSString *)place_of_issue date_of_issue:(NSString *)date_of_issue success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure{
     NSString *url = [NSString stringWithFormat:@"%@/account/user", VGP_ENDPOINT];
     NSDictionary *data = @{
         @"name": name,
@@ -35,7 +35,7 @@
     [[VGPNetworkManager sharedManager] POST:url param:data success:success failure:failure];
 }
 
-+ (void)updatePhone:(NSString *)phone success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure {
++ (void)updatePhone:(NSString *)phone success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure{
     NSString *url = [NSString stringWithFormat:@"%@/account/user/phone", VGP_ENDPOINT];
     NSDictionary *data = @{
         @"phone": phone,
@@ -43,13 +43,13 @@
     [[VGPNetworkManager sharedManager] POST:url param:data success:success failure:failure];
 }
 
-+ (void)resendVerifyPhone:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure {
++ (void)resendVerifyPhone:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure{
     NSString *url = [NSString stringWithFormat:@"%@/account/user/retry_phone", VGP_ENDPOINT];
     NSDictionary *data = @{};
     [[VGPNetworkManager sharedManager] POST:url param:data success:success failure:failure];
 }
 
-+ (void)verifyPhone:(NSString *)code success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure {
++ (void)verifyPhone:(NSString *)code success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure{
     NSString *url = [NSString stringWithFormat:@"%@/account/verify/phone", VGP_ENDPOINT];
     NSDictionary *data = @{
         @"code": code,
@@ -58,10 +58,19 @@
     [[VGPNetworkManager sharedManager] POST:url param:data success:success failure:failure];
 }
 
-+ (void)resendVerifyEmail:(NSString *)email success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure {
++ (void)resendVerifyEmail:(NSString *)email success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure{
     NSString *url = [NSString stringWithFormat:@"%@/account/user/email", VGP_ENDPOINT];
     NSDictionary *data = @{
         @"email": email,
+    };
+    [[VGPNetworkManager sharedManager] POST:url param:data success:success failure:failure];
+}
+
++ (void)protectAccount:(NSString *)username password:(NSString *)password success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure{
+    NSString *url = [NSString stringWithFormat:@"%@/account/user/protect_account", VGP_ENDPOINT];
+    NSDictionary *data = @{
+        @"username": username,
+        @"password": password,
     };
     [[VGPNetworkManager sharedManager] POST:url param:data success:success failure:failure];
 }

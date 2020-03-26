@@ -22,7 +22,12 @@ typedef void (^VGPProfileAPIFailure)(NSError *error);
 + (void)resendVerifyPhone:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure;
 + (void)verifyPhone:(NSString *)code success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure;
 
+/**
+ @TODO: email sẽ được xác thực bằng link gửi qua email address
+ */
 + (void)resendVerifyEmail:(NSString *)email success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure;
+
++ (void)protectAccount:(NSString *)username password:(NSString *)password success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure;
 
 @end
 

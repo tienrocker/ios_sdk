@@ -99,7 +99,7 @@
 
 @implementation WelcomeController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
     [super viewDidLoad];
     
     // ===================================
@@ -130,7 +130,6 @@
     [leftPanel addSubview:leftPanelImage];
     
     leftSupportButton = [[UIButton alloc] init];
-    [leftSupportButton setImage:[VGPHelper getUIImageWithImageName:@"btn-support" andType:@"tiff"] forState:UIControlStateNormal];
     [leftPanel addSubview:leftSupportButton];
     
     // right
@@ -139,17 +138,16 @@
     
     rightPanelLoginNormal = [[UIButton alloc] init];
     [rightPanelLoginNormal setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-login-vgp" andType:@"tiff"] forState:UIControlStateNormal];
-    [rightPanelLoginNormal setTitle:[VGPHelper localizationForString:@"login.right.normal"] forState:UIControlStateNormal];
     [rightPanelLoginNormal setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     rightPanelLoginNormal.titleLabel.adjustsFontSizeToFitWidth = YES;
     [rightPanelLoginNormal.titleLabel setFont:VGP_FONT_LABEL_13];
     rightPanelLoginNormal.titleLabel.minimumScaleFactor = .7;
     rightPanelLoginNormal.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [rightPanel addSubview:rightPanelLoginNormal];
+    rightPanelLoginNormal.translatesAutoresizingMaskIntoConstraints = NO;
     
     rightPanelLoginFacebook = [[UIButton alloc] init];
     [rightPanelLoginFacebook setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-login-facebook" andType:@"tiff"] forState:UIControlStateNormal];
-    [rightPanelLoginFacebook setTitle:[VGPHelper localizationForString:@"login.right.facebook"] forState:UIControlStateNormal];
     [rightPanelLoginFacebook setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     rightPanelLoginFacebook.titleLabel.adjustsFontSizeToFitWidth = YES;
     [rightPanelLoginFacebook.titleLabel setFont:VGP_FONT_LABEL_13];
@@ -159,7 +157,6 @@
     
     rightPanelLoginQuick = [[UIButton alloc] init];
     [rightPanelLoginQuick setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-login-quickplay" andType:@"tiff"] forState:UIControlStateNormal];
-    [rightPanelLoginQuick setTitle:[VGPHelper localizationForString:@"login.right.quick"] forState:UIControlStateNormal];
     [rightPanelLoginQuick setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     rightPanelLoginQuick.titleLabel.adjustsFontSizeToFitWidth = YES;
     [rightPanelLoginQuick.titleLabel setFont:VGP_FONT_LABEL_13];
@@ -169,7 +166,6 @@
     
     rightPanelLoginApple = [[UIButton alloc] init];
     [rightPanelLoginApple setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-login-apple" andType:@"tiff"] forState:UIControlStateNormal];
-    [rightPanelLoginApple setTitle:[VGPHelper localizationForString:@"login.right.apple"] forState:UIControlStateNormal];
     [rightPanelLoginApple setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     rightPanelLoginApple.titleLabel.adjustsFontSizeToFitWidth = YES;
     [rightPanelLoginApple.titleLabel setFont:VGP_FONT_LABEL_13];
@@ -186,7 +182,7 @@
     [rightPanelLoginApple addTarget:self action:@selector(rightPanelLoginAppleClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)updateUI {
+- (void)updateUI{
 
     [super updateUI];
     CGFloat screenWidth = [VGPHelper getScreenWidth];
@@ -301,22 +297,21 @@
     rightPanelHeightAnchor = [rightPanel.heightAnchor constraintEqualToAnchor:leftPanel.heightAnchor];
     [rightPanelHeightAnchor setActive:YES];
 
-    rightPanelLoginNormal.contentEdgeInsets = UIEdgeInsetsMake(0, width*0.077, 0, 0);
-    rightPanelLoginNormal.translatesAutoresizingMaskIntoConstraints = NO;
+    rightPanelLoginNormal.contentEdgeInsets = UIEdgeInsetsMake(0, width*0.077, 0, width*0.05);
     [rightPanelLoginNormalLeftAnchor setActive:NO];
-    rightPanelLoginNormalLeftAnchor = [rightPanelLoginNormal.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor];
-    [rightPanelLoginNormalLeftAnchor setActive:YES];
     [rightPanelLoginNormalTopAnchor setActive:NO];
-    rightPanelLoginNormalTopAnchor = [rightPanelLoginNormal.topAnchor constraintEqualToAnchor:rightPanel.topAnchor constant:width*0.06];
-    [rightPanelLoginNormalTopAnchor setActive:YES];
     [rightPanelLoginNormalWidthAnchor setActive:NO];
-    rightPanelLoginNormalWidthAnchor = [rightPanelLoginNormal.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:.8];
-    [rightPanelLoginNormalWidthAnchor setActive:YES];
     [rightPanelLoginNormalHeightAnchor setActive:NO];
+    rightPanelLoginNormalLeftAnchor = [rightPanelLoginNormal.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor];
+    rightPanelLoginNormalTopAnchor = [rightPanelLoginNormal.topAnchor constraintEqualToAnchor:rightPanel.topAnchor constant:width*0.06];
+    rightPanelLoginNormalWidthAnchor = [rightPanelLoginNormal.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:.8];
     rightPanelLoginNormalHeightAnchor = [rightPanelLoginNormal.heightAnchor constraintEqualToConstant:width*.077];
+    [rightPanelLoginNormalLeftAnchor setActive:YES];
+    [rightPanelLoginNormalTopAnchor setActive:YES];
+    [rightPanelLoginNormalWidthAnchor setActive:YES];
     [rightPanelLoginNormalHeightAnchor setActive:YES];
 
-    rightPanelLoginFacebook.contentEdgeInsets = UIEdgeInsetsMake(0, width*0.077, 0, 0);
+    rightPanelLoginFacebook.contentEdgeInsets = UIEdgeInsetsMake(0, width*0.077, 0, width*0.05);
     rightPanelLoginFacebook.translatesAutoresizingMaskIntoConstraints = NO;
     [rightPanelLoginFacebookCenterXAnchor setActive:NO];
     rightPanelLoginFacebookCenterXAnchor = [rightPanelLoginFacebook.centerXAnchor constraintEqualToAnchor:rightPanelLoginNormal.centerXAnchor];
@@ -331,7 +326,7 @@
     rightPanelLoginFacebookHeightAnchor = [rightPanelLoginFacebook.heightAnchor constraintEqualToAnchor:rightPanelLoginNormal.heightAnchor multiplier:1];
     [rightPanelLoginFacebookHeightAnchor setActive:YES];
 
-    rightPanelLoginQuick.contentEdgeInsets = UIEdgeInsetsMake(0, width*0.077, 0, 0);
+    rightPanelLoginQuick.contentEdgeInsets = UIEdgeInsetsMake(0, width*0.077, 0, width*0.05);
     rightPanelLoginQuick.translatesAutoresizingMaskIntoConstraints = NO;
     [rightPanelLoginQuickCenterXAnchor setActive:NO];
     rightPanelLoginQuickCenterXAnchor = [rightPanelLoginQuick.centerXAnchor constraintEqualToAnchor:rightPanelLoginFacebook.centerXAnchor];
@@ -346,7 +341,7 @@
     rightPanelLoginQuickHeightAnchor = [rightPanelLoginQuick.heightAnchor constraintEqualToAnchor:rightPanelLoginFacebook.heightAnchor multiplier:1];
     [rightPanelLoginQuickHeightAnchor setActive:YES];
 
-    rightPanelLoginApple.contentEdgeInsets = UIEdgeInsetsMake(0, width*0.077, 0, 0);
+    rightPanelLoginApple.contentEdgeInsets = UIEdgeInsetsMake(0, width*0.077, 0, width*0.05);
     rightPanelLoginApple.translatesAutoresizingMaskIntoConstraints = NO;
     [rightPanelLoginAppleCenterXAnchor setActive:NO];
     rightPanelLoginAppleCenterXAnchor = [rightPanelLoginApple.centerXAnchor constraintEqualToAnchor:rightPanelLoginQuick.centerXAnchor];
@@ -362,26 +357,18 @@
     [rightPanelLoginAppleHeightAnchor setActive:YES];
 }
 
-- (void)updateUIText {
+- (void)updateUIText{
     [super updateUIText];
+    [leftSupportButton setImage:[VGPHelper getUIImageWithImageName:[NSString stringWithFormat:@"btn-support-%@", [UIData getLocalization]] andType:@"tiff"] forState:UIControlStateNormal];
     [rightPanelLoginNormal setTitle:[VGPHelper localizationForString:@"login.right.normal"] forState:UIControlStateNormal];
     [rightPanelLoginFacebook setTitle:[VGPHelper localizationForString:@"login.right.facebook"] forState:UIControlStateNormal];
     [rightPanelLoginQuick setTitle:[VGPHelper localizationForString:@"login.right.quick"] forState:UIControlStateNormal];
     [rightPanelLoginApple setTitle:[VGPHelper localizationForString:@"login.right.apple"] forState:UIControlStateNormal];
 }
 
-- (void)leftSupportButtonClick {
-    MyLog(@"leftSupportButtonClick");
-    if([[UIData getLocalization] isEqualToString:@"en"]){
-        [VGPHelper changeLocalization:@"vi"];
-    } else {
-        [VGPHelper changeLocalization:@"en"];
-    }
-}
-
 #pragma mark Sign in with VGP
 
-- (void)rightPanelLoginNormalClick {
+- (void)rightPanelLoginNormalClick{
     [[VGPUI sharedInstance] showLoginNormalController:^{
         // @TODO: TEST UI
         [[VGPLogger sharedInstance] loginViewDisplay];
@@ -390,7 +377,7 @@
 
 #pragma mark Sign in with Facebook
 
-- (void)rightPanelLoginFacebookClick {
+- (void)rightPanelLoginFacebookClick{
     [self showLoadingView];
     [[VGPLogger sharedInstance] loginFacebookClick];
     [[VGPFBSDKLoginManager sharedInstance] logOut];
@@ -401,17 +388,16 @@
         } else if (result.isCancelled) {
             [self hideLoadingView];
         } else {
-            [self hideLoadingView];
-            if([FBSDKAccessToken currentAccessToken])
-            {
-                [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me" parameters:@{@"fields":@"id,name,email"}] startWithCompletionHandler:^(FBSDKGraphRequestConnection* connection, id result, NSError* error)
-                 {
+            if([FBSDKAccessToken currentAccessToken]) {
+                [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me" parameters:@{@"fields":@"id,name,email"}] startWithCompletionHandler:^(FBSDKGraphRequestConnection* connection, id result, NSError* error) {
                     if (!error) {
                         NSLog(@"Facebook fetched user:%@", result);
                         NSDictionary *data = (NSDictionary*)result;
                         // login with facebook
                         [VGPAPI facebookLogin:[data objectForKey:@"id"] success:^(id  _Nonnull responseObject) {
+                            [self hideLoadingView];
                         } failure:^(NSError * _Nonnull error) {
+                            [self hideLoadingView];
                             MyLog(@"%@", [error localizedDescription]);
                         }];
                     } else {
@@ -419,6 +405,7 @@
                     }
                 }];
             } else {
+                [self hideLoadingView];
                 NSLog(@"Error on facebook access_token");
             }
         }
@@ -427,7 +414,7 @@
 
 #pragma mark Sign in with Device
 
-- (void)rightPanelLoginQuickClick {
+- (void)rightPanelLoginQuickClick{
     [self showLoadingView];
     [[VGPLogger sharedInstance] loginQuickplayClick];
     [VGPAPI quickplayLogin:^(id  _Nonnull responseObject) {
@@ -440,7 +427,7 @@
 
 #pragma mark Sign in with Apple
 
-- (void)rightPanelLoginAppleClick {
+- (void)rightPanelLoginAppleClick{
     if (@available(iOS 13.0, *)) {
         [self showLoadingView];
         [[VGPLogger sharedInstance] loginAppleClick];
@@ -457,7 +444,7 @@
     }
 }
 
-- (void)authorizationController:(ASAuthorizationController *)controller didCompleteWithAuthorization:(ASAuthorization *)authorization NS_SWIFT_NAME(authorizationController(controller:didCompleteWithAuthorization:)) API_AVAILABLE(ios(13.0)){
+- (void)authorizationController:(ASAuthorizationController *)controller didCompleteWithAuthorization:(ASAuthorization *)authorization NS_SWIFT_NAME(authorizationController(controller:didCompleteWithAuthorization:)) API_AVAILABLE(ios(13.0)) {
     [self hideLoadingView];
     ASAuthorizationAppleIDCredential *appleIDCredential = authorization.credential;
     if(appleIDCredential && appleIDCredential.identityToken) {
@@ -470,7 +457,7 @@
     }
 }
 
-- (void)authorizationController:(ASAuthorizationController *)controller didCompleteWithError:(NSError *)error  NS_SWIFT_NAME(authorizationController(controller:didCompleteWithError:)) API_AVAILABLE(ios(13.0)){
+- (void)authorizationController:(ASAuthorizationController *)controller didCompleteWithError:(NSError *)error  NS_SWIFT_NAME(authorizationController(controller:didCompleteWithError:)) API_AVAILABLE(ios(13.0)) {
     [self hideLoadingView];
     [[VGPLogger sharedInstance] loginError:@"apple"];
     [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[NSString stringWithFormat:[VGPHelper localizationForString:@"login.apple.error"], (long)[error code]]];

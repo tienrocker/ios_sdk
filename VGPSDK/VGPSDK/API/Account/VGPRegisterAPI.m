@@ -17,7 +17,7 @@
 
 @implementation VGPRegisterAPI
 
-+ (void)registerWithEmail:(NSString *)username password:(NSString *)password email:(NSString *)email success:(VGPRegisterAPISuccess)success failure:(VGPRegisterAPIFailure)failure {
++ (void)registerWithEmail:(NSString *)username password:(NSString *)password email:(NSString *)email success:(VGPRegisterAPISuccess)success failure:(VGPRegisterAPIFailure)failure{
     NSString *url = [NSString stringWithFormat:@"%@/account/signup-with-email", VGP_ENDPOINT];
     NSDictionary *data = @{
         @"username": username,

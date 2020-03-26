@@ -21,6 +21,9 @@
 "resend.success" = "Gửi lại mã thành công";
 "error" = "Lỗi";
 "error.ios13.require" = "Tính năng chỉ hỗ trợ trên iOS 13 trở lên";
+"init.account" = "Khởi tạo tài khoản";
+"error.init.account.require" = "Bạn cần khởi tạo tài khoản VGP để sử dụng tính năng này";
+"checkemail" = "Thư xác thực đã gửi vào hòm thư của bạn";
 
 // ===== CONFIG =====
 "config.error" = "Lỗi cấu hình tập tin VGP";

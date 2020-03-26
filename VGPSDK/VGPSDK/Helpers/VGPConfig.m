@@ -21,14 +21,26 @@ NSString* VGP_APPS_FLYER_TRACKER_APPID = @"";
 NSString* VGP_APPS_FLYER_TRACKER_DEVKEY = @"";
 BOOL VGP_CONFIG_LOADED = NO;
 
+UIColor *VGP_MAIN_TEXT_COLOR = nil;
+UIFont *VGP_FONT_LABEL_10 = nil;
+UIFont *VGP_FONT_LABEL_13 = nil;
+UIFont *VGP_FONT_LABEL_15 = nil;
+UIFont *VGP_FONT_LABEL_20 = nil;
+
 /*!
  @todo Autoload method
 */
-+ (void)load {
++ (void)load{
     [self load:nil];
 }
 
-+ (void)load:(void (^ __nullable)(void))completion {
++ (void)load:(void (^ __nullable)(void))completion{
+    
+    VGP_MAIN_TEXT_COLOR = [UIColor colorWithRed:(232/255.0) green:(141/255.0) blue:(80/255.0) alpha:1];
+    VGP_FONT_LABEL_10 = [UIFont fontWithName:@"LexendDeca-Regular" size:10];
+    VGP_FONT_LABEL_13 = [UIFont fontWithName:@"LexendDeca-Regular" size:13];
+    VGP_FONT_LABEL_15 = [UIFont fontWithName:@"LexendDeca-Regular" size:15];
+    VGP_FONT_LABEL_20 = [UIFont fontWithName:@"LexendDeca-Regular" size:20];
     
     // read file config
     NSDictionary* result = [self readFile];
@@ -46,7 +58,7 @@ BOOL VGP_CONFIG_LOADED = NO;
         [apptoken length] != 0 && ![apptoken isEqualToString:@"(null)"] &&
         [apps_flyer_key length] != 0 && ![apps_flyer_key isEqualToString:@"(null)"] &&
         [apps_flyer_id length] != 0 && ![apps_flyer_id isEqualToString:@"(null)"])
-    {
+   {
         VGP_SERVER = server;
         VGP_GAMEID = gameid;
         [VGPLogger setGameCode:VGP_GAMEID];
@@ -59,7 +71,7 @@ BOOL VGP_CONFIG_LOADED = NO;
     }
 }
 
-+ (NSDictionary*)readFile {
++ (NSDictionary*)readFile{
     NSDictionary *result = nil;
     NSString *fileName = [FW_BUNDLE pathForResource:@"vgp_config" ofType:@"json"];
     NSString *error_string = @"";

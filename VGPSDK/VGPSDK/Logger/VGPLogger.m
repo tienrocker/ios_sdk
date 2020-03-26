@@ -21,7 +21,7 @@ static VGPLogger *sharedLogger = nil;
         sharedLogger = [[VGPLogger alloc] init];
         sharedLogger.openTimeMillis = [sharedLogger currentTimeMillis];
         sharedLogger.loginType = kLoginTypeQuickplay;
-        sharedLogger.loginProvider = @"unknow";
+        sharedLogger.loginProvider = @"token";
         sharedLogger.game_version = @"unknow";
         sharedLogger.game_code = @"unknow";
     }
@@ -31,7 +31,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract Set config.
  */
-+ (void)setGameVersion:(NSString*)code {
++ (void)setGameVersion:(NSString*)code{
     [VGPLogger sharedInstance].game_version = code;
     LoggerLog(@"game_version %@", [VGPLogger sharedInstance].game_version);
 }
@@ -39,7 +39,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract Set config.
  */
-+ (void)setGameCode:(NSString*)code {
++ (void)setGameCode:(NSString*)code{
     [VGPLogger sharedInstance].game_code = code;
     LoggerLog(@"game_code %@", [VGPLogger sharedInstance].game_code);
 }
@@ -47,7 +47,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract Get refault parameter.
  */
-- (NSDictionary *)defaultParams {
+- (NSDictionary *)defaultParams{
     long current_time = [self currentTimeMillis];
     long delta_time = current_time - self.openTimeMillis;
     
@@ -63,21 +63,21 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method get current time in milliseconds.
  */
-- (long)currentTimeMillis {
+- (long)currentTimeMillis{
     return (long)([[NSDate date] timeIntervalSince1970] * 1000.0);
 }
 
 /*!
  @abstract This method log default events.
  */
-- (void)log:(NSString *)event_name {
+- (void)log:(NSString *)event_name{
     [self log:event_name parameters:[self defaultParams]];
 }
 
 /*!
  @abstract This method log event with parameters.
  */
-- (void)log:(NSString *)event_name parameters:(NSDictionary *)parameters {
+- (void)log:(NSString *)event_name parameters:(NSDictionary *)parameters{
     LoggerLog(@"event_name %@ parameters %@", event_name, parameters);
     [[AppsFlyerTracker sharedTracker] trackEvent:event_name withValues:parameters];
     [FBSDKAppEvents logEvent:event_name parameters:parameters];
@@ -90,7 +90,7 @@ static VGPLogger *sharedLogger = nil;
  @abstract This method can be used when init download resource pack.
  @TODO filter fisrt time and another
  */
-- (void)resourceStartDownload {
+- (void)resourceStartDownload{
     [self log:@"vt_resource_download_begin"];
 }
 
@@ -98,7 +98,7 @@ static VGPLogger *sharedLogger = nil;
  @abstract This method can be used when downloading resource pack.
  @TODO filter fisrt time and another
  */
-- (void)resourceProcessDownload:(int)percent {
+- (void)resourceProcessDownload:(int)percent{
     NSString *event_name = [NSString stringWithFormat:@"vt_resource_download_%d", percent];
     [self log:event_name];
 }
@@ -107,7 +107,7 @@ static VGPLogger *sharedLogger = nil;
  @abstract This method can be used when download success resource pack.
  @TODO filter fisrt time and another
  */
-- (void)resourceDownloadSuccess {
+- (void)resourceDownloadSuccess{
     NSString *event_name = @"vt_resource_download_success";
     [self log:event_name];
 }
@@ -116,7 +116,7 @@ static VGPLogger *sharedLogger = nil;
  @abstract This method can be used when download failed resource pack.
  @TODO filter fisrt time and another
  */
-- (void)resourceDownloadError {
+- (void)resourceDownloadError{
     NSString *event_name = @"vt_resource_download_failed";
     [self log:event_name];
 }
@@ -127,7 +127,7 @@ static VGPLogger *sharedLogger = nil;
  @abstract This method can be used when start unpack resource pack.
  @TODO filter fisrt time and another
  */
-- (void)resourceStartUnpack {
+- (void)resourceStartUnpack{
     NSString *event_name = @"vt_resource_extract_begin";
     [self log:event_name];
 }
@@ -136,7 +136,7 @@ static VGPLogger *sharedLogger = nil;
  @abstract This method can be used when unpack success resource pack.
  @TODO filter fisrt time and another
  */
-- (void)resourceUnpackSuccess {
+- (void)resourceUnpackSuccess{
     NSString *event_name = @"vt_resource_extract_success";
     [self log:event_name];
 }
@@ -145,7 +145,7 @@ static VGPLogger *sharedLogger = nil;
  @abstract This method can be used when unpack failed resource pack.
  @TODO filter fisrt time and another
  */
-- (void)resourceUnpackError {
+- (void)resourceUnpackError{
     NSString *event_name = @"vt_resource_extract_failed";
     [self log:event_name];
 }
@@ -155,7 +155,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when VGP login view showup.
  */
-- (void)loginViewDisplay {
+- (void)loginViewDisplay{
     NSString *event_name = @"vt_form_login_open";
     [self log:event_name];
 }
@@ -163,7 +163,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when click to VGP login button.
  */
-- (void)loginNormalClick {
+- (void)loginNormalClick{
     self.loginType = kLoginTypeNormal;
     self.loginProvider = @"vgp";
     [self loginClick];
@@ -172,7 +172,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when click to quickplay login button.
  */
-- (void)loginQuickplayClick {
+- (void)loginQuickplayClick{
     self.loginType = kLoginTypeQuickplay;
     self.loginProvider = @"quickplay";
     [self loginClick];
@@ -181,7 +181,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when click to Facebook login button.
  */
-- (void)loginFacebookClick {
+- (void)loginFacebookClick{
     self.loginType = kLoginTypeFacebook;
     self.loginProvider = @"facebook";
     [self loginClick];
@@ -190,7 +190,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when click to Apple login button.
  */
-- (void)loginAppleClick {
+- (void)loginAppleClick{
     self.loginType = kLoginTypeApple;
     self.loginProvider = @"apple";
     [self loginClick];
@@ -199,7 +199,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when login click.
  */
-- (void)loginClick {
+- (void)loginClick{
     NSString *event_name = @"vt_button_login_click";
     [self log:event_name parameters:@{@"provider":self.loginProvider}];
     
@@ -210,7 +210,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when login success.
  */
-- (void)loginSuccess:(NSString *)provider {
+- (void)loginSuccess:(NSString *)provider{
     if(provider != nil && ![provider isEqualToString:@""]) self.loginProvider = provider;
     
     NSString *event_name = @"login_success";
@@ -223,7 +223,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when login error.
  */
-- (void)loginError:(NSString *)provider {
+- (void)loginError:(NSString *)provider{
     if(provider != nil && ![provider isEqualToString:@""]) self.loginProvider = provider;
     
     NSString *event_name = @"login_error";
@@ -238,7 +238,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when click to VGP register button.
  */
-- (void)registerClick {
+- (void)registerClick{
     self.loginType = kLoginTypeNormal;
     self.loginProvider = @"vgp";
     
@@ -252,7 +252,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when VGP register success.
  */
-- (void)registerSuccess:(NSString *)provider {
+- (void)registerSuccess:(NSString *)provider{
     if(provider != nil && ![provider isEqualToString:@""]) self.loginProvider = provider;
     
     NSString *event_name = @"signup_success";
@@ -265,7 +265,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when VGP register error.
  */
-- (void)registerError:(NSString *)provider {
+- (void)registerError:(NSString *)provider{
     if(provider != nil && ![provider isEqualToString:@""]) self.loginProvider = provider;
     
     NSString *event_name = @"signup_failure";
@@ -280,14 +280,14 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when login/register success.
 */
-- (void)callbackLoginRegister:(BOOL)isRegister {
+- (void)callbackLoginRegister:(BOOL)isRegister{
     [self callbackLoginRegister:isRegister provider:nil];
 }
 
 /*!
  @abstract This method can be used when login/register success.
 */
-- (void)callbackLoginRegister:(BOOL)isRegister provider:(nullable NSString *)provider {
+- (void)callbackLoginRegister:(BOOL)isRegister provider:(nullable NSString *)provider{
     if(isRegister) {
         [self registerSuccess:provider];
     } else {
@@ -314,7 +314,7 @@ static VGPLogger *sharedLogger = nil;
  @abstract This method can be used when character created.
  @TODO: do facebook không hiển thị cột custom nên chế character created sang registration
  */
-- (void)characterCreated {
+- (void)characterCreated{
     LoggerLog(@"characterCreated");
     
     [FBSDKAppEvents logEvent:FBSDKAppEventNameCompletedRegistration parameters:@{FBSDKAppEventParameterNameRegistrationMethod:self.loginProvider}];
@@ -332,7 +332,7 @@ static VGPLogger *sharedLogger = nil;
  @abstract This method can be used when character level up.
  @TODO add name space event
  */
-- (void)characterLevelup:(int)level {
+- (void)characterLevelup:(int)level{
     LoggerLog(@"characterLevelup %d", level);
     
     NSNumber *levelText = [NSNumber numberWithInt:level];
@@ -350,7 +350,7 @@ static VGPLogger *sharedLogger = nil;
  @abstract This method can be used when character VIP level up.
  @TODO add name space event
  */
-- (void)characterVipLevelup:(int)vipLevel {
+- (void)characterVipLevelup:(int)vipLevel{
     LoggerLog(@"characterVipLevelup %d", vipLevel);
     
     NSNumber *vipLevelText = [NSNumber numberWithInt:vipLevel];
@@ -367,7 +367,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when tutorial start.
  */
-- (void)tutorialBegin {
+- (void)tutorialBegin{
     LoggerLog(@"tutorialBegin");
     
     [FBSDKAppEvents logEvent:@"fb_mobile_tutorial_begin"];
@@ -378,7 +378,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when tutorial completed.
  */
-- (void)tutorialComplete {
+- (void)tutorialComplete{
     LoggerLog(@"tutorialComplete");
     
     [FBSDKAppEvents logEvent:FBSDKAppEventNameCompletedTutorial];
@@ -391,7 +391,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when game purchase view showup.
  */
-- (void)purchaseViewDisplay {
+- (void)purchaseViewDisplay{
     NSString *event_name = @"vt_form_payment_open";
     [self log:event_name];
 }
@@ -399,7 +399,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when user purchased.
  */
-- (void)userHadPurchase {
+- (void)userHadPurchase{
     LoggerLog(@"userHadPurchase");
     
     [FIRAnalytics setUserPropertyString:@"ios" forName:@"PU"];
@@ -408,7 +408,7 @@ static VGPLogger *sharedLogger = nil;
 /*!
  @abstract This method can be used when user purchased with money (VND).
  */
-- (void)userPurchase:(int)money {
+- (void)userPurchase:(int)money{
     LoggerLog(@"userPurchase vgpevent_%d", money);
     
     [FBSDKAppEvents logPurchase:money currency:@"VND" parameters:@{@"cashtype":self.loginProvider}];

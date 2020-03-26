@@ -22,6 +22,10 @@
 		FF3E416E23E9780B00788AC6 /* RegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3E416C23E9780B00788AC6 /* RegisterController.m */; };
 		FF3E417123E97E8700788AC6 /* ForgotController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF3E416F23E97E8700788AC6 /* ForgotController.h */; };
 		FF3E417223E97E8700788AC6 /* ForgotController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3E417023E97E8700788AC6 /* ForgotController.m */; };
+		FF50E5E1242B3F0D0072D413 /* LinkAccountController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF50E5DF242B3F0D0072D413 /* LinkAccountController.h */; };
+		FF50E5E2242B3F0D0072D413 /* LinkAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF50E5E0242B3F0D0072D413 /* LinkAccountController.m */; };
+		FF50E5E5242B457D0072D413 /* VGPLinkAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF50E5E3242B457D0072D413 /* VGPLinkAPI.h */; };
+		FF50E5E6242B457D0072D413 /* VGPLinkAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = FF50E5E4242B457D0072D413 /* VGPLinkAPI.m */; };
 		FF54344323E9410000CED1C9 /* LoginNormalController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF54344123E9410000CED1C9 /* LoginNormalController.h */; };
 		FF54344423E9410000CED1C9 /* LoginNormalController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF54344223E9410000CED1C9 /* LoginNormalController.m */; };
 		FF60AAB32428CF3C004283BD /* VGPRegisterAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF60AAB12428CF3C004283BD /* VGPRegisterAPI.h */; };
@@ -47,8 +51,8 @@
 		FFA0F09B2429F0FC001FD44E /* VerifyPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA0F0992429F0FC001FD44E /* VerifyPhoneController.m */; };
 		FFA0F09E2429F3C6001FD44E /* VGPProfileAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA0F09C2429F3C6001FD44E /* VGPProfileAPI.h */; };
 		FFA0F09F2429F3C6001FD44E /* VGPProfileAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA0F09D2429F3C6001FD44E /* VGPProfileAPI.m */; };
-		FFA8B6C423F2899600BD9A46 /* ProtectController.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA8B6C223F2899600BD9A46 /* ProtectController.h */; };
-		FFA8B6C523F2899600BD9A46 /* ProtectController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA8B6C323F2899600BD9A46 /* ProtectController.m */; };
+		FFA8B6C423F2899600BD9A46 /* InitProfileController.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA8B6C223F2899600BD9A46 /* InitProfileController.h */; };
+		FFA8B6C523F2899600BD9A46 /* InitProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA8B6C323F2899600BD9A46 /* InitProfileController.m */; };
 		FFA8B6C823F299F400BD9A46 /* ProfileEditController.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA8B6C623F299F400BD9A46 /* ProfileEditController.h */; };
 		FFA8B6C923F299F400BD9A46 /* ProfileEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA8B6C723F299F400BD9A46 /* ProfileEditController.m */; };
 		FFBBFBD223EBCC860041364F /* FlyButton.h in Headers */ = {isa = PBXBuildFile; fileRef = FFBBFBD023EBCC860041364F /* FlyButton.h */; };
@@ -83,6 +87,10 @@
 		FF3E416C23E9780B00788AC6 /* RegisterController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisterController.m; sourceTree = "<group>"; };
 		FF3E416F23E97E8700788AC6 /* ForgotController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForgotController.h; sourceTree = "<group>"; };
 		FF3E417023E97E8700788AC6 /* ForgotController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ForgotController.m; sourceTree = "<group>"; };
+		FF50E5DF242B3F0D0072D413 /* LinkAccountController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LinkAccountController.h; sourceTree = "<group>"; };
+		FF50E5E0242B3F0D0072D413 /* LinkAccountController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LinkAccountController.m; sourceTree = "<group>"; };
+		FF50E5E3242B457D0072D413 /* VGPLinkAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VGPLinkAPI.h; sourceTree = "<group>"; };
+		FF50E5E4242B457D0072D413 /* VGPLinkAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VGPLinkAPI.m; sourceTree = "<group>"; };
 		FF54344123E9410000CED1C9 /* LoginNormalController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginNormalController.h; sourceTree = "<group>"; };
 		FF54344223E9410000CED1C9 /* LoginNormalController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginNormalController.m; sourceTree = "<group>"; };
 		FF60AAB12428CF3C004283BD /* VGPRegisterAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VGPRegisterAPI.h; sourceTree = "<group>"; };
@@ -111,8 +119,8 @@
 		FFA0F0992429F0FC001FD44E /* VerifyPhoneController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VerifyPhoneController.m; sourceTree = "<group>"; };
 		FFA0F09C2429F3C6001FD44E /* VGPProfileAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VGPProfileAPI.h; sourceTree = "<group>"; };
 		FFA0F09D2429F3C6001FD44E /* VGPProfileAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VGPProfileAPI.m; sourceTree = "<group>"; };
-		FFA8B6C223F2899600BD9A46 /* ProtectController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProtectController.h; sourceTree = "<group>"; };
-		FFA8B6C323F2899600BD9A46 /* ProtectController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProtectController.m; sourceTree = "<group>"; };
+		FFA8B6C223F2899600BD9A46 /* InitProfileController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InitProfileController.h; sourceTree = "<group>"; };
+		FFA8B6C323F2899600BD9A46 /* InitProfileController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InitProfileController.m; sourceTree = "<group>"; };
 		FFA8B6C623F299F400BD9A46 /* ProfileEditController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileEditController.h; sourceTree = "<group>"; };
 		FFA8B6C723F299F400BD9A46 /* ProfileEditController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileEditController.m; sourceTree = "<group>"; };
 		FFBBFBD023EBCC860041364F /* FlyButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlyButton.h; sourceTree = "<group>"; };
@@ -227,14 +235,16 @@
 				FF3E417023E97E8700788AC6 /* ForgotController.m */,
 				FF64709823FA8A1B005FC356 /* ForgotPhoneController.h */,
 				FF64709923FA8A1B005FC356 /* ForgotPhoneController.m */,
+				FFA8B6C223F2899600BD9A46 /* InitProfileController.h */,
+				FFA8B6C323F2899600BD9A46 /* InitProfileController.m */,
+				FF50E5DF242B3F0D0072D413 /* LinkAccountController.h */,
+				FF50E5E0242B3F0D0072D413 /* LinkAccountController.m */,
 				FF54344123E9410000CED1C9 /* LoginNormalController.h */,
 				FF54344223E9410000CED1C9 /* LoginNormalController.m */,
 				FF6C269E23EA677E0047B871 /* ProfileController.h */,
 				FF6C269F23EA677E0047B871 /* ProfileController.m */,
 				FFA8B6C623F299F400BD9A46 /* ProfileEditController.h */,
 				FFA8B6C723F299F400BD9A46 /* ProfileEditController.m */,
-				FFA8B6C223F2899600BD9A46 /* ProtectController.h */,
-				FFA8B6C323F2899600BD9A46 /* ProtectController.m */,
 				FF3E416B23E9780B00788AC6 /* RegisterController.h */,
 				FF3E416C23E9780B00788AC6 /* RegisterController.m */,
 				FFA0F0982429F0FC001FD44E /* VerifyPhoneController.h */,
@@ -267,6 +277,8 @@
 		FF919C7124226D1B0087EC11 /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				FF50E5E3242B457D0072D413 /* VGPLinkAPI.h */,
+				FF50E5E4242B457D0072D413 /* VGPLinkAPI.m */,
 				FF919C7224226D390087EC11 /* VGPLoginAPI.h */,
 				FF919C7324226D390087EC11 /* VGPLoginAPI.m */,
 				FFA0F09C2429F3C6001FD44E /* VGPProfileAPI.h */,
@@ -313,7 +325,7 @@
 				FF147060241A02EC00802877 /* VGPLogger.h in Headers */,
 				FF3E416923E9483100788AC6 /* VGPSDKController.h in Headers */,
 				FFC5E0BB242210C40087DCD7 /* VGPFBSDKLoginManager.h in Headers */,
-				FFA8B6C423F2899600BD9A46 /* ProtectController.h in Headers */,
+				FFA8B6C423F2899600BD9A46 /* InitProfileController.h in Headers */,
 				FF37FC7623EC093800BD7D64 /* VGPUserData.h in Headers */,
 				FFDBDC1F2420BAE300F37575 /* VGPConfigAPI.h in Headers */,
 				FFDBDC272420BDF100F37575 /* VGPAPI.h in Headers */,
@@ -326,10 +338,12 @@
 				FF54344323E9410000CED1C9 /* LoginNormalController.h in Headers */,
 				FFF53457241F2CA500E671B1 /* FBSDKSharingCallback.h in Headers */,
 				FFA0F09E2429F3C6001FD44E /* VGPProfileAPI.h in Headers */,
+				FF50E5E1242B3F0D0072D413 /* LinkAccountController.h in Headers */,
 				FF64709A23FA8A1B005FC356 /* ForgotPhoneController.h in Headers */,
 				FF60AAB32428CF3C004283BD /* VGPRegisterAPI.h in Headers */,
 				FFA0F09A2429F0FC001FD44E /* VerifyPhoneController.h in Headers */,
 				FF3E416D23E9780B00788AC6 /* RegisterController.h in Headers */,
+				FF50E5E5242B457D0072D413 /* VGPLinkAPI.h in Headers */,
 				FF6C26A023EA677E0047B871 /* ProfileController.h in Headers */,
 				FFBBFBD223EBCC860041364F /* FlyButton.h in Headers */,
 			);
@@ -431,6 +445,7 @@
 			files = (
 				FFDBDC282420BDF100F37575 /* VGPAPI.m in Sources */,
 				FFF53458241F2CA500E671B1 /* FBSDKSharingCallback.m in Sources */,
+				FF50E5E6242B457D0072D413 /* VGPLinkAPI.m in Sources */,
 				FF769B9D23E8232F007FAE7F /* WelcomeController.m in Sources */,
 				FF60AAB42428CF3C004283BD /* VGPRegisterAPI.m in Sources */,
 				FFA0F09B2429F0FC001FD44E /* VerifyPhoneController.m in Sources */,
@@ -445,11 +460,12 @@
 				FF85148623E7CDB10077F238 /* VGPHelper.m in Sources */,
 				FF147064241A39F300802877 /* VGPNetworkManager.m in Sources */,
 				FF9BF905241A45AE00DFCB5B /* VGPDeviceData.m in Sources */,
-				FFA8B6C523F2899600BD9A46 /* ProtectController.m in Sources */,
+				FFA8B6C523F2899600BD9A46 /* InitProfileController.m in Sources */,
 				FF3E417223E97E8700788AC6 /* ForgotController.m in Sources */,
 				FF14705F241A02EC00802877 /* VGPLogger.m in Sources */,
 				FF919C7524226D390087EC11 /* VGPLoginAPI.m in Sources */,
 				FF14705C2419FFFD00802877 /* VGPConfig.m in Sources */,
+				FF50E5E2242B3F0D0072D413 /* LinkAccountController.m in Sources */,
 				FF6C26AC23EA76AA0047B871 /* VGPUI.m in Sources */,
 				FFC5E0BC242210C40087DCD7 /* VGPFBSDKLoginManager.m in Sources */,
 				FF769B0A23E7F90F007FAE7F /* VGPInterface.m in Sources */,

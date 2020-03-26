@@ -12,9 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface VerifyPhoneController : VGPSDKController
 
-- (void)rightPanelVerifyButtonClick;
-- (void)rightPanelResendButtonClick;
-
 @end
 
 NS_ASSUME_NONNULL_END

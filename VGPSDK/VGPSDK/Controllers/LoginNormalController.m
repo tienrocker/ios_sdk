@@ -39,7 +39,7 @@
 
 @implementation LoginNormalController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
     [super viewDidLoad];
     
     CGFloat screenWidth = [VGPHelper getScreenWidth];
@@ -83,7 +83,6 @@
     leftBackButtonImg = [[UIButton alloc] init];
     leftBackButtonImg.layer.zPosition = 3;
     [leftBackButtonImg setImage:[VGPHelper getUIImageWithImageName:@"btn-back" andType:@"tiff"] forState:UIControlStateNormal];
-    leftBackButtonText.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [panel addSubview:leftBackButtonImg];
     leftBackButtonImg.translatesAutoresizingMaskIntoConstraints = NO;
     [[leftBackButtonImg.leftAnchor constraintEqualToAnchor:panel.leftAnchor constant:width*.02] setActive:YES];
@@ -190,6 +189,7 @@
     
     // BUTTON
     rightPanelLoginButton = [[UIButton alloc] init];
+    rightPanelLoginButton.titleLabel.font = VGP_FONT_LABEL_15;
     [rightPanelLoginButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-orange-big" andType:@"tiff"] forState:UIControlStateNormal];
     [rightPanelLoginButton setTitle:[VGPHelper localizationForString:@"login.right.login"] forState:UIControlStateNormal];
     [rightPanelLoginButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
@@ -205,6 +205,7 @@
     [[rightPanelLoginButton.heightAnchor constraintEqualToConstant:width*.077] setActive:YES];
     
     rightPanelRegisterButton = [[UIButton alloc] init];
+    rightPanelRegisterButton.titleLabel.font = VGP_FONT_LABEL_13;
     [rightPanelRegisterButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-green-small" andType:@"tiff"] forState:UIControlStateNormal];
     [rightPanelRegisterButton setTitle:[VGPHelper localizationForString:@"login.right.register"] forState:UIControlStateNormal];
     [rightPanelRegisterButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
@@ -220,6 +221,7 @@
     [[rightPanelRegisterButton.heightAnchor constraintEqualToConstant:width*.0615] setActive:YES];
     
     rightPanelForgotPasswordButton = [[UIButton alloc] init];
+    rightPanelForgotPasswordButton.titleLabel.font = VGP_FONT_LABEL_13;
     [rightPanelForgotPasswordButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-pink-small" andType:@"tiff"] forState:UIControlStateNormal];
     [rightPanelForgotPasswordButton setTitle:[VGPHelper localizationForString:@"login.right.forgot_password"] forState:UIControlStateNormal];
     [rightPanelForgotPasswordButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
@@ -241,11 +243,11 @@
     [rightPanelForgotPasswordButton addTarget:self action:@selector(rightPanelForgotPasswordButtonClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)updateUI {
+- (void)updateUI{
     
 }
 
-- (void)updateUIText {
+- (void)updateUIText{
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
     rightPanelUsernameTextField.placeholder = [VGPHelper localizationForString:@"login.right.username"];
     rightPanelPasswordTextField.placeholder = [VGPHelper localizationForString:@"login.right.password"];
@@ -254,40 +256,38 @@
     [rightPanelForgotPasswordButton setTitle:[VGPHelper localizationForString:@"login.right.forgot_password"] forState:UIControlStateNormal];
 }
 
-- (void)rightPanelLoginButtonClick
-{
+- (void)rightPanelLoginButtonClick{
     [self showLoadingView];
     [[VGPLogger sharedInstance] loginNormalClick];
     
-    NSString *username = [rightPanelUsernameTextField text];
-    NSString *password = [rightPanelPasswordTextField text];
+    NSString *username = rightPanelUsernameTextField.text;
+    NSString *password = rightPanelPasswordTextField.text;
     
     [VGPAPI normalLogin:username password:password success:^(id  _Nonnull responseObject) {
         [self hideLoadingView];
+        self->rightPanelUsernameTextField.text = @"";
+        self->rightPanelPasswordTextField.text = @"";
     } failure:^(NSError * _Nonnull error) {
         [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[error localizedDescription]];
         [self hideLoadingView];
     }];
 }
 
-- (void)rightPanelRegisterButtonClick
-{
+- (void)rightPanelRegisterButtonClick{
     MyLog(@"rightPanelRegisterButtonClick");
     [[VGPUI sharedInstance] showRegisterController:^{
         // @TODO: TEST UI
     }];
 }
 
-- (void)rightPanelForgotPasswordButtonClick
-{
-    MyLog(@"rightPanelForgotPasswordButtonClick");
+- (void)rightPanelForgotPasswordButtonClick{
     [[VGPUI sharedInstance] showForgotController:^{
         // @TODO: TEST UI
     }];
 }
 
 #pragma mark - TextField Delegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
     MyLog(@"textField %@", textField);
     [textField resignFirstResponder];
     if(textField == rightPanelUsernameTextField) [rightPanelPasswordTextField becomeFirstResponder];
@@ -295,7 +295,16 @@
     return YES;
 }
 
-- (void)cancelInput:(UITapGestureRecognizer *)gesture {
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    self.view.frame = CGRectOffset(self.view.frame, 0, DIS_MOVE_POPUP);
+    if(textField == rightPanelPasswordTextField) {
+        textField.returnKeyType = UIReturnKeySend;
+    } else {
+        textField.returnKeyType = UIReturnKeyNext;
+    }
+}
+
+- (void)cancelInput:(UITapGestureRecognizer *)gesture{
     [rightPanelUsernameTextField resignFirstResponder];
     [rightPanelPasswordTextField resignFirstResponder];
 }

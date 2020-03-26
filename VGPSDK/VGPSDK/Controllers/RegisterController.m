@@ -38,7 +38,7 @@
 
 @implementation RegisterController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
     [super viewDidLoad];
     
     CGFloat screenWidth = [VGPHelper getScreenWidth];
@@ -83,7 +83,6 @@
     leftBackButtonImg = [[UIButton alloc] init];
     leftBackButtonImg.layer.zPosition = 3;
     [leftBackButtonImg setImage:[VGPHelper getUIImageWithImageName:@"btn-back" andType:@"tiff"] forState:UIControlStateNormal];
-    leftBackButtonText.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [panel addSubview:leftBackButtonImg];
     leftBackButtonImg.translatesAutoresizingMaskIntoConstraints = NO;
     [[leftBackButtonImg.leftAnchor constraintEqualToAnchor:panel.leftAnchor constant:width*.02] setActive:YES];
@@ -256,7 +255,7 @@
     [rightPanelRegisterButton addTarget:self action:@selector(rightPanelRegisterButtonClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)updateUIText {
+- (void)updateUIText{
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
     rightPanelUsernameTextField.placeholder = [VGPHelper localizationForString:@"login.right.username"];
     rightPanelPasswordTextField.placeholder = [VGPHelper localizationForString:@"login.right.password"];
@@ -270,10 +269,10 @@
     [self showLoadingView];
     [[VGPLogger sharedInstance] registerClick];
     
-    NSString *username = [rightPanelUsernameTextField text];
-    NSString *password = [rightPanelPasswordTextField text];
-    NSString *re_password = [rightPanelRePasswordTextField text];
-    NSString *email = [rightPanelEmailTextField text];
+    NSString *username = rightPanelUsernameTextField.text;
+    NSString *password = rightPanelPasswordTextField.text;
+    NSString *re_password = rightPanelRePasswordTextField.text;
+    NSString *email = rightPanelEmailTextField.text;
     
     if(![password isEqualToString:re_password]) {
         [self hideLoadingView];
@@ -283,6 +282,8 @@
     
     [VGPAPI registerWithEmail:username password:password email:email success:^(id  _Nonnull responseObject) {
         [self hideLoadingView];
+        self->rightPanelUsernameTextField.text = @"";
+        self->rightPanelPasswordTextField.text = @"";
     } failure:^(NSError * _Nonnull error) {
         [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[error localizedDescription]];
         [self hideLoadingView];
@@ -290,7 +291,7 @@
 }
 
 #pragma mark - TextField Delegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
     MyLog(@"textField %@", textField);
     [textField resignFirstResponder];
     if(textField == rightPanelUsernameTextField) [rightPanelPasswordTextField becomeFirstResponder];
@@ -304,7 +305,7 @@
     return YES;
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
     if(textField == rightPanelRePasswordTextField || textField == rightPanelEmailTextField) {
         self.view.frame = CGRectOffset(self.view.frame, 0, DIS_MOVE_POPUP * 2);
     } else {
@@ -318,7 +319,7 @@
     }
 }
 
-- (void)cancelInput:(UITapGestureRecognizer *)gesture {
+- (void)cancelInput:(UITapGestureRecognizer *)gesture{
     [rightPanelUsernameTextField resignFirstResponder];
     [rightPanelPasswordTextField resignFirstResponder];
     [rightPanelRePasswordTextField resignFirstResponder];

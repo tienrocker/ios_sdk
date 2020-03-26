@@ -25,23 +25,23 @@ static VGPInterface *sharedController = nil;
     return sharedController;
 }
 
-- (void)load {
+- (void)load{
     
 }
 
 #pragma mark Data
-- (NSInteger)getUserID {
+- (NSInteger)getUserID{
     return [VGPUserData getUserID];
 }
-- (NSString *)getUsername {
+- (NSString *)getUsername{
     return [VGPUserData getUsername];
 }
 
 #pragma mark Handler User Interface
-- (void)loginGame {
+- (void)loginGame{
     [self loginGame:nil];
 }
-- (void)loginGame:(void (^ __nullable)(void))completion {
+- (void)loginGame:(void (^ __nullable)(void))completion{
     
     if(VGP_CONFIG_LOADED == NO) {
         [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"notification"] message:[VGPHelper localizationForString:@"notification"]];
@@ -64,10 +64,10 @@ static VGPInterface *sharedController = nil;
         }];
     }
 }
-- (void)logoutGame {
+- (void)logoutGame{
     [self logoutGame:nil];
 }
-- (void)logoutGame:(void (^ __nullable)(void))completion {
+- (void)logoutGame:(void (^ __nullable)(void))completion{
     
     if(VGP_CONFIG_LOADED == NO) {
         [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"notification"] message:[VGPHelper localizationForString:@"notification"]];
@@ -77,10 +77,10 @@ static VGPInterface *sharedController = nil;
     [VGPUserData clearUserData];
     [VGPHelper onLogoutSuccess];
 }
-- (void)showProfile {
+- (void)showProfile{
     [self showProfile:nil];
 }
-- (void)showProfile:(void (^ __nullable)(void))completion {
+- (void)showProfile:(void (^ __nullable)(void))completion{
     
     if(VGP_CONFIG_LOADED == NO) {
         [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"notification"] message:[VGPHelper localizationForString:@"notification"]];
@@ -93,11 +93,11 @@ static VGPInterface *sharedController = nil;
         [[VGPUI sharedInstance] showProfileController:completion];
     }
 }
-- (void)showFlyButton {
+- (void)showFlyButton{
     if(VGP_CONFIG_LOADED == NO) return;
     [[[VGPUI sharedInstance] FlyButton] showButton];
 }
-- (void)hideFlyButton {
+- (void)hideFlyButton{
     [[[VGPUI sharedInstance] FlyButton] hideButton];
 }
 
@@ -109,28 +109,28 @@ static VGPInterface *sharedController = nil;
 - (void)setGameCode:(NSString*)code{
     [VGPLogger setGameCode:code];
 }
-- (void)startMobileTutorial {
+- (void)startMobileTutorial{
     [[VGPLogger sharedInstance] tutorialBegin];
 }
-- (void)completeMobileTutorial {
+- (void)completeMobileTutorial{
     [[VGPLogger sharedInstance] tutorialComplete];
 }
-- (void)logLevelUp:(int) level {
+- (void)logLevelUp:(int) level{
     [[VGPLogger sharedInstance] characterLevelup:(int)level];
 }
-- (void)logCreatedCharacter {
+- (void)logCreatedCharacter{
     [[VGPLogger sharedInstance] characterCreated];
 }
-- (void)logUnlockAchievement:(int) vipLevel {
+- (void)logUnlockAchievement:(int) vipLevel{
     [[VGPLogger sharedInstance] characterVipLevelup:vipLevel];
 }
-- (void)purchaseViewDisplay {
+- (void)purchaseViewDisplay{
     [[VGPLogger sharedInstance] purchaseViewDisplay];
 }
-- (void)logUserHadPurchase {
+- (void)logUserHadPurchase{
     [[VGPLogger sharedInstance] userHadPurchase];
 }
-- (void)logPurchase:(int) money {
+- (void)logPurchase:(int) money{
     [[VGPLogger sharedInstance] userPurchase:money];
     [self logUserHadPurchase];
 }
@@ -159,12 +159,12 @@ static VGPInterface *sharedController = nil;
 }
 
 FBSDKSharingCallback *fbscb;
-- (void)shareFacebookImage:(NSString *) url {
+- (void)shareFacebookImage:(NSString *) url{
     NSURL *_url = [NSURL URLWithString:url];
     NSData * data = [NSData dataWithContentsOfURL:_url];
     UIImage * image = [UIImage imageWithData:data];
     if (image)
-    {
+   {
         FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
         photo.image = image;
         FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
@@ -180,12 +180,12 @@ FBSDKSharingCallback *fbscb;
         [dialog show];
     }
     else
-    {
+   {
         [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:@"share_facebook_error"];
     }
 }
 
-- (void)shareFacebookImageLocal:(UIImage *) image {
+- (void)shareFacebookImageLocal:(UIImage *) image{
     FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
     photo.image = image;
     FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
@@ -205,7 +205,7 @@ FBSDKSharingCallback *fbscb;
 
 NSString *const kGCMMessageIDKey = @"gcm.message_id";
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     MyLog(@"didFinishLaunchingWithOptions");
     
     if([VGP_GAMEID length] == 0) return YES;
@@ -222,20 +222,18 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     MyLog(@"FIREBASE inited with client id: \"%@\"", [[FIRApp defaultApp].options clientID]);
     
     if (@available(iOS 10.0, *)) {
-      // iOS 10 or later
-      // For iOS 10 display notification (sent via APNS)
-      [UNUserNotificationCenter currentNotificationCenter].delegate = self;
-      UNAuthorizationOptions authOptions = UNAuthorizationOptionAlert | UNAuthorizationOptionSound | UNAuthorizationOptionBadge;
-      [[UNUserNotificationCenter currentNotificationCenter]
-          requestAuthorizationWithOptions:authOptions
-          completionHandler:^(BOOL granted, NSError * _Nullable error) {
-          if(error) MyLog(@"error %@", error);
-          }];
+        // iOS 10 or later
+        // For iOS 10 display notification (sent via APNS)
+        [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+        UNAuthorizationOptions authOptions = UNAuthorizationOptionAlert | UNAuthorizationOptionSound | UNAuthorizationOptionBadge;
+        [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:authOptions completionHandler:^(BOOL granted, NSError * _Nullable error) {
+            if(error) MyLog(@"error %@", error);
+        }];
     } else {
-      // iOS 10 notifications aren't available; fall back to iOS 8-9 notifications.
-      UIUserNotificationType allNotificationTypes = (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
-      UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
-      [application registerUserNotificationSettings:settings];
+        // iOS 10 notifications aren't available; fall back to iOS 8-9 notifications.
+        UIUserNotificationType allNotificationTypes = (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+        [application registerUserNotificationSettings:settings];
     }
     [application registerForRemoteNotifications];
     
@@ -244,31 +242,31 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     
     return [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 }
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    MyLog(@"applicationDidBecomeActive");
+- (void)applicationDidBecomeActive:(UIApplication *)application{
     [[AppsFlyerTracker sharedTracker] trackAppLaunch];
     [FIRAnalytics logEventWithName:kFIREventAppOpen parameters:nil];
     [FBSDKAppEvents activateApp];
 }
-- (void)applicationWillResignActive:(UIApplication *)application {
+- (void)applicationWillResignActive:(UIApplication *)application{
     MyLog(@"applicationWillResignActive");
 }
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    MyLog(@"xxxxxxxxxxxx");
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
     [[AppsFlyerTracker sharedTracker] handleOpenUrl:url options:nil];
     return YES;
 }
 // Open URI-scheme for iOS 9 and above
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
     //[[AppsFlyerTracker sharedTracker] handleOpenUrl:url options:options];
     return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
   ];
 }
 // Open URI-scheme for iOS 8 and below
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString*)sourceApplication annotation:(id)annotation {
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString*)sourceApplication annotation:(id)annotation{
     [[AppsFlyerTracker sharedTracker] handleOpenURL:url sourceApplication:sourceApplication withAnnotation:annotation];
-    return YES;
+    
+    return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
 }
+
 // Open Universal Links
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler{
     [[AppsFlyerTracker sharedTracker] continueUserActivity:userActivity restorationHandler:restorationHandler];
@@ -277,47 +275,61 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 
 - (void)application:(UIApplication *_Nonnull)application didChangeStatusBarOrientation:(UIInterfaceOrientation)oldStatusBarOrientation{
     MyLog(@"application didChangeStatusBarOrientation");
+    [[[VGPUI sharedInstance] FlyButton] reFrame];
     [[NSNotificationCenter defaultCenter] postNotificationName:VGP_EVENT_UPDATE_LAYOUT object:nil userInfo:nil];
+}
+
+- (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts  API_AVAILABLE(ios(13.0)) {
+    UIOpenURLContext *openURLContext = URLContexts.allObjects.firstObject;
+    if (openURLContext) {
+        [[AppsFlyerTracker sharedTracker] handleOpenUrl:openURLContext.URL options:nil];
+        
+        [[FBSDKApplicationDelegate sharedInstance] application:UIApplication.sharedApplication openURL:openURLContext.URL sourceApplication:openURLContext.options.sourceApplication annotation:openURLContext.options.annotation];
+    }
+}
+
+- (void)scene:(UIScene *)scene continueUserActivity:(NSUserActivity *)userActivity  API_AVAILABLE(ios(13.0)) {
+    [[AppsFlyerTracker sharedTracker]continueUserActivity:userActivity restorationHandler:nil];
 }
 
 #pragma mark Register Push notification
 
 // [START receive_message]
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-  // If you are receiving a notification message while your app is in the background,
-  // this callback will not be fired till the user taps on the notification launching the application.
-  // TODO: Handle data of notification
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    // If you are receiving a notification message while your app is in the background,
+    // this callback will not be fired till the user taps on the notification launching the application.
+    // TODO: Handle data of notification
 
-  // With swizzling disabled you must let Messaging know about the message, for Analytics
-  // [[FIRMessaging messaging] appDidReceiveMessage:userInfo];
+    // With swizzling disabled you must let Messaging know about the message, for Analytics
+    // [[FIRMessaging messaging] appDidReceiveMessage:userInfo];
 
-  // Print message ID.
-  if (userInfo[kGCMMessageIDKey]) {
-    NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
-  }
+    // Print message ID.
+    if (userInfo[kGCMMessageIDKey]) {
+        NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
+    }
 
-  // Print full message.
-  NSLog(@"%@", userInfo);
+    // Print full message.
+    NSLog(@"%@", userInfo);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-    fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-  // If you are receiving a notification message while your app is in the background,
-  // this callback will not be fired till the user taps on the notification launching the application.
-  // TODO: Handle data of notification
+    fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    // If you are receiving a notification message while your app is in the background,
+    // this callback will not be fired till the user taps on the notification launching the application.
+    // TODO: Handle data of notification
 
-  // With swizzling disabled you must let Messaging know about the message, for Analytics
-  // [[FIRMessaging messaging] appDidReceiveMessage:userInfo];
+    // With swizzling disabled you must let Messaging know about the message, for Analytics
+    // [[FIRMessaging messaging] appDidReceiveMessage:userInfo];
 
-  // Print message ID.
-  if (userInfo[kGCMMessageIDKey]) {
-    NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
-  }
+    // Print message ID.
+    if (userInfo[kGCMMessageIDKey]) {
+        NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
+    }
 
-  // Print full message.
-  NSLog(@"%@", userInfo);
+    // Print full message.
+    NSLog(@"%@", userInfo);
 
-  completionHandler(UIBackgroundFetchResultNewData);
+    completionHandler(UIBackgroundFetchResultNewData);
 }
 // [END receive_message]
 
@@ -326,43 +338,43 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 // Handle incoming notification messages while app is in the foreground.
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center
        willPresentNotification:(UNNotification *)notification
-         withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler  API_AVAILABLE(ios(10.0)){
+         withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler  API_AVAILABLE(ios(10.0)) {
   NSDictionary *userInfo = notification.request.content.userInfo;
 
-  // With swizzling disabled you must let Messaging know about the message, for Analytics
-  // [[FIRMessaging messaging] appDidReceiveMessage:userInfo];
+    // With swizzling disabled you must let Messaging know about the message, for Analytics
+    // [[FIRMessaging messaging] appDidReceiveMessage:userInfo];
 
-  // Print message ID.
-  if (userInfo[kGCMMessageIDKey]) {
-    NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
-  }
+    // Print message ID.
+    if (userInfo[kGCMMessageIDKey]) {
+        NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
+    }
 
-  // Print full message.
-  NSLog(@"%@", userInfo);
+    // Print full message.
+    NSLog(@"%@", userInfo);
 
-  // Change this to your preferred presentation option
-  completionHandler(UNNotificationPresentationOptionNone);
+    // Change this to your preferred presentation option
+    completionHandler(UNNotificationPresentationOptionNone);
 }
 
 // Handle notification messages after display notification is tapped by the user.
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center
 didReceiveNotificationResponse:(UNNotificationResponse *)response
-         withCompletionHandler:(void(^)(void))completionHandler  API_AVAILABLE(ios(10.0)){
-  NSDictionary *userInfo = response.notification.request.content.userInfo;
-  if (userInfo[kGCMMessageIDKey]) {
-    NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
-  }
+         withCompletionHandler:(void(^)(void))completionHandler  API_AVAILABLE(ios(10.0)) {
+    NSDictionary *userInfo = response.notification.request.content.userInfo;
+    if (userInfo[kGCMMessageIDKey]) {
+        NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
+    }
 
-  // Print full message.
-  NSLog(@"%@", userInfo);
+    // Print full message.
+    NSLog(@"%@", userInfo);
 
-  completionHandler();
+    completionHandler();
 }
 
 // [END ios_10_message_handling]
 
 // [START refresh_token]
-- (void)messaging:(FIRMessaging *)messaging didReceiveRegistrationToken:(NSString *)fcmToken {
+- (void)messaging:(FIRMessaging *)messaging didReceiveRegistrationToken:(NSString *)fcmToken{
     NSLog(@"FCM registration token: %@", fcmToken);
     // Notify about received token.
     NSDictionary *dataDict = [NSDictionary dictionaryWithObject:fcmToken forKey:@"token"];
@@ -379,22 +391,22 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 // [START ios_10_data_message]
 // Receive data messages on iOS 10+ directly from FCM (bypassing APNs) when the app is in the foreground.
 // To enable direct data messages, you can set [Messaging messaging].shouldEstablishDirectChannel to YES.
-- (void)messaging:(FIRMessaging *)messaging didReceiveMessage:(FIRMessagingRemoteMessage *)remoteMessage {
+- (void)messaging:(FIRMessaging *)messaging didReceiveMessage:(FIRMessagingRemoteMessage *)remoteMessage{
   NSLog(@"Received data message: %@", remoteMessage.appData);
 }
 // [END ios_10_data_message]
 
-- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken{
     [FIRMessaging messaging].APNSToken = deviceToken;
 }
 
-- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error {
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error{
     MyLog(@"Failed to get token, error: %@", error);
 }
 
 #pragma mark AppsFlyerTrackerDelegate methods
 
-- (void)onConversionDataReceived {
+- (void)onConversionDataReceived{
     
 }
 /**
@@ -402,7 +414,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
  Organic/non-organic, etc.
  @param conversionInfo May contain <code>null</code> values for some keys. Please handle this case.
  */
-- (void)onConversionDataSuccess:(NSDictionary *)conversionInfo {
+- (void)onConversionDataSuccess:(NSDictionary *)conversionInfo{
     id status = [conversionInfo objectForKey:@"af_status"];
     if([status isEqualToString:@"Non-organic"]) {
         id sourceID = [conversionInfo objectForKey:@"media_source"];
@@ -418,8 +430,23 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 /**
  Any errors that occurred during the conversion request.
  */
-- (void)onConversionDataFail:(NSError *)error {
+- (void)onConversionDataFail:(NSError *)error{
     MyLog(@"Failed to get data from AppsFlyer's server: %@", [error localizedDescription]);
+}
+
+/**
+ Support for scene delegate
+ */
+- (UISceneConfiguration *)application:(UIApplication *)application configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession options:(UISceneConnectionOptions *)options API_AVAILABLE(ios(13)) {
+    // Called when a new scene session is being created.
+    // Use this method to select a configuration to create the new scene with.
+    return [[UISceneConfiguration alloc] initWithName:@"Default Configuration" sessionRole:connectingSceneSession.role];
+}
+
+- (void)application:(UIApplication *)application didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions  API_AVAILABLE(ios(13.0)) {
+    // Called when the user discards a scene session.
+    // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
+    // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
 }
 
 @end

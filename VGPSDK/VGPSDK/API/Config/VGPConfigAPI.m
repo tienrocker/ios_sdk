@@ -14,7 +14,7 @@
 
 @implementation VGPConfigAPI
 
-+ (void)getServerInfo:(VGPConfigAPISuccess)success failure:(VGPConfigAPIFailure)failure {
++ (void)getServerInfo:(VGPConfigAPISuccess)success failure:(VGPConfigAPIFailure)failure{
     MyLog(@"getServerInfo");
     if([VGP_ENDPOINT isEqualToString:@""]) {
         [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[VGPHelper localizationForString:@"config.error"]];
@@ -24,13 +24,13 @@
     }
 }
 
-+ (void)getServerSettings:(VGPConfigAPISuccess)success failure:(VGPConfigAPIFailure)failure {
++ (void)getServerSettings:(VGPConfigAPISuccess)success failure:(VGPConfigAPIFailure)failure{
     MyLog(@"getServerSettings");
     NSString *url = [NSString stringWithFormat:@"%@/account/sdk/settings", VGP_ENDPOINT];
     [[VGPNetworkManager sharedManager] GET:url param:@{} success:success failure:failure];
 }
 
-+ (void)getPaymentSettings:(NSString *)server_id character_id:(NSString *)character_id package_name:(NSString *)package_name success:(VGPConfigAPISuccess)success failure:(VGPConfigAPIFailure)failure {
++ (void)getPaymentSettings:(NSString *)server_id character_id:(NSString *)character_id package_name:(NSString *)package_name success:(VGPConfigAPISuccess)success failure:(VGPConfigAPIFailure)failure{
     MyLog(@"getPaymentSettings");
     NSString *url = [NSString stringWithFormat:@"%@/payment/settings/settings", VGP_ENDPOINT];
     NSDictionary *data = @{

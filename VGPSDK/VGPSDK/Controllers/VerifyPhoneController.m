@@ -35,7 +35,7 @@
 
 @implementation VerifyPhoneController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
     [super viewDidLoad];
     
     CGFloat screenWidth = [VGPHelper getScreenWidth];
@@ -79,7 +79,6 @@
     leftBackButtonImg = [[UIButton alloc] init];
     leftBackButtonImg.layer.zPosition = 3;
     [leftBackButtonImg setImage:[VGPHelper getUIImageWithImageName:@"btn-back" andType:@"tiff"] forState:UIControlStateNormal];
-    leftBackButtonText.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [panel addSubview:leftBackButtonImg];
     leftBackButtonImg.translatesAutoresizingMaskIntoConstraints = NO;
     [[leftBackButtonImg.leftAnchor constraintEqualToAnchor:panel.leftAnchor constant:width*.02] setActive:YES];
@@ -194,16 +193,16 @@
     [rightPanelResendButton addTarget:self action:@selector(rightPanelResendButtonClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [rightPanelCodeTextField becomeFirstResponder];
 }
 
-- (void)updateUI {
+- (void)updateUI{
     
 }
 
-- (void)updateUIText {
+- (void)updateUIText{
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
     rightPanelCodeTextField.placeholder = [VGPHelper localizationForString:@"verify.code"];
     [rightPanelVerifyButton setTitle:[VGPHelper localizationForString:@"verify"] forState:UIControlStateNormal];
@@ -255,13 +254,13 @@
 }
 
 #pragma mark - TextField Delegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
     MyLog(@"textField %@", textField);
     [textField resignFirstResponder];
     return YES;
 }
 
-- (void)cancelInput:(UITapGestureRecognizer *)gesture {
+- (void)cancelInput:(UITapGestureRecognizer *)gesture{
     [rightPanelCodeTextField resignFirstResponder];
 }
 

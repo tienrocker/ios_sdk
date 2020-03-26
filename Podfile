@@ -13,14 +13,14 @@ target 'UIClient' do
   use_frameworks!
 
   # Pods for UIClient
-  pod 'FBSDKCoreKit', '6.2.0'
-  pod 'FBSDKLoginKit', '6.2.0'
-  pod 'FBSDKShareKit', '6.2.0'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
+  pod 'FBSDKShareKit'
 
-  pod 'FirebaseAnalytics', '6.3.1'
-  pod 'FirebaseMessaging', '4.3.0'
+  pod 'FirebaseAnalytics'
+  pod 'FirebaseMessaging'
   
-  pod 'AppsFlyerFramework', '5.2.0'
+  pod 'AppsFlyerFramework'
   
   pod 'AFNetworking', '3.2.1'
   pod 'FCUUID', '1.3.1'
@@ -35,14 +35,14 @@ target 'VGPSDK' do
   project 'VGPSDK/VGPSDK'
 
   # Pods for VGPSDK
-  pod 'FBSDKCoreKit', '6.2.0'
-  pod 'FBSDKLoginKit', '6.2.0'
-  pod 'FBSDKShareKit', '6.2.0'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
+  pod 'FBSDKShareKit'
 
-  pod 'FirebaseAnalytics', '6.3.1'
-  pod 'FirebaseMessaging', '4.3.0'
+  pod 'FirebaseAnalytics'
+  pod 'FirebaseMessaging'
   
-  pod 'AppsFlyerFramework', '5.2.0'
+  pod 'AppsFlyerFramework'
   
   pod 'AFNetworking', '3.2.1'
   pod 'FCUUID', '1.3.1'

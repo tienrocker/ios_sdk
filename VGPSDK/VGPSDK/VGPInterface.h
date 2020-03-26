@@ -26,7 +26,7 @@
 
 @class VGPInterface;
 
-@interface VGPInterface : NSObject <AppsFlyerTrackerDelegate, UNUserNotificationCenterDelegate, FIRMessagingDelegate> {
+@interface VGPInterface : NSObject <AppsFlyerTrackerDelegate, UNUserNotificationCenterDelegate, FIRMessagingDelegate>{
 }
 
 + (VGPInterface *_Nonnull)sharedInstance;
@@ -80,6 +80,8 @@
 - (BOOL)application:(UIApplication *_Nonnull)application openURL:(NSURL *_Nullable)url sourceApplication:(nullable NSString *)sourceApplication annotation:(id _Nullable )annotation;
 - (BOOL)application:(UIApplication *_Nonnull)application continueUserActivity:(NSUserActivity *_Nullable)userActivity restorationHandler:(void (^_Nullable)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler;
 - (void)application:(UIApplication *_Nonnull)application didChangeStatusBarOrientation:(UIInterfaceOrientation)oldStatusBarOrientation;
+- (void)scene:(UIScene *_Nonnull)scene openURLContexts:(NSSet<UIOpenURLContext *> *_Nonnull)URLContexts  API_AVAILABLE(ios(13.0));
+- (void)scene:(UIScene *_Nonnull)scene continueUserActivity:(NSUserActivity *_Nonnull)userActivity  API_AVAILABLE(ios(13.0));
 
 #pragma mark Register Push notification
 - (void)application:(UIApplication*_Nonnull)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*_Nonnull)deviceToken;
