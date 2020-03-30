@@ -17,8 +17,6 @@
 
 + (void)check:(NSString *)characterID andServerID:(NSString *)serverID andItemID:(NSString *)itemID andPartnerToken:(NSString *)partnerToken success:(VGPPaymentAPISuccess)success failure:(VGPPaymentAPIFailure)failure {
     if(partnerToken == nil) partnerToken = @"";
-    MyLog(@"characterID %@ serverID %@ itemID %@ partnerToken %@", characterID, serverID, itemID, partnerToken);
-    
     NSString *url = [NSString stringWithFormat:@"%@/payment/direct", VGP_ENDPOINT];
     NSDictionary *data = @ {
         @"character_id": characterID,

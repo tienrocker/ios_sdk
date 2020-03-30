@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <VGPSDK/VGPSDK.h>
 
 @interface ViewController : UIViewController
 

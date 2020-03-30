@@ -44,32 +44,71 @@
                                     <action selector="purchase:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vim-zI-qC6"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpg-dl-9Vt" userLabel="Logout">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpg-dl-9Vt" userLabel="Log">
                                 <rect key="frame" x="159" y="177" width="96" height="40"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="hpg-dl-9Vt" secondAttribute="height" multiplier="12:5" id="fBE-mf-Jqj"/>
                                     <constraint firstAttribute="width" constant="96" id="uWV-C4-4IE"/>
                                 </constraints>
+                                <state key="normal" title="Log">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="log:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oIS-gJ-lY5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ppn-O3-HcD" userLabel="Share Remote Image">
+                                <rect key="frame" x="159" y="238" width="96" height="40"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Ppn-O3-HcD" secondAttribute="height" multiplier="12:5" id="Kqx-SK-TxJ"/>
+                                    <constraint firstAttribute="width" constant="96" id="M45-vq-nW8"/>
+                                </constraints>
+                                <state key="normal" title="Share Remote Image">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareRemoteImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qG4-9e-QWJ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UYC-vD-YDg" userLabel="Logout">
+                                <rect key="frame" x="159" y="301" width="96" height="40"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="96" id="G9v-ZA-xju"/>
+                                    <constraint firstAttribute="width" secondItem="UYC-vD-YDg" secondAttribute="height" multiplier="12:5" id="uBp-JB-bTU"/>
+                                </constraints>
                                 <state key="normal" title="Logout">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="logoutClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rSC-HG-wDN"/>
+                                    <action selector="logoutClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oR2-k7-n2i"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="UYC-vD-YDg" firstAttribute="leading" secondItem="Ppn-O3-HcD" secondAttribute="leading" id="5yB-bd-cXb"/>
+                            <constraint firstItem="Ppn-O3-HcD" firstAttribute="top" secondItem="hpg-dl-9Vt" secondAttribute="bottom" constant="21" id="BfQ-QT-A7O"/>
                             <constraint firstItem="Th1-QI-BXK" firstAttribute="width" secondItem="Th1-QI-BXK" secondAttribute="height" multiplier="12:5" id="DUI-Yv-OaM"/>
+                            <constraint firstItem="UYC-vD-YDg" firstAttribute="top" secondItem="Ppn-O3-HcD" secondAttribute="bottom" constant="23" id="G1l-d0-uwc"/>
+                            <constraint firstItem="Ppn-O3-HcD" firstAttribute="leading" secondItem="hpg-dl-9Vt" secondAttribute="leading" id="J6a-ya-J9v"/>
                             <constraint firstItem="Th1-QI-BXK" firstAttribute="leading" secondItem="V6i-vT-9VT" secondAttribute="leading" id="JvF-sn-osu"/>
                             <constraint firstItem="hpg-dl-9Vt" firstAttribute="width" secondItem="hpg-dl-9Vt" secondAttribute="height" multiplier="12:5" id="KA0-t4-OV1"/>
+                            <constraint firstItem="Ppn-O3-HcD" firstAttribute="width" secondItem="Ppn-O3-HcD" secondAttribute="height" multiplier="12:5" id="MP8-GB-kRP"/>
+                            <constraint firstItem="UYC-vD-YDg" firstAttribute="width" secondItem="UYC-vD-YDg" secondAttribute="height" multiplier="12:5" id="R2I-aO-MK3"/>
                             <constraint firstItem="hpg-dl-9Vt" firstAttribute="top" secondItem="Th1-QI-BXK" secondAttribute="bottom" constant="21" id="VNv-jj-aSM"/>
                             <constraint firstItem="V6i-vT-9VT" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="XgC-T2-1VS"/>
                             <constraint firstItem="hpg-dl-9Vt" firstAttribute="leading" secondItem="Th1-QI-BXK" secondAttribute="leading" id="Z6m-46-krw"/>
+                            <constraint firstItem="UYC-vD-YDg" firstAttribute="width" secondItem="UYC-vD-YDg" secondAttribute="height" multiplier="12:5" id="bNQ-D7-C2f"/>
                             <constraint firstItem="V6i-vT-9VT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fId-jC-Scn"/>
+                            <constraint firstItem="UYC-vD-YDg" firstAttribute="width" secondItem="UYC-vD-YDg" secondAttribute="height" multiplier="12:5" id="fb7-Cv-a1k"/>
+                            <constraint firstItem="Ppn-O3-HcD" firstAttribute="width" secondItem="Ppn-O3-HcD" secondAttribute="height" multiplier="12:5" id="gJO-73-z7x"/>
                             <constraint firstItem="V6i-vT-9VT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="gyX-aD-42X"/>
+                            <constraint firstItem="UYC-vD-YDg" firstAttribute="width" secondItem="UYC-vD-YDg" secondAttribute="height" multiplier="12:5" id="mpz-vv-3da"/>
                             <constraint firstItem="hpg-dl-9Vt" firstAttribute="width" secondItem="hpg-dl-9Vt" secondAttribute="height" multiplier="12:5" id="nO4-GY-lub"/>
+                            <constraint firstItem="Ppn-O3-HcD" firstAttribute="width" secondItem="Ppn-O3-HcD" secondAttribute="height" multiplier="12:5" id="wSd-1A-ffl"/>
                             <constraint firstItem="Th1-QI-BXK" firstAttribute="top" secondItem="V6i-vT-9VT" secondAttribute="bottom" constant="22" id="xCZ-O7-QDe"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
