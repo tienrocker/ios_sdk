@@ -14,34 +14,41 @@
 #import "VGPLogger.h"
 #import "FBSDKSharingCallback.h"
 #import "VGPAPI.h"
+#import "VGPIAPHelper.h"
+
+@interface VGPInterface  (){
+    BOOL isPurchasing;
+    NSString *characterIDPurchasing;
+    NSString *serverIDPurchasing;
+    NSString *itemIDPurchasing;
+    NSString *partnerDataPurchasing;
+}
+
+@end
 
 @implementation VGPInterface
 
 static VGPInterface *sharedController = nil;
 
 + (VGPInterface *)sharedInstance
-{
-    if (!sharedController) sharedController = [[VGPInterface alloc] init];
+ {
+     if (!sharedController) sharedController = [[VGPInterface alloc] init];
     return sharedController;
 }
 
-- (void)load{
-    
-}
-
-#pragma mark Data
-- (NSInteger)getUserID{
+#pragma mark -  Data
+- (NSInteger)getUserID {
     return [VGPUserData getUserID];
 }
-- (NSString *)getUsername{
+- (NSString *)getUsername {
     return [VGPUserData getUsername];
 }
 
-#pragma mark Handler User Interface
-- (void)loginGame{
+#pragma mark -  Handler User Interface
+- (void)loginGame {
     [self loginGame:nil];
 }
-- (void)loginGame:(void (^ __nullable)(void))completion{
+- (void)loginGame:(void (^ __nullable)(void))completion {
     
     if(VGP_CONFIG_LOADED == NO) {
         [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"notification"] message:[VGPHelper localizationForString:@"notification"]];
@@ -64,10 +71,41 @@ static VGPInterface *sharedController = nil;
         }];
     }
 }
-- (void)logoutGame{
+- (void)purchase:(NSString *_Nonnull)characterID serverID:(NSString *_Nonnull)serverID itemID:(NSString *_Nonnull)itemID andPartnerData:(NSString *_Nullable)partnerData {
+    
+    // config chưa load xong
+    if(VGP_CONFIG_LOADED == NO) return;
+    // người dùng chưa đăng nhập
+    if([VGPUserData getUserID] == 0) return;
+    // cờ đang xử lý thanh toán được bật
+    if(isPurchasing) return;
+    
+    // enable chế độ đang thanh toán, không cho touch tiếp
+    isPurchasing = YES;
+    characterIDPurchasing = characterID;
+    serverIDPurchasing = serverID;
+    itemIDPurchasing = itemID;
+    partnerDataPurchasing = partnerData;
+    
+    [VGPAPI check:characterID andServerID:serverID andItemID:itemID andPartnerToken:partnerData success:^(id  _Nonnull responseObject) {
+        self->isPurchasing = NO;
+        NSString *message = [responseObject objectForKey:@"message"];
+        if(message) [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"notification"] message:message];
+    } failure:^(NSError * _Nonnull error) {
+        self->isPurchasing = NO;
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[error localizedDescription]];
+    }];
+}
+- (void)logoutGame {
     [self logoutGame:nil];
 }
-- (void)logoutGame:(void (^ __nullable)(void))completion{
+- (void)logoutGame:(void (^ __nullable)(void))completion {
+    
+    // cờ đang xử lý thanh toán được bật
+    if(isPurchasing) {
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:@"Đang xử lý thanh toán, không thể đăng xuất!"];
+        return;
+    }
     
     if(VGP_CONFIG_LOADED == NO) {
         [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"notification"] message:[VGPHelper localizationForString:@"notification"]];
@@ -77,10 +115,10 @@ static VGPInterface *sharedController = nil;
     [VGPUserData clearUserData];
     [VGPHelper onLogoutSuccess];
 }
-- (void)showProfile{
+- (void)showProfile {
     [self showProfile:nil];
 }
-- (void)showProfile:(void (^ __nullable)(void))completion{
+- (void)showProfile:(void (^ __nullable)(void))completion {
     
     if(VGP_CONFIG_LOADED == NO) {
         [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"notification"] message:[VGPHelper localizationForString:@"notification"]];
@@ -93,78 +131,77 @@ static VGPInterface *sharedController = nil;
         [[VGPUI sharedInstance] showProfileController:completion];
     }
 }
-- (void)showFlyButton{
+- (void)showFlyButton {
     if(VGP_CONFIG_LOADED == NO) return;
     [[[VGPUI sharedInstance] FlyButton] showButton];
 }
-- (void)hideFlyButton{
+- (void)hideFlyButton {
     [[[VGPUI sharedInstance] FlyButton] hideButton];
 }
 
-#pragma mark Marketing Events
+#pragma mark -  Marketing Events
 
-- (void)setGameVersion:(NSString*)code{
+- (void)setGameVersion:(NSString*)code {
     [VGPLogger setGameVersion:code];
 }
-- (void)setGameCode:(NSString*)code{
+- (void)setGameCode:(NSString*)code {
     [VGPLogger setGameCode:code];
 }
-- (void)startMobileTutorial{
+- (void)startMobileTutorial {
     [[VGPLogger sharedInstance] tutorialBegin];
 }
-- (void)completeMobileTutorial{
+- (void)completeMobileTutorial {
     [[VGPLogger sharedInstance] tutorialComplete];
 }
-- (void)logLevelUp:(int) level{
+- (void)logLevelUp:(int) level {
     [[VGPLogger sharedInstance] characterLevelup:(int)level];
 }
-- (void)logCreatedCharacter{
+- (void)logCreatedCharacter {
     [[VGPLogger sharedInstance] characterCreated];
 }
-- (void)logUnlockAchievement:(int) vipLevel{
+- (void)logUnlockAchievement:(int) vipLevel {
     [[VGPLogger sharedInstance] characterVipLevelup:vipLevel];
 }
-- (void)purchaseViewDisplay{
+- (void)purchaseViewDisplay {
     [[VGPLogger sharedInstance] purchaseViewDisplay];
 }
-- (void)logUserHadPurchase{
+- (void)logUserHadPurchase {
     [[VGPLogger sharedInstance] userHadPurchase];
 }
-- (void)logPurchase:(int) money{
+- (void)logPurchase:(int) money {
     [[VGPLogger sharedInstance] userPurchase:money];
     [self logUserHadPurchase];
 }
 
-- (void)resourceStartDownload{
+- (void)resourceStartDownload {
     [[VGPLogger sharedInstance] resourceStartDownload];
 }
-- (void)resourceProcessDownload:(int)percent{
+- (void)resourceProcessDownload:(int)percent {
     [[VGPLogger sharedInstance] resourceProcessDownload:percent];
 }
-- (void)resourceDownloadSuccess{
+- (void)resourceDownloadSuccess {
     [[VGPLogger sharedInstance] resourceDownloadSuccess];
 }
-- (void)resourceDownloadError{
+- (void)resourceDownloadError {
     [[VGPLogger sharedInstance] resourceDownloadError];
 }
 
-- (void)resourceStartUnpack{
+- (void)resourceStartUnpack {
     [[VGPLogger sharedInstance] resourceStartUnpack];
 }
-- (void)resourceUnpackSuccess{
+- (void)resourceUnpackSuccess {
     [[VGPLogger sharedInstance] resourceUnpackSuccess];
 }
-- (void)resourceUnpackError{
+- (void)resourceUnpackError {
     [[VGPLogger sharedInstance] resourceUnpackError];
 }
 
 FBSDKSharingCallback *fbscb;
-- (void)shareFacebookImage:(NSString *) url{
+- (void)shareFacebookImage:(NSString *) url {
     NSURL *_url = [NSURL URLWithString:url];
     NSData * data = [NSData dataWithContentsOfURL:_url];
     UIImage * image = [UIImage imageWithData:data];
-    if (image)
-   {
+    if (image) {
         FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
         photo.image = image;
         FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
@@ -178,14 +215,12 @@ FBSDKSharingCallback *fbscb;
         dialog.shareContent = content;
         dialog.mode = FBSDKShareDialogModeShareSheet;
         [dialog show];
-    }
-    else
-   {
+    } else {
         [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:@"share_facebook_error"];
     }
 }
 
-- (void)shareFacebookImageLocal:(UIImage *) image{
+- (void)shareFacebookImageLocal:(UIImage *) image {
     FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
     photo.image = image;
     FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
@@ -201,14 +236,14 @@ FBSDKSharingCallback *fbscb;
     [dialog show];
 }
 
-#pragma mark Init Application
+#pragma mark -  Init Application
 
 NSString *const kGCMMessageIDKey = @"gcm.message_id";
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     MyLog(@"didFinishLaunchingWithOptions");
     
-    if([VGP_GAMEID length] == 0) return YES;
+    if([VGP_GAMEID length] == 0) return NO;
     
     [AppsFlyerTracker sharedTracker].appleAppID = VGP_APPS_FLYER_TRACKER_APPID;
     [AppsFlyerTracker sharedTracker].appsFlyerDevKey = VGP_APPS_FLYER_TRACKER_DEVKEY;
@@ -240,41 +275,46 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     // load vgp config
     [VGPAPI getServerInfo];
     
+    // IAP callback
+    [[SKPaymentQueue defaultQueue] addTransactionObserver:[VGPIAPHelper sharedInstance]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(IAPHelperProductPurchasedNotification:) name:IAPHelperProductPurchasedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(IAPHelperProductPurchasedFailNotification:) name:IAPHelperProductPurchasedFailNotification object:nil];
+    
     return [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 }
-- (void)applicationDidBecomeActive:(UIApplication *)application{
+- (void)applicationDidBecomeActive:(UIApplication *)application {
     [[AppsFlyerTracker sharedTracker] trackAppLaunch];
     [FIRAnalytics logEventWithName:kFIREventAppOpen parameters:nil];
     [FBSDKAppEvents activateApp];
 }
-- (void)applicationWillResignActive:(UIApplication *)application{
-    MyLog(@"applicationWillResignActive");
+- (void)applicationWillResignActive:(UIApplication *)application {
 }
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     [[AppsFlyerTracker sharedTracker] handleOpenUrl:url options:nil];
     return YES;
 }
 // Open URI-scheme for iOS 9 and above
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
     //[[AppsFlyerTracker sharedTracker] handleOpenUrl:url options:options];
     return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
   ];
 }
 // Open URI-scheme for iOS 8 and below
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString*)sourceApplication annotation:(id)annotation{
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString*)sourceApplication annotation:(id)annotation {
     [[AppsFlyerTracker sharedTracker] handleOpenURL:url sourceApplication:sourceApplication withAnnotation:annotation];
     
     return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
 }
 
 // Open Universal Links
-- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler{
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
     [[AppsFlyerTracker sharedTracker] continueUserActivity:userActivity restorationHandler:restorationHandler];
     return YES;
 }
 
-- (void)application:(UIApplication *_Nonnull)application didChangeStatusBarOrientation:(UIInterfaceOrientation)oldStatusBarOrientation{
-    MyLog(@"application didChangeStatusBarOrientation");
+- (void)application:(UIApplication *_Nonnull)application didChangeStatusBarOrientation:(UIInterfaceOrientation)oldStatusBarOrientation {
+    VGP_SCREEN_WIDTH = [VGPHelper getScreenWidth];
+    VGP_SCREEN_HEIGHT = [VGPHelper getScreenHeight];
     [[[VGPUI sharedInstance] FlyButton] reFrame];
     [[NSNotificationCenter defaultCenter] postNotificationName:VGP_EVENT_UPDATE_LAYOUT object:nil userInfo:nil];
 }
@@ -292,10 +332,10 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     [[AppsFlyerTracker sharedTracker]continueUserActivity:userActivity restorationHandler:nil];
 }
 
-#pragma mark Register Push notification
+#pragma mark -  Register Push notification
 
 // [START receive_message]
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     // If you are receiving a notification message while your app is in the background,
     // this callback will not be fired till the user taps on the notification launching the application.
     // TODO: Handle data of notification
@@ -313,7 +353,7 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-    fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     // If you are receiving a notification message while your app is in the background,
     // this callback will not be fired till the user taps on the notification launching the application.
     // TODO: Handle data of notification
@@ -374,7 +414,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 // [END ios_10_message_handling]
 
 // [START refresh_token]
-- (void)messaging:(FIRMessaging *)messaging didReceiveRegistrationToken:(NSString *)fcmToken{
+- (void)messaging:(FIRMessaging *)messaging didReceiveRegistrationToken:(NSString *)fcmToken {
     NSLog(@"FCM registration token: %@", fcmToken);
     // Notify about received token.
     NSDictionary *dataDict = [NSDictionary dictionaryWithObject:fcmToken forKey:@"token"];
@@ -388,25 +428,17 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 }
 // [END refresh_token]
 
-// [START ios_10_data_message]
-// Receive data messages on iOS 10+ directly from FCM (bypassing APNs) when the app is in the foreground.
-// To enable direct data messages, you can set [Messaging messaging].shouldEstablishDirectChannel to YES.
-- (void)messaging:(FIRMessaging *)messaging didReceiveMessage:(FIRMessagingRemoteMessage *)remoteMessage{
-  NSLog(@"Received data message: %@", remoteMessage.appData);
-}
-// [END ios_10_data_message]
-
-- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken{
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
     [FIRMessaging messaging].APNSToken = deviceToken;
 }
 
-- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error{
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error {
     MyLog(@"Failed to get token, error: %@", error);
 }
 
-#pragma mark AppsFlyerTrackerDelegate methods
+#pragma mark -  AppsFlyerTrackerDelegate methods
 
-- (void)onConversionDataReceived{
+- (void)onConversionDataReceived {
     
 }
 /**
@@ -414,7 +446,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
  Organic/non-organic, etc.
  @param conversionInfo May contain <code>null</code> values for some keys. Please handle this case.
  */
-- (void)onConversionDataSuccess:(NSDictionary *)conversionInfo{
+- (void)onConversionDataSuccess:(NSDictionary *)conversionInfo {
     id status = [conversionInfo objectForKey:@"af_status"];
     if([status isEqualToString:@"Non-organic"]) {
         id sourceID = [conversionInfo objectForKey:@"media_source"];
@@ -423,14 +455,14 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
         [VGPDeviceData setCampaign:campaign];
         MyLog(@"This is a none organic install. Media source: %@  Campaign: %@", sourceID, campaign);
     } else if([status isEqualToString:@"Organic"]) {
-        MyLog(@"This is an organic install.");
+        // MyLog(@"This is an organic install.");
     }
 }
 
 /**
  Any errors that occurred during the conversion request.
  */
-- (void)onConversionDataFail:(NSError *)error{
+- (void)onConversionDataFail:(NSError *)error {
     MyLog(@"Failed to get data from AppsFlyer's server: %@", [error localizedDescription]);
 }
 
@@ -447,6 +479,38 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
     // Called when the user discards a scene session.
     // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
     // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+}
+
+#pragma mark - Notification IAP
+
+- (void)IAPHelperProductPurchasedNotification:(NSNotification *)notification {
+    NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
+    NSData *receipt = [NSData dataWithContentsOfURL:receiptURL];
+    
+    if (!receipt) {
+        isPurchasing = NO;
+        MyLog(@"recept %@", receipt);
+    } else {
+        NSString *receiptData = [receipt base64EncodedStringWithOptions:0];
+        MyLog(@"receiptData %@", receiptData);
+        
+        // trường hợp restore purchase
+        if(characterIDPurchasing == nil || serverIDPurchasing == nil || itemIDPurchasing == nil) {
+            self->isPurchasing = NO;
+        } else {
+            [VGPAPI iap:characterIDPurchasing andServerID:serverIDPurchasing andItemID:itemIDPurchasing andPartnerToken:partnerDataPurchasing andReceiptData:receiptData success:^(id  _Nonnull responseObject) {
+                self->isPurchasing = NO;
+            } failure:^(NSError * _Nonnull error) {
+                self->isPurchasing = NO;
+                [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[error localizedDescription]];
+            }];
+        }
+    }
+}
+
+-(void)IAPHelperProductPurchasedFailNotification:(NSNotification *)notification
+{
+    isPurchasing = NO;
 }
 
 @end

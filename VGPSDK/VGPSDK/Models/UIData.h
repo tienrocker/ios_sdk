@@ -17,11 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIData : NSObject
 
-#pragma mark LANG
+#pragma mark -  LANG
 + (NSString *)getLocalization;
 + (void)setLocalization:(NSString *)localization;
 
-#pragma mark String
+#pragma mark -  String
 /**
 @todo: dùng khi người dùng đã xác thực số điện thoại nhưng muốn đổi
 */

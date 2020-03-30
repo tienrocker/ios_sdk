@@ -1,5 +1,5 @@
 //
-//  LinkAccountController.h
+//  ProtectAccountController.h
 //  VGPSDK
 //
 //  Created by  Tien Tran on 3/25/20.
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LinkAccountController : VGPSDKController
+@interface ProtectAccountController : VGPSDKController
 
 @end
 

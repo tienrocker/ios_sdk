@@ -10,33 +10,33 @@
 
 @implementation UIData
 
-#pragma mark LANG
-+ (NSString *)getLocalization{
+#pragma mark -  LANG
++ (NSString *)getLocalization {
     NSString *value = [VGPHelper getNSUserDefaults:VGP_LOCALIZATION];
     if(![value isEqualToString:@""]) return value;
     return [[[NSBundle mainBundle] preferredLocalizations] firstObject];
 }
-+ (void)setLocalization:(NSString *)localization{
++ (void)setLocalization:(NSString *)localization {
     [VGPHelper setNSUserDefaults:VGP_LOCALIZATION value:localization];
 }
 
-#pragma mark String
+#pragma mark -  String
 /**
  @todo: dùng khi người dùng đã xác thực số điện thoại nhưng muốn đổi
  */
-+ (NSString *)getPhoneChangeAlertMessage{
++ (NSString *)getPhoneChangeAlertMessage {
     return [VGPHelper getNSUserDefaults:VGP_PHONE_CHANGE_ALERT_MESSAGE];
 }
-+ (void)setPhoneChangeAlertMessage:(NSString *)message{
++ (void)setPhoneChangeAlertMessage:(NSString *)message {
     [VGPHelper setNSUserDefaults:VGP_PHONE_CHANGE_ALERT_MESSAGE value:message];
 }
 /**
 @todo: dùng khi người dùng muốn lấy nội dung sms để xác thực điện thoại
 */
-+ (NSString *)getPhoneChangeSMSMessage{
++ (NSString *)getPhoneChangeSMSMessage {
     return [VGPHelper getNSUserDefaults:VGP_PHONE_CHANGE_SMS_MESSAGE];
 }
-+ (void)setPhoneChangeSMSMessage:(NSString *)message{
++ (void)setPhoneChangeSMSMessage:(NSString *)message {
     [VGPHelper setNSUserDefaults:VGP_PHONE_CHANGE_SMS_MESSAGE value:message];
 }
 

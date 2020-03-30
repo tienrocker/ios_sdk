@@ -38,12 +38,10 @@
 
 @implementation RegisterController
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
-    CGFloat screenWidth = [VGPHelper getScreenWidth];
-    // CGFloat screenHeight = [VGPHelper getScreenHeight];
-    CGFloat width = LAYOUT_WIDTH < screenWidth ? LAYOUT_WIDTH : screenWidth - screenWidth * LAYOUT_OFFSET;
+    CGFloat width = LAYOUT_WIDTH < VGP_SCREEN_WIDTH ? LAYOUT_WIDTH : VGP_SCREEN_WIDTH - VGP_SCREEN_WIDTH * LAYOUT_OFFSET;
     CGFloat height = (LAYOUT_HEIGHT / LAYOUT_WIDTH) * width;
     
     // ===================================
@@ -255,7 +253,7 @@
     [rightPanelRegisterButton addTarget:self action:@selector(rightPanelRegisterButtonClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)updateUIText{
+- (void)updateUIText {
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
     rightPanelUsernameTextField.placeholder = [VGPHelper localizationForString:@"login.right.username"];
     rightPanelPasswordTextField.placeholder = [VGPHelper localizationForString:@"login.right.password"];
@@ -265,7 +263,7 @@
 }
 
 - (void)rightPanelRegisterButtonClick
-{
+ {
     [self showLoadingView];
     [[VGPLogger sharedInstance] registerClick];
     
@@ -291,7 +289,7 @@
 }
 
 #pragma mark - TextField Delegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     MyLog(@"textField %@", textField);
     [textField resignFirstResponder];
     if(textField == rightPanelUsernameTextField) [rightPanelPasswordTextField becomeFirstResponder];
@@ -305,13 +303,8 @@
     return YES;
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-    if(textField == rightPanelRePasswordTextField || textField == rightPanelEmailTextField) {
-        self.view.frame = CGRectOffset(self.view.frame, 0, DIS_MOVE_POPUP * 2);
-    } else {
-        self.view.frame = CGRectOffset(self.view.frame, 0, DIS_MOVE_POPUP);
-    }
-    
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [super textFieldDidBeginEditing:textField];
     if(textField == rightPanelEmailTextField) {
         textField.returnKeyType = UIReturnKeyGo;
     } else {
@@ -319,7 +312,7 @@
     }
 }
 
-- (void)cancelInput:(UITapGestureRecognizer *)gesture{
+- (void)cancelInput:(UITapGestureRecognizer *)gesture {
     [rightPanelUsernameTextField resignFirstResponder];
     [rightPanelPasswordTextField resignFirstResponder];
     [rightPanelRePasswordTextField resignFirstResponder];

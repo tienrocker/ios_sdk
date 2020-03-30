@@ -47,7 +47,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message handler:(void (^ __nullable)(UIAlertAction *action))handler;
 + (void)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message actionWithTitle:(nullable NSString *)actionTitle handler:(void (^ __nullable)(UIAlertAction *action))handler;
 
-#pragma mark After login
++ (NSString *)MD5:(NSString *)text;
+
+#pragma mark -  After login
 + (void)onRegisterSuccess;
 + (void)onLoginSuccess;
 + (void)onLogoutSuccess;

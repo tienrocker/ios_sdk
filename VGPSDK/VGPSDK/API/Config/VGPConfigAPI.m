@@ -14,30 +14,26 @@
 
 @implementation VGPConfigAPI
 
-+ (void)getServerInfo:(VGPConfigAPISuccess)success failure:(VGPConfigAPIFailure)failure{
++ (void)getServerInfo:(VGPConfigAPISuccess)success failure:(VGPConfigAPIFailure)failure {
     MyLog(@"getServerInfo");
     if([VGP_ENDPOINT isEqualToString:@""]) {
         [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[VGPHelper localizationForString:@"config.error"]];
     } else {
         NSString *url = [NSString stringWithFormat:@"%@/config", VGP_ENDPOINT];
-        [[VGPNetworkManager sharedManager] GET:url param:@{} success:success failure:failure];
+        [[VGPNetworkManager sharedManager] GET:url param:@ {} success:success failure:failure];
     }
 }
 
-+ (void)getServerSettings:(VGPConfigAPISuccess)success failure:(VGPConfigAPIFailure)failure{
-    MyLog(@"getServerSettings");
++ (void)getServerSettings:(VGPConfigAPISuccess)success failure:(VGPConfigAPIFailure)failure {
     NSString *url = [NSString stringWithFormat:@"%@/account/sdk/settings", VGP_ENDPOINT];
-    [[VGPNetworkManager sharedManager] GET:url param:@{} success:success failure:failure];
+    [[VGPNetworkManager sharedManager] GET:url param:@ {} success:success failure:failure];
 }
 
-+ (void)getPaymentSettings:(NSString *)server_id character_id:(NSString *)character_id package_name:(NSString *)package_name success:(VGPConfigAPISuccess)success failure:(VGPConfigAPIFailure)failure{
-    MyLog(@"getPaymentSettings");
-    NSString *url = [NSString stringWithFormat:@"%@/payment/settings/settings", VGP_ENDPOINT];
-    NSDictionary *data = @{
++ (void)getPaymentSettings:(VGPConfigAPISuccess)success failure:(VGPConfigAPIFailure)failure {
+    NSString *url = [NSString stringWithFormat:@"%@/payment/settings", VGP_ENDPOINT];
+    NSDictionary *data = @ {
         @"user_token": [VGPUserData getToken],
-        @"servre_id": server_id,
-        @"character_id": character_id,
-        @"package_name": package_name,
+        @"package_name": [[NSBundle mainBundle] bundleIdentifier],
     };
     [[VGPNetworkManager sharedManager] GET:url param:data success:success failure:failure];
 }

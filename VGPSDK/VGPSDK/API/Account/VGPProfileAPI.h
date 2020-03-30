@@ -29,6 +29,10 @@ typedef void (^VGPProfileAPIFailure)(NSError *error);
 
 + (void)protectAccount:(NSString *)username password:(NSString *)password success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure;
 
+#pragma mark -  Account change password
+
++ (void)changePassword:(NSString *)old_password password:(NSString *)new_password success:(VGPProfileAPISuccess)success failure:(VGPProfileAPIFailure)failure;
+
 @end
 
 NS_ASSUME_NONNULL_END

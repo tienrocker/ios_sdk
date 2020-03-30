@@ -32,6 +32,13 @@
     [[VGPInterface sharedInstance] loginGame];
 }
 
+- (IBAction)purchase:(UIButton *)sender {
+    /**
+     @TODO: you can add anything to andPartnerToken value, up to you
+     */
+    [[VGPInterface sharedInstance] purchase:@"USERID1" serverID:@"SERVERID1" itemID:@"gold.tieudaogiangho.17000" andPartnerData:nil];
+}
+
 - (IBAction)logoutClick:(UIButton *)sender {
     [[VGPInterface sharedInstance] logoutGame];
 }

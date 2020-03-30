@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <CommonCrypto/CommonDigest.h>
 #import "VGPHelper.h"
 #import "VGPConfig.h"
 #import "VGPLogger.h"
@@ -17,7 +18,7 @@
 
 @implementation VGPHelper
 
-+ (UILayoutGuide *)layoutGuide{
++ (UILayoutGuide *)layoutGuide {
     if (@available(iOS 11, *)) {
         return [[UIApplication sharedApplication] keyWindow].safeAreaLayoutGuide;
     } else {
@@ -25,17 +26,17 @@
     }
 }
 
-+ (float)getScreenWidth{
++ (float)getScreenWidth {
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
     return screenSize.width;
 }
 
-+ (float)getScreenHeight{
++ (float)getScreenHeight {
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
     return screenSize.height;
 }
 
-+ (CGRect)aspectFitRect:(CGRect)outerRect withInnerRect:(CGRect)innerRect{
++ (CGRect)aspectFitRect:(CGRect)outerRect withInnerRect:(CGRect)innerRect {
     // the width and height ratios of the rects
     CGFloat wRatio = outerRect.size.width / innerRect.size.width;
     CGFloat hRatio = outerRect.size.height/innerRect.size.height;
@@ -50,14 +51,14 @@
     CGFloat yOffset = (outerRect.size.height-(innerRect.size.height*ratio))*0.5;
     
     // aspect fitted origin and size
-    CGPoint innerRectOrigin ={xOffset+outerRect.origin.x, yOffset+outerRect.origin.y};
-    CGSize innerRectSize ={innerRect.size.width*ratio, innerRect.size.height*ratio};
+    CGPoint innerRectOrigin = {xOffset+outerRect.origin.x, yOffset+outerRect.origin.y};
+    CGSize innerRectSize = {innerRect.size.width*ratio, innerRect.size.height*ratio};
     
     return (CGRect) {innerRectOrigin, innerRectSize};
 }
 
-+ (UIImage*)getUIImageWithImageName:(nullable NSString*) imageName andType:(nullable NSString*) type{
-    @try{
++ (UIImage*)getUIImageWithImageName:(nullable NSString*) imageName andType:(nullable NSString*) type {
+    @try {
         if(type==nil) type = @"png";
         NSString* imagePath = [VGPHelper getImagePathWithName:imageName ofType:type];
         UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
@@ -70,7 +71,7 @@
     }
 }
 
-+ (UIWindow*)keyWindow{
++ (UIWindow*)keyWindow {
     UIWindow *foundWindow = nil;
     NSArray *windows = [[UIApplication sharedApplication]windows];
     for (UIWindow *window in windows) {
@@ -82,10 +83,10 @@
     return foundWindow;
 }
 
-+ (NSString *)stringFromDeviceToken:(NSData*)deviceToken{
++ (NSString *)stringFromDeviceToken:(NSData*)deviceToken {
     NSUInteger length = deviceToken.length;
     if (length == 0) return nil;
-    @try{
+    @try {
         const unsigned char *buffer = deviceToken.bytes;
         NSMutableString *hexString  = [NSMutableString stringWithCapacity:(length * 2)];
         for (int i = 0; i < length; ++i) {
@@ -99,12 +100,12 @@
     }
 }
 
-+ (UIViewController *)topViewController{
++ (UIViewController *)topViewController {
     return [self topViewController:[self keyWindow].rootViewController];
 }
 
 + (UIViewController *)topViewController:(UIViewController *)rootViewController
-{
+ {
     if (rootViewController.presentedViewController == nil) {
         return rootViewController;
     }
@@ -119,11 +120,11 @@
     return [self topViewController:presentedViewController];
 }
 
-+ (void)dismissViewController{
++ (void)dismissViewController {
     [[[UIApplication sharedApplication] keyWindow].rootViewController dismissViewControllerAnimated:true completion:nil];
 }
 
-+ (NSString *)getImagePathWithName:(nullable NSString *)name ofType:(nullable NSString *)ext{
++ (NSString *)getImagePathWithName:(nullable NSString *)name ofType:(nullable NSString *)ext {
     name = [NSString stringWithFormat:@"VGPSDK.bundle/%@", name];
     if(ext==nil) ext = @"png";
     NSString *path = [FW_BUNDLE pathForResource:name ofType:ext];
@@ -131,33 +132,33 @@
 }
 
 static NSBundle *bundleTranslation = nil;
-+ (NSString *)localizationForString:(NSString *)originalText{
++ (NSString *)localizationForString:(NSString *)originalText {
     if(bundleTranslation == nil) {
         NSString * bundlePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"VGPSDK.bundle/%@", [UIData getLocalization]] ofType:@"lproj"];
         bundleTranslation = [NSBundle bundleWithPath:bundlePath];
     }
     return [bundleTranslation localizedStringForKey:originalText value:originalText table:nil];
 }
-+ (void)changeLocalization:(NSString *)localization{
++ (void)changeLocalization:(NSString *)localization {
     [UIData setLocalization:localization];
     bundleTranslation = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:VGP_EVENT_UPDATE_LANGUAGE object:nil userInfo:nil];
 }
 
-+ (NSString *)getNSUserDefaults:(NSString *)name{
++ (NSString *)getNSUserDefaults:(NSString *)name {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:name]) return [[NSUserDefaults standardUserDefaults] objectForKey:name];
     return @"";
 }
-+ (void)setNSUserDefaults:(NSString *)name value:(NSString *)value{
++ (void)setNSUserDefaults:(NSString *)name value:(NSString *)value {
     if(value == nil) [[NSUserDefaults standardUserDefaults] removeObjectForKey:name];
     else [[NSUserDefaults standardUserDefaults] setObject:value forKey:name];
 }
 
-+ (NSString *)formatDate:(NSDate *)date{
++ (NSString *)formatDate:(NSDate *)date {
     return [self formatDate:date withDateFormat:nil];
 }
 
-+ (NSString *)formatDate:(NSDate *)date withDateFormat:(NSString *)withDateFormat{
++ (NSString *)formatDate:(NSDate *)date withDateFormat:(NSString *)withDateFormat {
     if(withDateFormat == nil) withDateFormat = @"dd-MM-yyyy";
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
@@ -166,55 +167,65 @@ static NSBundle *bundleTranslation = nil;
     return formattedDate;
 }
 
-+ (void)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message{
++ (void)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message {
     [self alertControllerWithTitle:title message:message handler:nil];
 }
-+ (void)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message handler:(void (^ __nullable)(UIAlertAction *action))handler{
++ (void)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message handler:(void (^ __nullable)(UIAlertAction *action))handler {
     [self alertControllerWithTitle:title message:message actionWithTitle:[VGPHelper localizationForString:@"ok"] handler:handler];
 }
-+ (void)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message actionWithTitle:(nullable NSString *)actionTitle handler:(void (^ __nullable)(UIAlertAction *action))handler{
++ (void)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message actionWithTitle:(nullable NSString *)actionTitle handler:(void (^ __nullable)(UIAlertAction *action))handler {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle: UIAlertControllerStyleAlert];
     UIAlertAction *action = [UIAlertAction actionWithTitle:actionTitle style: UIAlertActionStyleDefault handler:handler];
     [alertController addAction: action];
     [[VGPHelper topViewController] presentViewController:alertController animated:YES completion:nil];
 }
 
-#pragma mark After login
++ (NSString *)MD5:(NSString *)text
+{
+    const char *cStr = [text UTF8String];
+    unsigned char digest[16];
+    CC_MD5( cStr, (int)strlen(cStr), digest ); // This is the md5 call
+    NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+    for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++) [output appendFormat:@"%02x", digest[i]];
+    return  output;
+}
 
-+ (void)onRegisterSuccess{
+#pragma mark -  After login
+
++ (void)onRegisterSuccess {
     [[VGPLogger sharedInstance] registerSuccess:nil];
     
     if([VGPUserData getShowProtectDialog])
-        [[VGPUI sharedInstance] dismiss:^{
+        [[VGPUI sharedInstance] dismiss:^ {
             SHOW_BACK_BUTTON = NO;
-            [[VGPUI sharedInstance] showInitProfileController];
+            [[VGPUI sharedInstance] showInitAccountController];
         }];
     else
         [[VGPUI sharedInstance] dismiss];
     
-    NSDictionary *data = @{@"id": @([VGPUserData getUserID]), @"token": [VGPUserData getToken]};
+    NSDictionary *data = @ {@"id": @([VGPUserData getUserID]), @"token": [VGPUserData getToken]};
     [[NSNotificationCenter defaultCenter] postNotificationName:VGP_EVENT_LOGIN_SUCCESS object:nil userInfo:data];
 }
 
-+ (void)onLoginSuccess{
++ (void)onLoginSuccess {
     [[VGPLogger sharedInstance] loginSuccess:nil];
     
     if([VGPUserData getShowProtectDialog])
-        [[VGPUI sharedInstance] dismiss:^{
+        [[VGPUI sharedInstance] dismiss:^ {
             SHOW_BACK_BUTTON = NO;
-            [[VGPUI sharedInstance] showInitProfileController];
+            [[VGPUI sharedInstance] showInitAccountController];
         }];
     else
         [[VGPUI sharedInstance] dismiss];
     
-    NSDictionary *data = @{@"id": @([VGPUserData getUserID]), @"token": [VGPUserData getToken]};
+    NSDictionary *data = @ {@"id": @([VGPUserData getUserID]), @"token": [VGPUserData getToken]};
     [[NSNotificationCenter defaultCenter] postNotificationName:VGP_EVENT_LOGIN_SUCCESS object:nil userInfo:data];
 }
 
-+ (void)onLogoutSuccess{
++ (void)onLogoutSuccess {
     [[VGPUI sharedInstance] dismiss];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:VGP_EVENT_LOGOUT_SUCCESS object:nil userInfo:@{}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:VGP_EVENT_LOGOUT_SUCCESS object:nil userInfo:@ {}];
 }
 
 @end

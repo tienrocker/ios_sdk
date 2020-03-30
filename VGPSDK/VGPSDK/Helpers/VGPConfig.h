@@ -30,11 +30,17 @@ extern NSString *VGP_APPS_FLYER_TRACKER_APPID;
 extern NSString *VGP_APPS_FLYER_TRACKER_DEVKEY;
 extern BOOL VGP_CONFIG_LOADED;
 
+extern float VGP_SCREEN_WIDTH;
+extern float VGP_SCREEN_HEIGHT;
 extern UIColor *VGP_MAIN_TEXT_COLOR;
+extern UIFont *VGP_FONT_LABEL_08;
 extern UIFont *VGP_FONT_LABEL_10;
 extern UIFont *VGP_FONT_LABEL_13;
+extern UIFont *VGP_FONT_LABEL_14;
 extern UIFont *VGP_FONT_LABEL_15;
 extern UIFont *VGP_FONT_LABEL_20;
+
+extern NSArray* VGP_IAP_ITEMS;
 
 /*!
  @todo Autoload method

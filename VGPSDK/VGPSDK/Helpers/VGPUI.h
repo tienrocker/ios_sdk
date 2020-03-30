@@ -18,8 +18,9 @@
 #import "ProfileController.h"
 #import "ProfileEditController.h"
 #import "VerifyPhoneController.h"
-#import "InitProfileController.h"
-#import "LinkAccountController.h"
+#import "InitAccountController.h"
+#import "ProtectAccountController.h"
+#import "ChangePasswordController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,10 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (VGPUI *)sharedInstance;
 
-#pragma mark Global
+#pragma mark -  Global
 - (FlyButton *) FlyButton;
 
-#pragma mark UI
+#pragma mark -  UI
 - (WelcomeController *)WelcomeViewController;
 - (LoginNormalController *)LoginNormalController;
 - (RegisterController *)RegisterController;
@@ -41,10 +42,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (ProfileController *)ProfileController;
 - (ProfileEditController *)ProfileEditController;
 - (VerifyPhoneController *)VerifyPhoneController;
-- (InitProfileController *)InitProfileController;
-- (LinkAccountController *)LinkAccountController;
+- (InitAccountController *)InitAccountController;
+- (ProtectAccountController *)ProtectAccountController;
+- (ChangePasswordController *)ChangePasswordController;
 
-#pragma mark Events
+#pragma mark -  Events
 - (void)dismiss;
 - (void)dismiss:(void (^ __nullable)(void))completion;
 - (void)showWelcomeController;
@@ -63,10 +65,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showProfileEditController:(void (^ __nullable)(void))completion;
 - (void)showVerifyPhoneController;
 - (void)showVerifyPhoneController:(void (^ __nullable)(void))completion;
-- (void)showInitProfileController;
-- (void)showInitProfileController:(void (^ __nullable)(void))completion;
-- (void)showLinkAccountController;
-- (void)showLinkAccountController:(void (^ __nullable)(void))completion;
+- (void)showInitAccountController;
+- (void)showInitAccountController:(void (^ __nullable)(void))completion;
+- (void)showProtectAccountController;
+- (void)showProtectAccountController:(void (^ __nullable)(void))completion;
+- (void)showChangePasswordController;
+- (void)showChangePasswordController:(void (^ __nullable)(void))completion;
+
 @end
 
 NS_ASSUME_NONNULL_END

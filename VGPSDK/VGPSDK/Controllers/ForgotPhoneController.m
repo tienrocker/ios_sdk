@@ -2,15 +2,17 @@
 //  ForgotPhoneController.m
 //  VGPSDK
 //
-//  Created by  Tien Tran on 2/17/20.
+//  Created by  Tien Tran on 2/11/20.
 //  Copyright © 2020  Tien Tran. All rights reserved.
 //
 
 #import "ForgotPhoneController.h"
-#import "VGPUI.h"
 #import "VGPInterface.h"
 #import "VGPHelper.h"
-#import "VGPUserData.h"
+#import "VGPUI.h"
+#import "UIData.h"
+#import "VGPAPI.h"
+#import "VGPFBSDKLoginManager.h"
 
 @interface ForgotPhoneController () {
     UIImageView *imgLayout;
@@ -20,25 +22,96 @@
     UIView *leftPanel;
     UIButton *leftBackButtonImg;
     UIButton *leftBackButtonText;
-    UIView *leftPanelImage;
-
+    UIImageView *leftPanelImage;
+    UIButton *leftSupportButton;
+    
     UIView *rightPanel;
-    UILabel *rightPanelForgotPhoneText1Label;
-    UIButton *rightPanelForgotPhone1Button;
-    UIButton *rightPanelForgotPhone2Button;
+    UILabel *rightPanelTitleLabel;
+    UIImageView *rightPanelUsernameTextFieldBackground;
+    UITextField *rightPanelUsernameTextField;
+    UIButton *rightPanelForgotPhoneButton;
+    
+    // ===================================
+
+    // background
+    NSLayoutConstraint *imgLayoutCenterXAnchor;
+    NSLayoutConstraint *imgLayoutCenterYAnchor;
+    NSLayoutConstraint *imgLayoutWidthAnchor;
+    NSLayoutConstraint *imgLayoutHeightAnchor;
+
+    // create layout
+    NSLayoutConstraint *panelCenterXAnchor;
+    NSLayoutConstraint *panelCenterYAnchor;
+    NSLayoutConstraint *panelWidthAnchor;
+    NSLayoutConstraint *panelHeightAnchor;
+
+    // close button
+    NSLayoutConstraint *rightCloseButtonRightAnchor;
+    NSLayoutConstraint *rightCloseButtonTopAnchor;
+    NSLayoutConstraint *rightCloseButtonWidthAnchor;
+    NSLayoutConstraint *rightCloseButtonHeightAnchor;
+
+    // ===================================
+
+    // left
+    NSLayoutConstraint *leftPanelLeftAnchor;
+    NSLayoutConstraint *leftPanelCenterYAnchor;
+    NSLayoutConstraint *leftPanelWidthAnchor;
+    NSLayoutConstraint *leftPanelHeightAnchor;
+
+    NSLayoutConstraint *leftPanelImageCenterXAnchor;
+    NSLayoutConstraint *leftPanelImageTopAnchor;
+    NSLayoutConstraint *leftPanelImageWidthAnchor;
+    NSLayoutConstraint *leftPanelImageHeightAnchor;
+
+    NSLayoutConstraint *leftBackButtonImgLeftAnchor;
+    NSLayoutConstraint *leftBackButtonImgTopAnchor;
+    NSLayoutConstraint *leftBackButtonImgWidthAnchor;
+    NSLayoutConstraint *leftBackButtonImgHeightAnchor;
+
+    NSLayoutConstraint *leftBackButtonTextLeftAnchor;
+    NSLayoutConstraint *leftBackButtonTextTopAnchor;
+    NSLayoutConstraint *leftBackButtonTextWidthAnchor;
+    NSLayoutConstraint *leftBackButtonTextHeightAnchor;
+
+    NSLayoutConstraint *leftSupportButtonCenterXAnchor;
+    NSLayoutConstraint *leftSupportButtonTopAnchor;
+    NSLayoutConstraint *leftSupportButtonWidthAnchor;
+    NSLayoutConstraint *leftSupportButtonHeightAnchor;
+
+    // right
+    NSLayoutConstraint *rightPanelRightAnchor;
+    NSLayoutConstraint *rightPanelCenterYAnchor;
+    NSLayoutConstraint *rightPanelWidthAnchor;
+    NSLayoutConstraint *rightPanelHeightAnchor;
+
+    NSLayoutConstraint *rightPanelTitleLabelLeftAnchor;
+    NSLayoutConstraint *rightPanelTitleLabelTopAnchor;
+    NSLayoutConstraint *rightPanelTitleLabelWidthAnchor;
+    NSLayoutConstraint *rightPanelTitleLabelHeightAnchor;
+
+    NSLayoutConstraint *rightPanelUsernameTextFieldBackgroundLeftAnchor;
+    NSLayoutConstraint *rightPanelUsernameTextFieldBackgroundTopAnchor;
+    NSLayoutConstraint *rightPanelUsernameTextFieldBackgroundWidthAnchor;
+    NSLayoutConstraint *rightPanelUsernameTextFieldBackgroundHeightAnchor;
+    
+    NSLayoutConstraint *rightPanelUsernameTextFieldLeftAnchor;
+    NSLayoutConstraint *rightPanelUsernameTextFieldTopAnchor;
+    NSLayoutConstraint *rightPanelUsernameTextFieldWidthAnchor;
+    NSLayoutConstraint *rightPanelUsernameTextFieldHeightAnchor;
+    
+    NSLayoutConstraint *rightPanelForgotPhoneButtonCenterXAnchor;
+    NSLayoutConstraint *rightPanelForgotPhoneButtonTopAnchor;
+    NSLayoutConstraint *rightPanelForgotPhoneButtonWidthAnchor;
+    NSLayoutConstraint *rightPanelForgotPhoneButtonHeightAnchor;
 }
 
 @end
 
 @implementation ForgotPhoneController
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
-    CGFloat screenWidth = [VGPHelper getScreenWidth];
-    // CGFloat screenHeight = [VGPHelper getScreenHeight];
-    CGFloat width = LAYOUT_WIDTH < screenWidth ? LAYOUT_WIDTH : screenWidth - screenWidth * LAYOUT_OFFSET;
-    CGFloat height = (LAYOUT_HEIGHT / LAYOUT_WIDTH) * width;
     
     // ===================================
     
@@ -47,20 +120,12 @@
     imgLayout.layer.zPosition = 1;
     [self.view addSubview:imgLayout];
     imgLayout.translatesAutoresizingMaskIntoConstraints = NO;
-    [[imgLayout.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor] setActive:YES];
-    [[imgLayout.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor] setActive:YES];
-    [[imgLayout.widthAnchor constraintEqualToConstant:width+width*0.04] setActive:YES];
-    [[imgLayout.heightAnchor constraintEqualToConstant:height+width*0.04] setActive:YES];
     
     // create layout
     panel = [[UIView alloc] init];
     panel.layer.zPosition = 2;
     [self.view addSubview:panel];
     panel.translatesAutoresizingMaskIntoConstraints = NO;
-    [[panel.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor] setActive:YES];
-    [[panel.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor] setActive:YES];
-    [[panel.widthAnchor constraintEqualToConstant:width] setActive:YES];
-    [[panel.heightAnchor constraintEqualToConstant:height] setActive:YES];
     
     // close button
     rightCloseButton = [[UIButton alloc] init];
@@ -68,162 +133,332 @@
     [rightCloseButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-close" andType:@"tiff"] forState:UIControlStateNormal];
     [self.view addSubview:rightCloseButton];
     rightCloseButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [[rightCloseButton.rightAnchor constraintEqualToAnchor:panel.rightAnchor constant:width*0.04] setActive:YES];
-    [[rightCloseButton.topAnchor constraintEqualToAnchor:panel.topAnchor constant:-width*0.04] setActive:YES];
-    [[rightCloseButton.widthAnchor constraintEqualToConstant:width*0.08] setActive:YES];
-    [[rightCloseButton.heightAnchor constraintEqualToConstant:width*0.08] setActive:YES];
     [rightCloseButton addTarget:self action:@selector(rightCloseButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
+    // ===================================
+    
+    // left
+    leftPanel = [[UIView alloc] init];
+    [panel addSubview:leftPanel];
+    leftPanel.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    leftPanelImage = [[UIImageView alloc] initWithImage:[VGPHelper getUIImageWithImageName:@"img" andType:@"tiff"]];
+    [leftPanel addSubview:leftPanelImage];
+    leftPanelImage.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    // left back image
     leftBackButtonImg = [[UIButton alloc] init];
     leftBackButtonImg.layer.zPosition = 3;
-    [leftBackButtonImg setImage:[VGPHelper getUIImageWithImageName:@"btn-back" andType:@"tiff"] forState:UIControlStateNormal];
     [panel addSubview:leftBackButtonImg];
     leftBackButtonImg.translatesAutoresizingMaskIntoConstraints = NO;
-    [[leftBackButtonImg.leftAnchor constraintEqualToAnchor:panel.leftAnchor constant:width*.02] setActive:YES];
-    [[leftBackButtonImg.topAnchor constraintEqualToAnchor:panel.topAnchor constant:width*.02] setActive:YES];
-    [[leftBackButtonImg.widthAnchor constraintEqualToConstant:width*.03] setActive:YES];
-    [[leftBackButtonImg.heightAnchor constraintEqualToConstant:width*.04] setActive:YES];
+    [leftBackButtonImg addTarget:self action:@selector(leftBackButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
+    // left back text
     leftBackButtonText = [[UIButton alloc] init];
     leftBackButtonText.layer.zPosition = 3;
-    [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
     [leftBackButtonText setTitleColor:VGP_MAIN_TEXT_COLOR forState:UIControlStateNormal];
     leftBackButtonText.titleLabel.adjustsFontSizeToFitWidth = YES;
     [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_15];
     leftBackButtonText.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [panel addSubview:leftBackButtonText];
     leftBackButtonText.translatesAutoresizingMaskIntoConstraints = NO;
-    [[leftBackButtonText.topAnchor constraintEqualToAnchor:leftBackButtonImg.topAnchor constant:0] setActive:YES];
-    [[leftBackButtonText.leftAnchor constraintEqualToAnchor:leftBackButtonImg.rightAnchor constant:0] setActive:YES];
-    [[leftBackButtonText.widthAnchor constraintEqualToConstant:width*.5] setActive:YES];
-    [[leftBackButtonText.heightAnchor constraintEqualToAnchor:leftBackButtonImg.heightAnchor multiplier:1] setActive:YES];
-    
-    [leftBackButtonImg addTarget:self action:@selector(leftBackButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [leftBackButtonText addTarget:self action:@selector(leftBackButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
-    // ===================================
-    
-    // left
-    leftPanel = [[UIView alloc] init];
-    leftPanel.userInteractionEnabled = NO;
-    [panel addSubview:leftPanel];
-    
-    leftPanel.translatesAutoresizingMaskIntoConstraints = NO;
-    [[leftPanel.leftAnchor constraintEqualToAnchor:panel.leftAnchor] setActive:YES];
-    [[leftPanel.centerYAnchor constraintEqualToAnchor:panel.centerYAnchor] setActive:YES];
-    [[leftPanel.widthAnchor constraintEqualToAnchor:panel.widthAnchor multiplier:.43] setActive:YES];
-    [[leftPanel.heightAnchor constraintEqualToAnchor:panel.heightAnchor] setActive:YES];
-    
-    leftPanelImage = [[UIImageView alloc] initWithImage:[VGPHelper getUIImageWithImageName:@"img" andType:@"tiff"]];
-    [leftPanel addSubview:leftPanelImage];
-    
-    leftPanelImage.translatesAutoresizingMaskIntoConstraints = NO;
-    [[leftPanelImage.centerXAnchor constraintEqualToAnchor:leftPanel.centerXAnchor] setActive:YES];
-    [[leftPanelImage.topAnchor constraintEqualToAnchor:leftPanel.topAnchor constant:width*0.06] setActive:YES];
-    [[leftPanelImage.widthAnchor constraintEqualToAnchor:leftPanel.widthAnchor multiplier:0.8f] setActive:YES];
-    [[leftPanelImage.heightAnchor constraintEqualToAnchor:leftPanelImage.widthAnchor multiplier:1] setActive:YES];
+    leftSupportButton = [[UIButton alloc] init];
+    [leftPanel addSubview:leftSupportButton];
+    leftSupportButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [leftSupportButton addTarget:self action:@selector(leftSupportButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     // right
     rightPanel = [[UIView alloc] init];
     [panel addSubview:rightPanel];
-    
     rightPanel.translatesAutoresizingMaskIntoConstraints = NO;
-    [[rightPanel.rightAnchor constraintEqualToAnchor:panel.rightAnchor] setActive:YES];
-    [[rightPanel.centerYAnchor constraintEqualToAnchor:panel.centerYAnchor] setActive:YES];
-    [[rightPanel.widthAnchor constraintEqualToAnchor:panel.widthAnchor multiplier:.57] setActive:YES];
-    [[rightPanel.heightAnchor constraintEqualToAnchor:leftPanel.heightAnchor] setActive:YES];
     
-    rightPanelForgotPhoneText1Label = [[UILabel alloc] init];
-    rightPanelForgotPhoneText1Label.text = [VGPHelper localizationForString:@"forgot.right.phone.text1"];
-    rightPanelForgotPhoneText1Label.textColor = [UIColor blackColor];
-    rightPanelForgotPhoneText1Label.font = VGP_FONT_LABEL_13;
-    rightPanelForgotPhoneText1Label.numberOfLines = 0;
-    [rightPanelForgotPhoneText1Label setTextAlignment:NSTextAlignmentLeft];
-    [rightPanel addSubview:rightPanelForgotPhoneText1Label];
+    // USERNAME
+    rightPanelTitleLabel = [[UILabel alloc] init];
+    rightPanelTitleLabel.adjustsFontSizeToFitWidth = YES;
+    [rightPanelTitleLabel setFont:VGP_FONT_LABEL_10];
+    [rightPanelTitleLabel setTextColor:[UIColor grayColor]];
+    [rightPanelTitleLabel setTextAlignment:NSTextAlignmentLeft];
+    [rightPanel addSubview:rightPanelTitleLabel];
+    rightPanelTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     
-    rightPanelForgotPhoneText1Label.translatesAutoresizingMaskIntoConstraints = NO;
-    [[rightPanelForgotPhoneText1Label.topAnchor constraintEqualToAnchor:leftPanelImage.topAnchor constant:0] setActive:YES];
-    [[rightPanelForgotPhoneText1Label.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor] setActive:YES];
-    [[rightPanelForgotPhoneText1Label.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:.8] setActive:YES];
-    [[rightPanelForgotPhoneText1Label.heightAnchor constraintEqualToConstant:width*0.05] setActive:YES];
-    [rightPanelForgotPhoneText1Label setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+    // PHONE
+    rightPanelUsernameTextFieldBackground = [[UIImageView alloc] initWithImage:[VGPHelper getUIImageWithImageName:@"input" andType:@"tiff"]];
+    [rightPanel addSubview:rightPanelUsernameTextFieldBackground];
+    rightPanelUsernameTextFieldBackground.translatesAutoresizingMaskIntoConstraints = NO;
     
-    rightPanelForgotPhone1Button = [[UIButton alloc] init];
-    rightPanelForgotPhone1Button.layer.cornerRadius = 5;
-    rightPanelForgotPhone1Button.layer.borderWidth = 2;
-    rightPanelForgotPhone1Button.layer.borderColor = VGP_MAIN_TEXT_COLOR.CGColor;
+    rightPanelUsernameTextField = [[UITextField alloc] init];
+    rightPanelUsernameTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    if (@available(iOS 10.0, *)) rightPanelUsernameTextField.textContentType = UITextContentTypeTelephoneNumber;
+    rightPanelUsernameTextField.textColor = [UIColor blackColor];
+    rightPanelUsernameTextField.delegate = self;
+    [rightPanel addSubview:rightPanelUsernameTextField];
+    rightPanelUsernameTextField.translatesAutoresizingMaskIntoConstraints = NO;
     
-    [rightPanelForgotPhone1Button setTitle:[VGPHelper localizationForString:@"profile.protect.phone"] forState:UIControlStateNormal];
-    [rightPanelForgotPhone1Button setTitleColor:VGP_MAIN_TEXT_COLOR forState:UIControlStateNormal];
-    rightPanelForgotPhone1Button.titleLabel.adjustsFontSizeToFitWidth = YES;
-    rightPanelForgotPhone1Button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [rightPanel addSubview:rightPanelForgotPhone1Button];
-    
-    rightPanelForgotPhone1Button.translatesAutoresizingMaskIntoConstraints = NO;
-    [[rightPanelForgotPhone1Button.centerXAnchor constraintEqualToAnchor:rightPanelForgotPhoneText1Label.centerXAnchor] setActive:YES];
-    [[rightPanelForgotPhone1Button.topAnchor constraintEqualToAnchor:rightPanelForgotPhoneText1Label.bottomAnchor constant:width*0.02] setActive:YES];
-    [[rightPanelForgotPhone1Button.widthAnchor constraintEqualToAnchor:rightPanelForgotPhoneText1Label.widthAnchor multiplier:1] setActive:YES];
-    [[rightPanelForgotPhone1Button.heightAnchor constraintEqualToConstant:width*.077] setActive:YES];
-    
-    rightPanelForgotPhoneText1Label = [[UILabel alloc] init];
-    rightPanelForgotPhoneText1Label.text = [VGPHelper localizationForString:@"forgot.right.phone.text1"];
-    rightPanelForgotPhoneText1Label.textColor = [UIColor blackColor];
-    rightPanelForgotPhoneText1Label.font = VGP_FONT_LABEL_13;
-    rightPanelForgotPhoneText1Label.numberOfLines = 0;
-    [rightPanelForgotPhoneText1Label setTextAlignment:NSTextAlignmentLeft];
-    [rightPanel addSubview:rightPanelForgotPhoneText1Label];
-    
-    rightPanelForgotPhoneText1Label.translatesAutoresizingMaskIntoConstraints = NO;
-    [[rightPanelForgotPhoneText1Label.topAnchor constraintEqualToAnchor:leftPanelImage.topAnchor constant:0] setActive:YES];
-    [[rightPanelForgotPhoneText1Label.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor] setActive:YES];
-    [[rightPanelForgotPhoneText1Label.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:.8] setActive:YES];
-    [[rightPanelForgotPhoneText1Label.heightAnchor constraintEqualToConstant:width*0.05] setActive:YES];
-    [rightPanelForgotPhoneText1Label setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
-    
-    
-    rightPanelForgotPhone2Button = [[UIButton alloc] init];
-    [rightPanelForgotPhone2Button setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-forgot-byphone" andType:@"tiff"] forState:UIControlStateNormal];
-    [rightPanelForgotPhone2Button setTitle:[VGPHelper localizationForString:@"send"] forState:UIControlStateNormal];
-    [rightPanelForgotPhone2Button setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
-    rightPanelForgotPhone2Button.titleLabel.adjustsFontSizeToFitWidth = YES;
-    rightPanelForgotPhone2Button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    rightPanelForgotPhone2Button.contentEdgeInsets = UIEdgeInsetsMake(0, 50, 0, 0);
-    [rightPanel addSubview:rightPanelForgotPhone2Button];
-    
-    rightPanelForgotPhone2Button.translatesAutoresizingMaskIntoConstraints = NO;
-    [[rightPanelForgotPhone2Button.topAnchor constraintEqualToAnchor:rightPanelForgotPhone1Button.bottomAnchor constant:width*0.01] setActive:YES];
-    [[rightPanelForgotPhone2Button.leftAnchor constraintEqualToAnchor:rightPanelForgotPhone1Button.leftAnchor] setActive:YES];
-    [[rightPanelForgotPhone2Button.widthAnchor constraintEqualToAnchor:rightPanelForgotPhone1Button.widthAnchor multiplier:1] setActive:YES];
-    [[rightPanelForgotPhone2Button.heightAnchor constraintEqualToAnchor:rightPanelForgotPhone1Button.heightAnchor multiplier:1] setActive:YES];
-    
-    // events
-    [rightPanelForgotPhone1Button addTarget:self action:@selector(rightPanelForgotPhone1ButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [rightPanelForgotPhone2Button addTarget:self action:@selector(rightPanelForgotPhone2ButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    // BUTTON
+    rightPanelForgotPhoneButton = [[UIButton alloc] init];
+    [rightPanelForgotPhoneButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-orange-big" andType:@"tiff"] forState:UIControlStateNormal];
+    [rightPanelForgotPhoneButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
+    rightPanelForgotPhoneButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    [rightPanelForgotPhoneButton.titleLabel setFont:VGP_FONT_LABEL_15];
+    rightPanelForgotPhoneButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    [rightPanel addSubview:rightPanelForgotPhoneButton];
+    rightPanelForgotPhoneButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [rightPanelForgotPhoneButton addTarget:self action:@selector(rightPanelForgotPhoneButtonClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)updateUIText{
+- (void)updateUI {
+
+    CGFloat width = LAYOUT_WIDTH < VGP_SCREEN_WIDTH ? LAYOUT_WIDTH : VGP_SCREEN_WIDTH - VGP_SCREEN_WIDTH * LAYOUT_OFFSET;
+    CGFloat height = (LAYOUT_HEIGHT / LAYOUT_WIDTH) * width;
+    CGFloat padding = width * 0.02;
+    
+    // ===================================
+    
+    rightPanelUsernameTextField.layer.sublayerTransform = CATransform3DMakeTranslation(width*.02,0,0);
+    rightPanelUsernameTextField.layer.sublayerTransform = CATransform3DMakeTranslation(width*.02,0,0);
+    
+    // ===================================
+
+    // background
+    [imgLayoutCenterXAnchor setActive:NO];
+    [imgLayoutCenterYAnchor setActive:NO];
+    [imgLayoutWidthAnchor setActive:NO];
+    [imgLayoutHeightAnchor setActive:NO];
+    imgLayoutCenterXAnchor = [imgLayout.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor];
+    imgLayoutCenterYAnchor = [imgLayout.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor];
+    imgLayoutWidthAnchor = [imgLayout.widthAnchor constraintEqualToConstant:width+width*0.04];
+    imgLayoutHeightAnchor = [imgLayout.heightAnchor constraintEqualToConstant:height+width*0.04];
+    [imgLayoutCenterXAnchor setActive:YES];
+    [imgLayoutCenterYAnchor setActive:YES];
+    [imgLayoutWidthAnchor setActive:YES];
+    [imgLayoutHeightAnchor setActive:YES];
+    
+    // create layout
+    
+    [panelCenterXAnchor setActive:NO];
+    [panelCenterYAnchor setActive:NO];
+    [panelWidthAnchor setActive:NO];
+    [panelHeightAnchor setActive:NO];
+    panelCenterXAnchor = [panel.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor];
+    panelCenterYAnchor = [panel.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor];
+    panelWidthAnchor = [panel.widthAnchor constraintEqualToConstant:width];
+    panelHeightAnchor = [panel.heightAnchor constraintEqualToConstant:height];
+    [panelCenterXAnchor setActive:YES];
+    [panelCenterYAnchor setActive:YES];
+    [panelWidthAnchor setActive:YES];
+    [panelHeightAnchor setActive:YES];
+    
+    // close button
+    [rightCloseButtonRightAnchor setActive:NO];
+    [rightCloseButtonTopAnchor setActive:NO];
+    [rightCloseButtonWidthAnchor setActive:NO];
+    [rightCloseButtonHeightAnchor setActive:NO];
+    rightCloseButtonRightAnchor = [rightCloseButton.rightAnchor constraintEqualToAnchor:panel.rightAnchor constant:width*0.04];
+    rightCloseButtonTopAnchor = [rightCloseButton.topAnchor constraintEqualToAnchor:panel.topAnchor constant:-width*0.04];
+    rightCloseButtonWidthAnchor = [rightCloseButton.widthAnchor constraintEqualToConstant:width*0.08];
+    rightCloseButtonHeightAnchor = [rightCloseButton.heightAnchor constraintEqualToConstant:width*0.08];
+    [rightCloseButtonRightAnchor setActive:YES];
+    [rightCloseButtonTopAnchor setActive:YES];
+    [rightCloseButtonWidthAnchor setActive:YES];
+    [rightCloseButtonHeightAnchor setActive:YES];
+    
+    // ===================================
+
+    // left
+    [leftPanelLeftAnchor setActive:NO];
+    [leftPanelCenterYAnchor setActive:NO];
+    [leftPanelWidthAnchor setActive:NO];
+    [leftPanelHeightAnchor setActive:NO];
+    leftPanelLeftAnchor = [leftPanel.leftAnchor constraintEqualToAnchor:panel.leftAnchor];
+    leftPanelCenterYAnchor = [leftPanel.centerYAnchor constraintEqualToAnchor:panel.centerYAnchor];
+    leftPanelWidthAnchor = [leftPanel.widthAnchor constraintEqualToAnchor:panel.widthAnchor multiplier:.48];
+    leftPanelHeightAnchor = [leftPanel.heightAnchor constraintEqualToAnchor:panel.heightAnchor];
+    [leftPanelLeftAnchor setActive:YES];
+    [leftPanelCenterYAnchor setActive:YES];
+    [leftPanelWidthAnchor setActive:YES];
+    [leftPanelHeightAnchor setActive:YES];
+    
+    [leftPanelImageCenterXAnchor setActive:NO];
+    [leftPanelImageTopAnchor setActive:NO];
+    [leftPanelImageWidthAnchor setActive:NO];
+    [leftPanelImageHeightAnchor setActive:NO];
+    leftPanelImageCenterXAnchor = [leftPanelImage.centerXAnchor constraintEqualToAnchor:leftPanel.centerXAnchor];
+    leftPanelImageTopAnchor = [leftPanelImage.topAnchor constraintEqualToAnchor:leftPanel.topAnchor constant:width*0.03];
+    leftPanelImageWidthAnchor = [leftPanelImage.widthAnchor constraintEqualToAnchor:leftPanel.widthAnchor multiplier:0.68f];
+    leftPanelImageHeightAnchor = [leftPanelImage.heightAnchor constraintEqualToAnchor:leftPanelImage.widthAnchor multiplier:1];
+    [leftPanelImageCenterXAnchor setActive:YES];
+    [leftPanelImageTopAnchor setActive:YES];
+    [leftPanelImageWidthAnchor setActive:YES];
+    [leftPanelImageHeightAnchor setActive:YES];
+    
+    [leftBackButtonImgLeftAnchor setActive:NO];
+    [leftBackButtonImgTopAnchor setActive:NO];
+    [leftBackButtonImgWidthAnchor setActive:NO];
+    [leftBackButtonImgHeightAnchor setActive:NO];
+    leftBackButtonImgLeftAnchor = [leftBackButtonImg.leftAnchor constraintEqualToAnchor:panel.leftAnchor constant:padding];
+    leftBackButtonImgTopAnchor = [leftBackButtonImg.topAnchor constraintEqualToAnchor:panel.topAnchor constant:padding];
+    leftBackButtonImgWidthAnchor = [leftBackButtonImg.widthAnchor constraintEqualToConstant:width*.03];
+    leftBackButtonImgHeightAnchor = [leftBackButtonImg.heightAnchor constraintEqualToConstant:width*.04];
+    [leftBackButtonImgLeftAnchor setActive:YES];
+    [leftBackButtonImgTopAnchor setActive:YES];
+    [leftBackButtonImgWidthAnchor setActive:YES];
+    [leftBackButtonImgHeightAnchor setActive:YES];
+    
+    [leftBackButtonTextTopAnchor setActive:NO];
+    [leftBackButtonTextLeftAnchor setActive:NO];
+    [leftBackButtonTextWidthAnchor setActive:NO];
+    [leftBackButtonTextHeightAnchor setActive:NO];
+    leftBackButtonTextTopAnchor = [leftBackButtonText.topAnchor constraintEqualToAnchor:leftBackButtonImg.topAnchor constant:0];
+    leftBackButtonTextLeftAnchor = [leftBackButtonText.leftAnchor constraintEqualToAnchor:leftBackButtonImg.rightAnchor constant:0];
+    leftBackButtonTextWidthAnchor = [leftBackButtonText.widthAnchor constraintEqualToConstant:width*.5];
+    leftBackButtonTextHeightAnchor = [leftBackButtonText.heightAnchor constraintEqualToAnchor:leftBackButtonImg.heightAnchor multiplier:1];
+    [leftBackButtonTextTopAnchor setActive:YES];
+    [leftBackButtonTextLeftAnchor setActive:YES];
+    [leftBackButtonTextWidthAnchor setActive:YES];
+    [leftBackButtonTextHeightAnchor setActive:YES];
+    
+    [leftSupportButtonCenterXAnchor setActive:NO];
+    [leftSupportButtonTopAnchor setActive:NO];
+    [leftSupportButtonWidthAnchor setActive:NO];
+    [leftSupportButtonHeightAnchor setActive:NO];
+    leftSupportButtonTopAnchor = [leftSupportButton.topAnchor constraintEqualToAnchor:leftPanelImage.bottomAnchor constant:padding];
+    leftSupportButtonCenterXAnchor = [leftSupportButton.centerXAnchor constraintEqualToAnchor:leftPanel.centerXAnchor];
+    leftSupportButtonWidthAnchor = [leftSupportButton.widthAnchor constraintEqualToAnchor:leftPanelImage.widthAnchor multiplier:1];
+    leftSupportButtonHeightAnchor = [leftSupportButton.heightAnchor constraintEqualToAnchor:leftSupportButton.widthAnchor multiplier:.25];
+    [leftSupportButtonCenterXAnchor setActive:YES];
+    [leftSupportButtonTopAnchor setActive:YES];
+    [leftSupportButtonWidthAnchor setActive:YES];
+    [leftSupportButtonHeightAnchor setActive:YES];
+
+    // right
+    [rightPanelRightAnchor setActive:NO];
+    [rightPanelCenterYAnchor setActive:NO];
+    [rightPanelWidthAnchor setActive:NO];
+    [rightPanelHeightAnchor setActive:NO];
+    rightPanelRightAnchor = [rightPanel.rightAnchor constraintEqualToAnchor:panel.rightAnchor];
+    rightPanelCenterYAnchor = [rightPanel.centerYAnchor constraintEqualToAnchor:panel.centerYAnchor];
+    rightPanelWidthAnchor = [rightPanel.widthAnchor constraintEqualToAnchor:panel.widthAnchor multiplier:.52];
+    rightPanelHeightAnchor = [rightPanel.heightAnchor constraintEqualToAnchor:leftPanel.heightAnchor];
+    [rightPanelRightAnchor setActive:YES];
+    [rightPanelCenterYAnchor setActive:YES];
+    [rightPanelWidthAnchor setActive:YES];
+    [rightPanelHeightAnchor setActive:YES];
+    
+    // TITLE
+    [rightPanelTitleLabelLeftAnchor setActive:NO];
+    [rightPanelTitleLabelTopAnchor setActive:NO];
+    [rightPanelTitleLabelWidthAnchor setActive:NO];
+    [rightPanelTitleLabelHeightAnchor setActive:NO];
+    rightPanelTitleLabelLeftAnchor = [rightPanelTitleLabel.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor];
+    rightPanelTitleLabelTopAnchor = [rightPanelTitleLabel.topAnchor constraintEqualToAnchor:rightPanel.topAnchor constant:width*0.08];
+    rightPanelTitleLabelWidthAnchor = [rightPanelTitleLabel.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:.8];
+    rightPanelTitleLabelHeightAnchor = [rightPanelTitleLabel.heightAnchor constraintEqualToConstant:width*.077];
+    [rightPanelTitleLabelLeftAnchor setActive:YES];
+    [rightPanelTitleLabelTopAnchor setActive:YES];
+    [rightPanelTitleLabelWidthAnchor setActive:YES];
+    [rightPanelTitleLabelHeightAnchor setActive:YES];
+    
+    // USERNAME
+    [rightPanelUsernameTextFieldBackgroundLeftAnchor setActive:NO];
+    [rightPanelUsernameTextFieldBackgroundTopAnchor setActive:NO];
+    [rightPanelUsernameTextFieldBackgroundWidthAnchor setActive:NO];
+    [rightPanelUsernameTextFieldBackgroundHeightAnchor setActive:NO];
+    rightPanelUsernameTextFieldBackgroundLeftAnchor = [rightPanelUsernameTextFieldBackground.leftAnchor constraintEqualToAnchor:rightPanelTitleLabel.leftAnchor];
+    rightPanelUsernameTextFieldBackgroundTopAnchor = [rightPanelUsernameTextFieldBackground.topAnchor constraintEqualToAnchor:rightPanelTitleLabel.bottomAnchor constant:padding];
+    rightPanelUsernameTextFieldBackgroundWidthAnchor = [rightPanelUsernameTextFieldBackground.widthAnchor constraintEqualToAnchor:rightPanelTitleLabel.widthAnchor multiplier:1];
+    rightPanelUsernameTextFieldBackgroundHeightAnchor = [rightPanelUsernameTextFieldBackground.heightAnchor constraintEqualToAnchor:rightPanelTitleLabel.heightAnchor multiplier:1];
+    [rightPanelUsernameTextFieldBackgroundLeftAnchor setActive:YES];
+    [rightPanelUsernameTextFieldBackgroundTopAnchor setActive:YES];
+    [rightPanelUsernameTextFieldBackgroundWidthAnchor setActive:YES];
+    [rightPanelUsernameTextFieldBackgroundHeightAnchor setActive:YES];
+    
+    [rightPanelUsernameTextFieldLeftAnchor setActive:NO];
+    [rightPanelUsernameTextFieldTopAnchor setActive:NO];
+    [rightPanelUsernameTextFieldWidthAnchor setActive:NO];
+    [rightPanelUsernameTextFieldHeightAnchor setActive:NO];
+    rightPanelUsernameTextFieldLeftAnchor = [rightPanelUsernameTextField.leftAnchor constraintEqualToAnchor:rightPanelUsernameTextFieldBackground.leftAnchor];
+    rightPanelUsernameTextFieldTopAnchor = [rightPanelUsernameTextField.topAnchor constraintEqualToAnchor:rightPanelUsernameTextFieldBackground.topAnchor constant:1];
+    rightPanelUsernameTextFieldWidthAnchor = [rightPanelUsernameTextField.widthAnchor constraintEqualToAnchor:rightPanelUsernameTextFieldBackground.widthAnchor multiplier:1];
+    rightPanelUsernameTextFieldHeightAnchor = [rightPanelUsernameTextField.heightAnchor constraintEqualToAnchor:rightPanelUsernameTextFieldBackground.heightAnchor multiplier:1];
+    [rightPanelUsernameTextFieldLeftAnchor setActive:YES];
+    [rightPanelUsernameTextFieldTopAnchor setActive:YES];
+    [rightPanelUsernameTextFieldWidthAnchor setActive:YES];
+    [rightPanelUsernameTextFieldHeightAnchor setActive:YES];
+    
+    [rightPanelForgotPhoneButtonCenterXAnchor setActive:NO];
+    [rightPanelForgotPhoneButtonTopAnchor setActive:NO];
+    [rightPanelForgotPhoneButtonWidthAnchor setActive:NO];
+    [rightPanelForgotPhoneButtonHeightAnchor setActive:NO];
+    rightPanelForgotPhoneButtonCenterXAnchor = [rightPanelForgotPhoneButton.centerXAnchor constraintEqualToAnchor:rightPanelUsernameTextField.centerXAnchor];
+    rightPanelForgotPhoneButtonTopAnchor = [rightPanelForgotPhoneButton.topAnchor constraintEqualToAnchor:rightPanelUsernameTextField.bottomAnchor constant:padding];
+    rightPanelForgotPhoneButtonWidthAnchor = [rightPanelForgotPhoneButton.widthAnchor constraintEqualToAnchor:rightPanelUsernameTextField.widthAnchor multiplier:1];
+    rightPanelForgotPhoneButtonHeightAnchor = [rightPanelForgotPhoneButton.heightAnchor constraintEqualToAnchor:rightPanelUsernameTextField.heightAnchor multiplier:1];
+    [rightPanelForgotPhoneButtonCenterXAnchor setActive:YES];
+    [rightPanelForgotPhoneButtonTopAnchor setActive:YES];
+    [rightPanelForgotPhoneButtonWidthAnchor setActive:YES];
+    [rightPanelForgotPhoneButtonHeightAnchor setActive:YES];
+    
+    if(SHOW_BACK_BUTTON) {
+        leftBackButtonImg.hidden = NO;
+        leftBackButtonText.hidden = NO;
+    } else {
+        leftBackButtonImg.hidden = YES;
+        leftBackButtonText.hidden = YES;
+    }
+}
+
+- (void)updateUIText {
+    [leftBackButtonImg setImage:[VGPHelper getUIImageWithImageName:@"btn-back" andType:@"tiff"] forState:UIControlStateNormal];
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
-    rightPanelForgotPhoneText1Label.text = [VGPHelper localizationForString:@"forgot.right.phone.text1"];
-    [rightPanelForgotPhone1Button setTitle:[VGPHelper localizationForString:@"profile.protect.phone"] forState:UIControlStateNormal];
-    [rightPanelForgotPhone2Button setTitle:[VGPHelper localizationForString:@"send"] forState:UIControlStateNormal];
+    [leftSupportButton setImage:[VGPHelper getUIImageWithImageName:[NSString stringWithFormat:@"btn-support-%@", [UIData getLocalization]] andType:@"tiff"] forState:UIControlStateNormal];
+    
+    rightPanelTitleLabel.font = VGP_FONT_LABEL_13;
+    rightPanelUsernameTextField.font = VGP_FONT_LABEL_13;
+    rightPanelTitleLabel.text = @"xxxxxxxxxxxxxxxxx";
+    
+    rightPanelUsernameTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[VGPHelper localizationForString:@"login.right.username"] attributes:@ { NSForegroundColorAttributeName: [UIColor lightGrayColor], NSFontAttributeName : VGP_FONT_LABEL_13 }];
+    
+    [rightPanelForgotPhoneButton setTitle:[VGPHelper localizationForString:@"send"] forState:UIControlStateNormal];
+    [super updateUIText];
 }
 
-- (void)rightPanelForgotPhone1ButtonClick{
-    MyLog(@"rightPanelForgotPhone1ButtonClick");
-    [self composeSMS];
+- (void)viewDidAppear:(BOOL)animated {
+    rightPanelUsernameTextField.text = @"";
 }
 
-- (void)rightPanelForgotPhone2ButtonClick{
-    MyLog(@"rightPanelForgotPhone2ButtonClick");
-    [self composeSMS];
-}
-
-- (void)composeSMS{
-    NSString *phone = @"";
-    NSString *sendMessage = @"FORGOT PASSWORD";
-    NSString *sms = [NSString stringWithFormat:@"sms:%@&body=%@", phone, sendMessage];
+- (void)rightPanelForgotPhoneButtonClick {
+    NSArray* contentArr = [[UIData getPhoneChangeSMSMessage] componentsSeparatedByString:@":"];
+    NSString* messContent = [contentArr objectAtIndex:0];
+    NSString* phoneContent = [contentArr objectAtIndex:1];
+    NSString *username = [rightPanelUsernameTextField text];
+    
+    messContent = [messContent stringByReplacingOccurrencesOfString:@"[username]" withString:username];
+    
+    NSString *sms = [NSString stringWithFormat:@"sms:%@&body=%@", phoneContent, messContent];
     NSString *url = [sms stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+}
+
+#pragma mark - TextField Delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    MyLog(@"textField %@", textField);
+    [textField resignFirstResponder];
+    if(textField == rightPanelUsernameTextField) [self rightPanelForgotPhoneButtonClick];
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [super textFieldDidBeginEditing:textField];
+    if(textField == rightPanelUsernameTextField)
+        textField.returnKeyType = UIReturnKeyNext;
+    else
+        textField.returnKeyType = UIReturnKeySend;
+}
+
+- (void)cancelInput:(UITapGestureRecognizer *)gesture {
+    [rightPanelUsernameTextField resignFirstResponder];
 }
 
 @end

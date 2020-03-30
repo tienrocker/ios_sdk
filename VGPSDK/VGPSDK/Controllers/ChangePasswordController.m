@@ -1,19 +1,20 @@
 //
-//  ForgotController.m
+//  ChangePasswordController.m
 //  VGPSDK
 //
 //  Created by  Tien Tran on 2/11/20.
 //  Copyright © 2020  Tien Tran. All rights reserved.
 //
 
-#import "ForgotController.h"
-#import "VGPUI.h"
+#import "ChangePasswordController.h"
 #import "VGPInterface.h"
 #import "VGPHelper.h"
-#import "VGPLogger.h"
+#import "VGPUI.h"
+#import "UIData.h"
 #import "VGPAPI.h"
+#import "VGPFBSDKLoginManager.h"
 
-@interface ForgotController () {
+@interface ChangePasswordController () {
     UIImageView *imgLayout;
     UIView *panel;
     UIButton *rightCloseButton;
@@ -25,10 +26,11 @@
     UIButton *leftSupportButton;
     
     UIView *rightPanel;
-    UILabel *rightPanelForgotAccountLabel;
-    
-    UIButton *rightPanelForgotByPhoneButton;
-    UIButton *rightPanelForgotByEmailButton;
+    UIImageView *rightPanelOldPasswordTextFieldBackground;
+    UITextField *rightPanelOldPasswordTextField;
+    UIImageView *rightPanelNewPasswordTextFieldBackground;
+    UITextField *rightPanelNewPasswordTextField;
+    UIButton *rightPanelChangePasswordButton;
     
     // ===================================
 
@@ -83,25 +85,36 @@
     NSLayoutConstraint *rightPanelCenterYAnchor;
     NSLayoutConstraint *rightPanelWidthAnchor;
     NSLayoutConstraint *rightPanelHeightAnchor;
+
+    NSLayoutConstraint *rightPanelOldPasswordTextFieldBackgroundLeftAnchor;
+    NSLayoutConstraint *rightPanelOldPasswordTextFieldBackgroundTopAnchor;
+    NSLayoutConstraint *rightPanelOldPasswordTextFieldBackgroundWidthAnchor;
+    NSLayoutConstraint *rightPanelOldPasswordTextFieldBackgroundHeightAnchor;
     
-    NSLayoutConstraint *rightPanelForgotAccountLabelLeftAnchor;
-    NSLayoutConstraint *rightPanelForgotAccountLabelTopAnchor;
-    NSLayoutConstraint *rightPanelForgotAccountLabelWidthAnchor;
-    NSLayoutConstraint *rightPanelForgotAccountLabelHeightAnchor;
-    
-    NSLayoutConstraint *rightPanelForgotByPhoneButtonLeftAnchor;
-    NSLayoutConstraint *rightPanelForgotByPhoneButtonTopAnchor;
-    NSLayoutConstraint *rightPanelForgotByPhoneButtonWidthAnchor;
-    NSLayoutConstraint *rightPanelForgotByPhoneButtonHeightAnchor;
-    
-    NSLayoutConstraint *rightPanelForgotByEmailButtonLeftAnchor;
-    NSLayoutConstraint *rightPanelForgotByEmailButtonTopAnchor;
-    NSLayoutConstraint *rightPanelForgotByEmailButtonWidthAnchor;
-    NSLayoutConstraint *rightPanelForgotByEmailButtonHeightAnchor;
+    NSLayoutConstraint *rightPanelOldPasswordTextFieldLeftAnchor;
+    NSLayoutConstraint *rightPanelOldPasswordTextFieldTopAnchor;
+    NSLayoutConstraint *rightPanelOldPasswordTextFieldWidthAnchor;
+    NSLayoutConstraint *rightPanelOldPasswordTextFieldHeightAnchor;
+
+    NSLayoutConstraint *rightPanelNewPasswordTextFieldBackgroundCenterXAnchor;
+    NSLayoutConstraint *rightPanelNewPasswordTextFieldBackgroundTopAnchor;
+    NSLayoutConstraint *rightPanelNewPasswordTextFieldBackgroundWidthAnchor;
+    NSLayoutConstraint *rightPanelNewPasswordTextFieldBackgroundHeightAnchor;
+
+    NSLayoutConstraint *rightPanelNewPasswordTextFieldCenterXAnchor;
+    NSLayoutConstraint *rightPanelNewPasswordTextFieldTopAnchor;
+    NSLayoutConstraint *rightPanelNewPasswordTextFieldWidthAnchor;
+    NSLayoutConstraint *rightPanelNewPasswordTextFieldHeightAnchor;
+
+    NSLayoutConstraint *rightPanelChangePasswordButtonCenterXAnchor;
+    NSLayoutConstraint *rightPanelChangePasswordButtonTopAnchor;
+    NSLayoutConstraint *rightPanelChangePasswordButtonWidthAnchor;
+    NSLayoutConstraint *rightPanelChangePasswordButtonHeightAnchor;
 }
+
 @end
 
-@implementation ForgotController
+@implementation ChangePasswordController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -167,37 +180,54 @@
     [panel addSubview:rightPanel];
     rightPanel.translatesAutoresizingMaskIntoConstraints = NO;
     
-    // FORGOT TEXT
-    rightPanelForgotAccountLabel = [[UILabel alloc] init];
-    rightPanelForgotAccountLabel.textColor = [UIColor blackColor];
-    [rightPanel addSubview:rightPanelForgotAccountLabel];
-    rightPanelForgotAccountLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    // OLD PASSWORD
+    rightPanelOldPasswordTextFieldBackground = [[UIImageView alloc] initWithImage:[VGPHelper getUIImageWithImageName:@"input" andType:@"tiff"]];
+    [rightPanel addSubview:rightPanelOldPasswordTextFieldBackground];
+    rightPanelOldPasswordTextFieldBackground.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    rightPanelOldPasswordTextField = [[UITextField alloc] init];
+    rightPanelOldPasswordTextField.secureTextEntry = YES;
+    if (@available(iOS 11.0, *)) rightPanelOldPasswordTextField.textContentType = UITextContentTypePassword;
+    rightPanelOldPasswordTextField.textColor = [UIColor blackColor];
+    rightPanelOldPasswordTextField.delegate = self;
+    [rightPanel addSubview:rightPanelOldPasswordTextField];
+    rightPanelOldPasswordTextField.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    // NEW PASSWORD
+    rightPanelNewPasswordTextFieldBackground = [[UIImageView alloc] initWithImage:[VGPHelper getUIImageWithImageName:@"input" andType:@"tiff"]];
+    [rightPanel addSubview:rightPanelNewPasswordTextFieldBackground];
+    rightPanelNewPasswordTextFieldBackground.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    rightPanelNewPasswordTextField = [[UITextField alloc] init];
+    rightPanelNewPasswordTextField.secureTextEntry = YES;
+    if (@available(iOS 12.0, *)) rightPanelNewPasswordTextField.textContentType = UITextContentTypeNewPassword;
+    rightPanelNewPasswordTextField.textColor = [UIColor blackColor];
+    rightPanelNewPasswordTextField.delegate = self;
+    [rightPanel addSubview:rightPanelNewPasswordTextField];
+    rightPanelNewPasswordTextField.translatesAutoresizingMaskIntoConstraints = NO;
     
     // BUTTON
-    rightPanelForgotByPhoneButton = [[UIButton alloc] init];
-    [rightPanelForgotByPhoneButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-forgot-byphone" andType:@"tiff"] forState:UIControlStateNormal];
-    [rightPanelForgotByPhoneButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
-    rightPanelForgotByPhoneButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    rightPanelForgotByPhoneButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [rightPanel addSubview:rightPanelForgotByPhoneButton];
-    rightPanelForgotByPhoneButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [rightPanelForgotByPhoneButton addTarget:self action:@selector(rightPanelForgotByPhoneButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    rightPanelForgotByEmailButton = [[UIButton alloc] init];
-    [rightPanelForgotByEmailButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-forgot-byemail" andType:@"tiff"] forState:UIControlStateNormal];
-    [rightPanelForgotByEmailButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
-    rightPanelForgotByEmailButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    rightPanelForgotByEmailButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [rightPanel addSubview:rightPanelForgotByEmailButton];
-    rightPanelForgotByEmailButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [rightPanelForgotByEmailButton addTarget:self action:@selector(rightPanelForgotByEmailButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    rightPanelChangePasswordButton = [[UIButton alloc] init];
+    [rightPanelChangePasswordButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-orange-big" andType:@"tiff"] forState:UIControlStateNormal];
+    [rightPanelChangePasswordButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
+    rightPanelChangePasswordButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    [rightPanelChangePasswordButton.titleLabel setFont:VGP_FONT_LABEL_15];
+    rightPanelChangePasswordButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    [rightPanel addSubview:rightPanelChangePasswordButton];
+    rightPanelChangePasswordButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [rightPanelChangePasswordButton addTarget:self action:@selector(rightPanelChangePasswordButtonClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)updateUI {
-    
+
     CGFloat width = LAYOUT_WIDTH < VGP_SCREEN_WIDTH ? LAYOUT_WIDTH : VGP_SCREEN_WIDTH - VGP_SCREEN_WIDTH * LAYOUT_OFFSET;
     CGFloat height = (LAYOUT_HEIGHT / LAYOUT_WIDTH) * width;
     CGFloat padding = width * 0.02;
+    
+    // ===================================
+    
+    rightPanelOldPasswordTextField.layer.sublayerTransform = CATransform3DMakeTranslation(width*.02,0,0);
+    rightPanelNewPasswordTextField.layer.sublayerTransform = CATransform3DMakeTranslation(width*.02,0,0);
     
     // ===================================
 
@@ -326,69 +356,95 @@
     [rightPanelWidthAnchor setActive:YES];
     [rightPanelHeightAnchor setActive:YES];
     
-    // FOTGOT TEXT
-    [rightPanelForgotAccountLabelLeftAnchor setActive:NO];
-    [rightPanelForgotAccountLabelTopAnchor setActive:NO];
-    [rightPanelForgotAccountLabelWidthAnchor setActive:NO];
-    [rightPanelForgotAccountLabelHeightAnchor setActive:NO];
-    rightPanelForgotAccountLabelLeftAnchor = [rightPanelForgotAccountLabel.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor];
-    rightPanelForgotAccountLabelTopAnchor = [rightPanelForgotAccountLabel.topAnchor constraintEqualToAnchor:rightPanel.topAnchor constant:padding*3];
-    rightPanelForgotAccountLabelWidthAnchor = [rightPanelForgotAccountLabel.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:1];
-    rightPanelForgotAccountLabelHeightAnchor = [rightPanelForgotAccountLabel.heightAnchor constraintEqualToConstant:padding*2];
-    [rightPanelForgotAccountLabelLeftAnchor setActive:YES];
-    [rightPanelForgotAccountLabelTopAnchor setActive:YES];
-    [rightPanelForgotAccountLabelWidthAnchor setActive:YES];
-    [rightPanelForgotAccountLabelHeightAnchor setActive:YES];
+    // username
+    [rightPanelOldPasswordTextFieldBackgroundLeftAnchor setActive:NO];
+    [rightPanelOldPasswordTextFieldBackgroundTopAnchor setActive:NO];
+    [rightPanelOldPasswordTextFieldBackgroundWidthAnchor setActive:NO];
+    [rightPanelOldPasswordTextFieldBackgroundHeightAnchor setActive:NO];
+    rightPanelOldPasswordTextFieldBackgroundLeftAnchor = [rightPanelOldPasswordTextFieldBackground.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor];
+    rightPanelOldPasswordTextFieldBackgroundTopAnchor = [rightPanelOldPasswordTextFieldBackground.topAnchor constraintEqualToAnchor:rightPanel.topAnchor constant:width*0.12];
+    rightPanelOldPasswordTextFieldBackgroundWidthAnchor = [rightPanelOldPasswordTextFieldBackground.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:.8];
+    rightPanelOldPasswordTextFieldBackgroundHeightAnchor = [rightPanelOldPasswordTextFieldBackground.heightAnchor constraintEqualToConstant:width*.077];
+    [rightPanelOldPasswordTextFieldBackgroundLeftAnchor setActive:YES];
+    [rightPanelOldPasswordTextFieldBackgroundTopAnchor setActive:YES];
+    [rightPanelOldPasswordTextFieldBackgroundWidthAnchor setActive:YES];
+    [rightPanelOldPasswordTextFieldBackgroundHeightAnchor setActive:YES];
     
-    // BUTTON
-    [rightPanelForgotByPhoneButtonLeftAnchor setActive:NO];
-    [rightPanelForgotByPhoneButtonTopAnchor setActive:NO];
-    [rightPanelForgotByPhoneButtonWidthAnchor setActive:NO];
-    [rightPanelForgotByPhoneButtonHeightAnchor setActive:NO];
-    rightPanelForgotByPhoneButtonLeftAnchor = [rightPanelForgotByPhoneButton.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor];
-    rightPanelForgotByPhoneButtonTopAnchor = [rightPanelForgotByPhoneButton.topAnchor constraintEqualToAnchor:rightPanelForgotAccountLabel.bottomAnchor constant:padding];
-    rightPanelForgotByPhoneButtonWidthAnchor = [rightPanelForgotByPhoneButton.widthAnchor constraintEqualToAnchor:rightPanelForgotAccountLabel.widthAnchor multiplier:.8];
-    rightPanelForgotByPhoneButtonHeightAnchor = [rightPanelForgotByPhoneButton.heightAnchor constraintEqualToConstant:width*.077];
-    [rightPanelForgotByPhoneButtonLeftAnchor setActive:YES];
-    [rightPanelForgotByPhoneButtonTopAnchor setActive:YES];
-    [rightPanelForgotByPhoneButtonWidthAnchor setActive:YES];
-    [rightPanelForgotByPhoneButtonHeightAnchor setActive:YES];
+    [rightPanelOldPasswordTextFieldLeftAnchor setActive:NO];
+    [rightPanelOldPasswordTextFieldTopAnchor setActive:NO];
+    [rightPanelOldPasswordTextFieldWidthAnchor setActive:NO];
+    [rightPanelOldPasswordTextFieldHeightAnchor setActive:NO];
+    rightPanelOldPasswordTextFieldLeftAnchor = [rightPanelOldPasswordTextField.leftAnchor constraintEqualToAnchor:rightPanelOldPasswordTextFieldBackground.leftAnchor];
+    rightPanelOldPasswordTextFieldTopAnchor = [rightPanelOldPasswordTextField.topAnchor constraintEqualToAnchor:rightPanelOldPasswordTextFieldBackground.topAnchor constant:1];
+    rightPanelOldPasswordTextFieldWidthAnchor = [rightPanelOldPasswordTextField.widthAnchor constraintEqualToAnchor:rightPanelOldPasswordTextFieldBackground.widthAnchor multiplier:1];
+    rightPanelOldPasswordTextFieldHeightAnchor = [rightPanelOldPasswordTextField.heightAnchor constraintEqualToAnchor:rightPanelOldPasswordTextFieldBackground.heightAnchor multiplier:1];
+    [rightPanelOldPasswordTextFieldLeftAnchor setActive:YES];
+    [rightPanelOldPasswordTextFieldTopAnchor setActive:YES];
+    [rightPanelOldPasswordTextFieldWidthAnchor setActive:YES];
+    [rightPanelOldPasswordTextFieldHeightAnchor setActive:YES];
     
-    [rightPanelForgotByEmailButtonLeftAnchor setActive:NO];
-    [rightPanelForgotByEmailButtonTopAnchor setActive:NO];
-    [rightPanelForgotByEmailButtonWidthAnchor setActive:NO];
-    [rightPanelForgotByEmailButtonHeightAnchor setActive:NO];
-    rightPanelForgotByEmailButtonLeftAnchor = [rightPanelForgotByEmailButton.leftAnchor constraintEqualToAnchor:rightPanelForgotByPhoneButton.leftAnchor];
-    rightPanelForgotByEmailButtonTopAnchor = [rightPanelForgotByEmailButton.topAnchor constraintEqualToAnchor:rightPanelForgotByPhoneButton.bottomAnchor constant:padding];
-    rightPanelForgotByEmailButtonWidthAnchor = [rightPanelForgotByEmailButton.widthAnchor constraintEqualToAnchor:rightPanelForgotByPhoneButton.widthAnchor multiplier:1];
-    rightPanelForgotByEmailButtonHeightAnchor = [rightPanelForgotByEmailButton.heightAnchor constraintEqualToAnchor:rightPanelForgotByPhoneButton.heightAnchor multiplier:1];
-    [rightPanelForgotByEmailButtonLeftAnchor setActive:YES];
-    [rightPanelForgotByEmailButtonTopAnchor setActive:YES];
-    [rightPanelForgotByEmailButtonWidthAnchor setActive:YES];
-    [rightPanelForgotByEmailButtonHeightAnchor setActive:YES];
+    // password
+    [rightPanelNewPasswordTextFieldBackgroundCenterXAnchor setActive:NO];
+    [rightPanelNewPasswordTextFieldBackgroundTopAnchor setActive:NO];
+    [rightPanelNewPasswordTextFieldBackgroundWidthAnchor setActive:NO];
+    [rightPanelNewPasswordTextFieldBackgroundHeightAnchor setActive:NO];
+    rightPanelNewPasswordTextFieldBackgroundCenterXAnchor = [rightPanelNewPasswordTextFieldBackground.centerXAnchor constraintEqualToAnchor:rightPanelOldPasswordTextField.centerXAnchor];
+    rightPanelNewPasswordTextFieldBackgroundTopAnchor = [rightPanelNewPasswordTextFieldBackground.topAnchor constraintEqualToAnchor:rightPanelOldPasswordTextField.bottomAnchor constant:padding];
+    rightPanelNewPasswordTextFieldBackgroundWidthAnchor = [rightPanelNewPasswordTextFieldBackground.widthAnchor constraintEqualToAnchor:rightPanelOldPasswordTextField.widthAnchor multiplier:1];
+    rightPanelNewPasswordTextFieldBackgroundHeightAnchor = [rightPanelNewPasswordTextFieldBackground.heightAnchor constraintEqualToAnchor:rightPanelOldPasswordTextField.heightAnchor multiplier:1];
+    [rightPanelNewPasswordTextFieldBackgroundCenterXAnchor setActive:YES];
+    [rightPanelNewPasswordTextFieldBackgroundTopAnchor setActive:YES];
+    [rightPanelNewPasswordTextFieldBackgroundWidthAnchor setActive:YES];
+    [rightPanelNewPasswordTextFieldBackgroundHeightAnchor setActive:YES];
+    
+    [rightPanelNewPasswordTextFieldCenterXAnchor setActive:NO];
+    [rightPanelNewPasswordTextFieldTopAnchor setActive:NO];
+    [rightPanelNewPasswordTextFieldWidthAnchor setActive:NO];
+    [rightPanelNewPasswordTextFieldHeightAnchor setActive:NO];
+    rightPanelNewPasswordTextFieldCenterXAnchor = [rightPanelNewPasswordTextField.centerXAnchor constraintEqualToAnchor:rightPanelNewPasswordTextFieldBackground.centerXAnchor];
+    rightPanelNewPasswordTextFieldTopAnchor = [rightPanelNewPasswordTextField.topAnchor constraintEqualToAnchor:rightPanelNewPasswordTextFieldBackground.topAnchor constant:1];
+    rightPanelNewPasswordTextFieldWidthAnchor = [rightPanelNewPasswordTextField.widthAnchor constraintEqualToAnchor:rightPanelNewPasswordTextFieldBackground.widthAnchor multiplier:1];
+    rightPanelNewPasswordTextFieldHeightAnchor = [rightPanelNewPasswordTextField.heightAnchor constraintEqualToAnchor:rightPanelNewPasswordTextFieldBackground.heightAnchor multiplier:1];
+    [rightPanelNewPasswordTextFieldCenterXAnchor setActive:YES];
+    [rightPanelNewPasswordTextFieldTopAnchor setActive:YES];
+    [rightPanelNewPasswordTextFieldWidthAnchor setActive:YES];
+    [rightPanelNewPasswordTextFieldHeightAnchor setActive:YES];
+    
+    [rightPanelChangePasswordButtonCenterXAnchor setActive:NO];
+    [rightPanelChangePasswordButtonTopAnchor setActive:NO];
+    [rightPanelChangePasswordButtonWidthAnchor setActive:NO];
+    [rightPanelChangePasswordButtonHeightAnchor setActive:NO];
+    rightPanelChangePasswordButtonCenterXAnchor = [rightPanelChangePasswordButton.centerXAnchor constraintEqualToAnchor:rightPanelNewPasswordTextField.centerXAnchor];
+    rightPanelChangePasswordButtonTopAnchor = [rightPanelChangePasswordButton.topAnchor constraintEqualToAnchor:rightPanelNewPasswordTextField.bottomAnchor constant:padding];
+    rightPanelChangePasswordButtonWidthAnchor = [rightPanelChangePasswordButton.widthAnchor constraintEqualToAnchor:rightPanelNewPasswordTextField.widthAnchor multiplier:1];
+    rightPanelChangePasswordButtonHeightAnchor = [rightPanelChangePasswordButton.heightAnchor constraintEqualToAnchor:rightPanelNewPasswordTextField.heightAnchor multiplier:1];
+    [rightPanelChangePasswordButtonCenterXAnchor setActive:YES];
+    [rightPanelChangePasswordButtonTopAnchor setActive:YES];
+    [rightPanelChangePasswordButtonWidthAnchor setActive:YES];
+    [rightPanelChangePasswordButtonHeightAnchor setActive:YES];
+    
+    if(SHOW_BACK_BUTTON) {
+        leftBackButtonImg.hidden = NO;
+        leftBackButtonText.hidden = NO;
+    } else {
+        leftBackButtonImg.hidden = YES;
+        leftBackButtonText.hidden = YES;
+    }
     
     // iphone SE
-    if(width <= 320) {
+    if(VGP_SCREEN_WIDTH <= 320) {
         [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_10];
-        [rightPanelForgotByPhoneButton.titleLabel setFont:VGP_FONT_LABEL_10];
-        [rightPanelForgotByEmailButton.titleLabel setFont:VGP_FONT_LABEL_08];
     }
     // iphone 6 - 6s - 7 - 8 - X
-    else if(width > 320 && width <= 375) {
+    else if(VGP_SCREEN_WIDTH > 320 && VGP_SCREEN_WIDTH <= 375) {
         [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_13];
-        [rightPanelForgotByPhoneButton.titleLabel setFont:VGP_FONT_LABEL_13];
-        [rightPanelForgotByEmailButton.titleLabel setFont:VGP_FONT_LABEL_10];
     }
     // iphone 7+ - 8+
-    else if(width > 375 && width <= 414) {
+    else if(VGP_SCREEN_WIDTH > 375 && VGP_SCREEN_WIDTH <= 414) {
         [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_15];
-        [rightPanelForgotByPhoneButton.titleLabel setFont:VGP_FONT_LABEL_13];
-        [rightPanelForgotByEmailButton.titleLabel setFont:VGP_FONT_LABEL_10];
     }
     else {
         [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_15];
-        [rightPanelForgotByPhoneButton.titleLabel setFont:VGP_FONT_LABEL_15];
-        [rightPanelForgotByEmailButton.titleLabel setFont:VGP_FONT_LABEL_13];
     }
 }
 
@@ -397,17 +453,56 @@
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
     [leftSupportButton setImage:[VGPHelper getUIImageWithImageName:[NSString stringWithFormat:@"btn-support-%@", [UIData getLocalization]] andType:@"tiff"] forState:UIControlStateNormal];
     
-    rightPanelForgotAccountLabel.text = [VGPHelper localizationForString:@"profile.protect.text"];
-    [rightPanelForgotByPhoneButton setTitle:[VGPHelper localizationForString:@"profile.protect.phone"] forState:UIControlStateNormal];
-    [rightPanelForgotByEmailButton setTitle:[VGPHelper localizationForString:@"profile.protect.email"] forState:UIControlStateNormal];
+    rightPanelOldPasswordTextField.font = VGP_FONT_LABEL_13;
+    rightPanelNewPasswordTextField.font = VGP_FONT_LABEL_13;
+    
+    rightPanelOldPasswordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[VGPHelper localizationForString:@"profile.old_password"] attributes:@ { NSForegroundColorAttributeName: [UIColor lightGrayColor], NSFontAttributeName : VGP_FONT_LABEL_13 }];
+    rightPanelNewPasswordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[VGPHelper localizationForString:@"profile.new_password"] attributes:@ { NSForegroundColorAttributeName: [UIColor lightGrayColor], NSFontAttributeName : VGP_FONT_LABEL_13 }];
+    
+    [rightPanelChangePasswordButton setTitle:[VGPHelper localizationForString:@"update"] forState:UIControlStateNormal];
+    [super updateUIText];
 }
 
-- (void)rightPanelForgotByPhoneButtonClick {
-    [[VGPUI sharedInstance] showForgotPhoneController];
+- (void)rightPanelChangePasswordButtonClick {
+    [self showLoadingView];
+    
+    NSString *old_password = [rightPanelOldPasswordTextField text];
+    NSString *new_password = [rightPanelNewPasswordTextField text];
+    
+    [VGPAPI changePassword:old_password password:new_password success:^(id  _Nonnull responseObject) {
+        [self hideLoadingView];
+        self->rightPanelOldPasswordTextField.text = @"";
+        self->rightPanelNewPasswordTextField.text = @"";
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"notification"] message:[VGPHelper localizationForString:@"update.success"] handler:^(UIAlertAction * _Nonnull action) {
+            [[VGPInterface sharedInstance] logoutGame];
+        }];
+    } failure:^(NSError * _Nonnull error) {
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[error localizedDescription]];
+        [self hideLoadingView];
+    }];
 }
 
-- (void)rightPanelForgotByEmailButtonClick {
+#pragma mark - TextField Delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    MyLog(@"textField %@", textField);
+    [textField resignFirstResponder];
+    if(textField == rightPanelOldPasswordTextField) [rightPanelNewPasswordTextField becomeFirstResponder];
+    if(textField == rightPanelNewPasswordTextField) [self rightPanelChangePasswordButtonClick];
+    return YES;
+}
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [super textFieldDidBeginEditing:textField];
+    if(textField == rightPanelNewPasswordTextField) {
+        textField.returnKeyType = UIReturnKeySend;
+    } else {
+        textField.returnKeyType = UIReturnKeyNext;
+    }
+}
+
+- (void)cancelInput:(UITapGestureRecognizer *)gesture {
+    [rightPanelOldPasswordTextField resignFirstResponder];
+    [rightPanelNewPasswordTextField resignFirstResponder];
 }
 
 @end

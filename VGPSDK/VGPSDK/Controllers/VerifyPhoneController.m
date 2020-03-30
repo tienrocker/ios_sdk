@@ -35,12 +35,10 @@
 
 @implementation VerifyPhoneController
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
-    CGFloat screenWidth = [VGPHelper getScreenWidth];
-    // CGFloat screenHeight = [VGPHelper getScreenHeight];
-    CGFloat width = LAYOUT_WIDTH < screenWidth ? LAYOUT_WIDTH : screenWidth - screenWidth * LAYOUT_OFFSET;
+    CGFloat width = LAYOUT_WIDTH < VGP_SCREEN_WIDTH ? LAYOUT_WIDTH : VGP_SCREEN_WIDTH - VGP_SCREEN_WIDTH * LAYOUT_OFFSET;
     CGFloat height = (LAYOUT_HEIGHT / LAYOUT_WIDTH) * width;
     
     // ===================================
@@ -193,16 +191,16 @@
     [rightPanelResendButton addTarget:self action:@selector(rightPanelResendButtonClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [rightPanelCodeTextField becomeFirstResponder];
 }
 
-- (void)updateUI{
+- (void)updateUI {
     
 }
 
-- (void)updateUIText{
+- (void)updateUIText {
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
     rightPanelCodeTextField.placeholder = [VGPHelper localizationForString:@"verify.code"];
     [rightPanelVerifyButton setTitle:[VGPHelper localizationForString:@"verify"] forState:UIControlStateNormal];
@@ -210,7 +208,7 @@
 }
 
 - (void)rightPanelVerifyButtonClick
-{
+ {
     [self showLoadingView];
     [rightPanelCodeTextField resignFirstResponder];
     rightPanelCodeTextField.text = @"";
@@ -232,7 +230,7 @@
 }
 
 - (void)rightPanelResendButtonClick
-{
+ {
     [self showLoadingView];
     [rightPanelCodeTextField resignFirstResponder];
     rightPanelCodeTextField.text = @"";
@@ -254,13 +252,13 @@
 }
 
 #pragma mark - TextField Delegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     MyLog(@"textField %@", textField);
     [textField resignFirstResponder];
     return YES;
 }
 
-- (void)cancelInput:(UITapGestureRecognizer *)gesture{
+- (void)cancelInput:(UITapGestureRecognizer *)gesture {
     [rightPanelCodeTextField resignFirstResponder];
 }
 

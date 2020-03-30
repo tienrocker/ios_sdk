@@ -85,7 +85,7 @@
 
 @implementation ProfileEditController
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     if(dateFormatter == nil) {
@@ -93,9 +93,7 @@
         [dateFormatter setDateFormat:VGP_USER_DATE_FORMAT];
     }
     
-    CGFloat screenWidth = [VGPHelper getScreenWidth];
-    // CGFloat screenHeight = [VGPHelper getScreenHeight];
-    CGFloat width = LAYOUT_WIDTH < screenWidth ? LAYOUT_WIDTH : screenWidth - screenWidth * LAYOUT_OFFSET;
+    CGFloat width = LAYOUT_WIDTH < VGP_SCREEN_WIDTH ? LAYOUT_WIDTH : VGP_SCREEN_WIDTH - VGP_SCREEN_WIDTH * LAYOUT_OFFSET;
     CGFloat height = (LAYOUT_HEIGHT / LAYOUT_WIDTH) * width;
     CGFloat padding = width * 0.02;
     
@@ -599,7 +597,7 @@
     [updateProfileButton addTarget:self action:@selector(updateProfileButtonClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)updateUIText{
+- (void)updateUIText {
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
     personalProfileTextLabel.text = [VGPHelper localizationForString:@"profile.info"];
     nameLabel.text = [NSString stringWithFormat:@"%@ *", [VGPHelper localizationForString:@"profile.fullname"]];
@@ -663,7 +661,7 @@
     }
 }
 
-- (void) genderButtonClick{
+- (void) genderButtonClick {
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:[VGPHelper localizationForString:@"profile.gender.select"] message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *male = [UIAlertAction actionWithTitle:[VGPHelper localizationForString:@"profile.gender.select.male"]
@@ -704,7 +702,7 @@
     [[VGPHelper topViewController] presentViewController:alertVC animated:YES completion:nil];
 }
 
-- (void)phoneButtonClick{
+- (void)phoneButtonClick {
     [self showLoadingView];
     [self cancelInput:nil];
     
@@ -719,7 +717,7 @@
     }];
 }
 
-- (void)emailButtonClick{
+- (void)emailButtonClick {
     [self showLoadingView];
     [self cancelInput:nil];
     
@@ -734,7 +732,7 @@
     }];
 }
 
-- (void)updateProfileButtonClick{
+- (void)updateProfileButtonClick {
     [self showLoadingView];
     [self cancelInput:nil];
     
@@ -758,20 +756,20 @@
     }];
 }
 
-- (void)updateBirthdayInputTextField:(id)sender{
+- (void)updateBirthdayInputTextField:(id)sender {
     MyLog(@"updateBirthdayInputTextField");
     UIDatePicker *picker = (UIDatePicker*)birthdayInputTextField.inputView;
     birthdayInputTextField.text = [VGPHelper formatDate:picker.date];
 }
 
-- (void)updateDateIDInputTextField:(id)sender{
+- (void)updateDateIDInputTextField:(id)sender {
     MyLog(@"updateDateIDInputTextField");
     UIDatePicker *picker = (UIDatePicker*)dateIDInputTextField.inputView;
     dateIDInputTextField.text = [VGPHelper formatDate:picker.date];
 }
 
 #pragma mark - TextField Delegate
-- (void)cancelInput:(UITapGestureRecognizer *)gesture{
+- (void)cancelInput:(UITapGestureRecognizer *)gesture {
     [nameInputTextField resignFirstResponder];
     [genderInputTextField resignFirstResponder];
     [birthdayInputTextField resignFirstResponder];

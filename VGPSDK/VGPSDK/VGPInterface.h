@@ -26,18 +26,19 @@
 
 @class VGPInterface;
 
-@interface VGPInterface : NSObject <AppsFlyerTrackerDelegate, UNUserNotificationCenterDelegate, FIRMessagingDelegate>{
+@interface VGPInterface : NSObject <AppsFlyerTrackerDelegate, UNUserNotificationCenterDelegate, FIRMessagingDelegate> {
 }
 
 + (VGPInterface *_Nonnull)sharedInstance;
 
-#pragma mark Data
+#pragma mark -  Data
 - (NSInteger)getUserID;
 - (NSString *_Nullable)getUsername;
 
-#pragma mark Handler User Interface
+#pragma mark -  Handler User Interface
 - (void)loginGame;
 - (void)loginGame:(void (^ __nullable)(void))completion;
+- (void)purchase:(NSString *_Nonnull)characterID serverID:(NSString *_Nonnull)serverID itemID:(NSString *_Nonnull)itemID andPartnerData:(NSString *_Nullable)partnerData;
 - (void)logoutGame;
 - (void)logoutGame:(void (^ __nullable)(void))completion;
 - (void)showProfile;
@@ -45,7 +46,7 @@
 - (void)showFlyButton;
 - (void)hideFlyButton;
 
-#pragma mark Marketing Events
+#pragma mark -  Marketing Events
 
 - (void)setGameVersion:(NSString*_Nonnull)code;
 - (void)setGameCode:(NSString*_Nonnull)code;
@@ -71,7 +72,7 @@
 - (void)shareFacebookImage:(NSString *_Nonnull)url;
 - (void)shareFacebookImageLocal:(UIImage *_Nonnull)image;
 
-#pragma mark Init Application
+#pragma mark -  Init Application
 - (BOOL)application:(UIApplication *_Nonnull)application didFinishLaunchingWithOptions:(nullable NSDictionary<UIApplicationLaunchOptionsKey, id> *)launchOptions API_AVAILABLE(ios(3.0));
 - (void)applicationDidBecomeActive:(UIApplication *_Nonnull)application;
 - (void)applicationWillResignActive:(UIApplication *_Nonnull)application;
@@ -83,7 +84,7 @@
 - (void)scene:(UIScene *_Nonnull)scene openURLContexts:(NSSet<UIOpenURLContext *> *_Nonnull)URLContexts  API_AVAILABLE(ios(13.0));
 - (void)scene:(UIScene *_Nonnull)scene continueUserActivity:(NSUserActivity *_Nonnull)userActivity  API_AVAILABLE(ios(13.0));
 
-#pragma mark Register Push notification
+#pragma mark -  Register Push notification
 - (void)application:(UIApplication*_Nonnull)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*_Nonnull)deviceToken;
 - (void)application:(UIApplication*_Nonnull)application didFailToRegisterForRemoteNotificationsWithError:(NSError*_Nonnull)error;
 

@@ -16,15 +16,15 @@
 
 static VGPNetworkManager *sharedManager = nil;
 
-+ (VGPNetworkManager*)sharedManager{
++ (VGPNetworkManager*)sharedManager {
     static dispatch_once_t once;
-    dispatch_once(&once, ^{
+    dispatch_once(&once, ^ {
         sharedManager = [[VGPNetworkManager alloc] init];
     });
     return sharedManager;
 }
 
-- (AFHTTPSessionManager*)getNetworkingManager{
+- (AFHTTPSessionManager*)getNetworkingManager {
     if (self.networkingManager == nil) {
         self.networkingManager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         [self.networkingManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -35,14 +35,14 @@ static VGPNetworkManager *sharedManager = nil;
     return self.networkingManager;
 }
 
-- (id)getSecurityPolicy{
+- (id)getSecurityPolicy {
     AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
     securityPolicy.allowInvalidCertificates = YES;
     [securityPolicy setValidatesDomainName:NO];
     return securityPolicy;
 }
 
-- (void)GET:(NSString *)url param:(NSDictionary *)data success:(NetworkManagerSuccess)success failure:(NetworkManagerFailure)failure{
+- (void)GET:(NSString *)url param:(NSDictionary *)data success:(NetworkManagerSuccess)success failure:(NetworkManagerFailure)failure {
     url = [VGPNetworkManager addQueryStringToUrlString:url withDictionary:data];
     MyLog(@"url %@ data %@", url, data);
     
@@ -55,15 +55,15 @@ static VGPNetworkManager *sharedManager = nil;
             failure(error);
         } else {
             if (error.code == kCFURLErrorCannotConnectToHost || error.code == NSURLErrorTimedOut || error.code == kCFURLErrorNotConnectedToInternet) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:VGP_EVENT_NETWORK_TIMEOUT object:nil userInfo:@{@"operation":operation, @"error":error}];
+                [[NSNotificationCenter defaultCenter] postNotificationName:VGP_EVENT_NETWORK_TIMEOUT object:nil userInfo:@ {@"operation":operation, @"error":error}];
                 [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[VGPHelper localizationForString:@"network.error"]];
             }
         }
     }];
 }
 
-- (void)POST:(NSString *)url param:(NSDictionary *)data success:(NetworkManagerSuccess)success failure:(NetworkManagerFailure)failure{
-    url = [VGPNetworkManager addQueryStringToUrlString:url withDictionary:@{}];
+- (void)POST:(NSString *)url param:(NSDictionary *)data success:(NetworkManagerSuccess)success failure:(NetworkManagerFailure)failure {
+    url = [VGPNetworkManager addQueryStringToUrlString:url withDictionary:@ {}];
     MyLog(@"url %@ data %@", url, data);
     
     [[self getNetworkingManager] POST:url parameters:data progress:nil success:^(NSURLSessionTask *task, id responseObject) {
@@ -72,14 +72,14 @@ static VGPNetworkManager *sharedManager = nil;
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         MyLog(@"error %@", [error localizedDescription]);
         if (error.code == kCFURLErrorCannotConnectToHost || error.code == NSURLErrorTimedOut || error.code == kCFURLErrorNotConnectedToInternet) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:VGP_EVENT_NETWORK_TIMEOUT object:nil userInfo:@{@"operation":operation, @"error":error}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:VGP_EVENT_NETWORK_TIMEOUT object:nil userInfo:@ {@"operation":operation, @"error":error}];
             [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[VGPHelper localizationForString:@"network.error"]];
         }
         if (failure != nil) failure(error);
     }];
 }
 
-+ (NSString*)addQueryStringToUrlString:(NSString *)urlString withDictionary:(NSDictionary *)dictionary{
++ (NSString*)addQueryStringToUrlString:(NSString *)urlString withDictionary:(NSDictionary *)dictionary {
     NSMutableString *urlWithQuerystring = [[NSMutableString alloc] initWithString:urlString];
     [urlWithQuerystring appendFormat:@"?app_token=%@&os=ios&lang=%@", [self urlEscapeString:VGP_APPTOKEN], [UIData getLocalization]];
     if([VGPUserData getToken]) [urlWithQuerystring appendFormat:@"&user_token=%@", [VGPUserData getToken]];
@@ -97,12 +97,11 @@ static VGPNetworkManager *sharedManager = nil;
     return urlWithQuerystring;
 }
 
-+ (NSString*)urlEscapeString:(NSString *)unencodedString{
-    CFStringRef originalStringRef = (__bridge_retained CFStringRef)unencodedString;
-    NSString *s = (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,originalStringRef, NULL, (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ", kCFStringEncodingUTF8);
-    CFRelease(originalStringRef);
-    return s;
++ (NSString*)urlEscapeString:(NSString *)unencodedString {
+    NSMutableCharacterSet *charset = [[NSCharacterSet URLQueryAllowedCharacterSet] mutableCopy];
+    [charset removeCharactersInString:@"!*'\"();:@&=+$,/?%#[]% "];
+    NSString *encodedValue = [unencodedString stringByAddingPercentEncodingWithAllowedCharacters:charset];
+    return encodedValue;
 }
 
 @end
-

@@ -30,15 +30,17 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     [[VGPInterface sharedInstance] applicationWillResignActive:application];
 }
+
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     return [[VGPInterface sharedInstance] application:application handleOpenURL:url];
 }
+
 // Open URI-scheme for iOS 9 and above
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
     return [[VGPInterface sharedInstance] application:application openURL:url options:options];
 }
 // Open URI-scheme for iOS 8 and below
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString*)sourceApplication annotation:(id)annotation {
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(nullable NSString*)sourceApplication annotation:(id)annotation {
     return [[VGPInterface sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
 }
 // Open Universal Links

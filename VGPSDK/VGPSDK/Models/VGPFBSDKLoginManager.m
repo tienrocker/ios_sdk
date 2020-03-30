@@ -11,7 +11,7 @@
 @implementation VGPFBSDKLoginManager
 
 static VGPFBSDKLoginManager *sharedController;
-+ (VGPFBSDKLoginManager *)sharedInstance{
++ (VGPFBSDKLoginManager *)sharedInstance {
     if (!sharedController) {
         sharedController = [[VGPFBSDKLoginManager alloc] init];
     }

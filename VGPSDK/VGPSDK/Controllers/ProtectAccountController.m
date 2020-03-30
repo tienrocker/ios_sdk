@@ -1,12 +1,12 @@
 //
-//  LinkAccountController.m
+//  ProtectAccountController.m
 //  VGPSDK
 //
 //  Created by  Tien Tran on 3/25/20.
 //  Copyright © 2020  Tien Tran. All rights reserved.
 //
 
-#import "LinkAccountController.h"
+#import "ProtectAccountController.h"
 #import "VGPInterface.h"
 #import "VGPHelper.h"
 #import "VGPUI.h"
@@ -14,7 +14,7 @@
 #import "VGPAPI.h"
 #import "VGPFBSDKLoginManager.h"
 
-@interface LinkAccountController () {
+@interface ProtectAccountController () {
     UIImageView *imgLayout;
     UIView *panel;
     UIButton *rightCloseButton;
@@ -31,6 +31,7 @@
     UIButton *rightPanelLinkQuick;
     UIButton *rightPanelLinkApple;
     UIButton *rightPanelInitVGPAccount;
+    UIButton *rightPanelChangePassword;
     
     // ===================================
 
@@ -110,13 +111,18 @@
     NSLayoutConstraint *rightPanelInitVGPAccountTopAnchor;
     NSLayoutConstraint *rightPanelInitVGPAccountWidthAnchor;
     NSLayoutConstraint *rightPanelInitVGPAccountHeightAnchor;
+    
+    NSLayoutConstraint *rightPanelChangePasswordCenterXAnchor;
+    NSLayoutConstraint *rightPanelChangePasswordTopAnchor;
+    NSLayoutConstraint *rightPanelChangePasswordWidthAnchor;
+    NSLayoutConstraint *rightPanelChangePasswordHeightAnchor;
 }
 
 @end
 
-@implementation LinkAccountController
+@implementation ProtectAccountController
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     // ===================================
@@ -164,7 +170,6 @@
     leftBackButtonText.layer.zPosition = 3;
     [leftBackButtonText setTitleColor:VGP_MAIN_TEXT_COLOR forState:UIControlStateNormal];
     leftBackButtonText.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_15];
     leftBackButtonText.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [panel addSubview:leftBackButtonText];
     leftBackButtonText.translatesAutoresizingMaskIntoConstraints = NO;
@@ -182,7 +187,6 @@
     
     rightPanelUsernameLabel = [[UILabel alloc] init];
     rightPanelUsernameLabel.textColor = VGP_MAIN_TEXT_COLOR;
-    rightPanelUsernameLabel.font = VGP_FONT_LABEL_20;
     rightPanelUsernameLabel.numberOfLines = 0;
     rightPanelUsernameLabel.textAlignment = NSTextAlignmentCenter;
     [rightPanel addSubview:rightPanelUsernameLabel];
@@ -207,18 +211,24 @@
     [rightPanelInitVGPAccount setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-orange-big" andType:@"tiff"] forState:UIControlStateNormal];
     [rightPanelInitVGPAccount setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     rightPanelInitVGPAccount.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [rightPanelInitVGPAccount.titleLabel setFont:VGP_FONT_LABEL_15];
     rightPanelInitVGPAccount.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [rightPanel addSubview:rightPanelInitVGPAccount];
     rightPanelInitVGPAccount.translatesAutoresizingMaskIntoConstraints = NO;
     [rightPanelInitVGPAccount addTarget:self action:@selector(rightPanelInitVGPAccountClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    rightPanelChangePassword = [[UIButton alloc] init];
+    [rightPanelChangePassword setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-orange-big" andType:@"tiff"] forState:UIControlStateNormal];
+    [rightPanelChangePassword setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
+    rightPanelChangePassword.titleLabel.adjustsFontSizeToFitWidth = YES;
+    rightPanelChangePassword.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    [rightPanel addSubview:rightPanelChangePassword];
+    rightPanelChangePassword.translatesAutoresizingMaskIntoConstraints = NO;
+    [rightPanelChangePassword addTarget:self action:@selector(rightPanelChangePasswordClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)updateUI{
+- (void)updateUI {
 
-    CGFloat screenWidth = [VGPHelper getScreenWidth];
-    // CGFloat screenHeight = [VGPHelper getScreenHeight];
-    CGFloat width = LAYOUT_WIDTH < screenWidth ? LAYOUT_WIDTH : screenWidth - screenWidth * LAYOUT_OFFSET;
+    CGFloat width = LAYOUT_WIDTH < VGP_SCREEN_WIDTH ? LAYOUT_WIDTH : VGP_SCREEN_WIDTH - VGP_SCREEN_WIDTH * LAYOUT_OFFSET;
     CGFloat height = (LAYOUT_HEIGHT / LAYOUT_WIDTH) * width;
     CGFloat padding = width * 0.02;
     
@@ -358,13 +368,7 @@
     [rightPanelUsernameLabelWidthAnchor setActive:NO];
     [rightPanelUsernameLabelHeightAnchor setActive:NO];
     rightPanelUsernameLabelLeftAnchor = [rightPanelUsernameLabel.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor];
-    
-    if([VGPUserData getCanUpdateUsername]) {
-        rightPanelUsernameLabelTopAnchor = [rightPanelUsernameLabel.topAnchor constraintEqualToAnchor:rightPanel.topAnchor constant:width*0.03];
-    } else {
-        rightPanelUsernameLabelTopAnchor = [rightPanelUsernameLabel.topAnchor constraintEqualToAnchor:rightPanel.topAnchor constant:width*0.06];
-    }
-    
+    rightPanelUsernameLabelTopAnchor = [rightPanelUsernameLabel.topAnchor constraintEqualToAnchor:rightPanel.topAnchor constant:width*0.03];
     rightPanelUsernameLabelWidthAnchor = [rightPanelUsernameLabel.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:.8];
     rightPanelUsernameLabelHeightAnchor = [rightPanelUsernameLabel.heightAnchor constraintEqualToConstant:width*.077];
     [rightPanelUsernameLabelLeftAnchor setActive:YES];
@@ -411,9 +415,10 @@
     [rightPanelLinkAppleWidthAnchor setActive:YES];
     [rightPanelLinkAppleHeightAnchor setActive:YES];
     
-    
+    MyLog(@"[VGPUserData getCanUpdateUsername] %@", [VGPUserData getCanUpdateUsername] ? @"YES" : @"NO");
     if([VGPUserData getCanUpdateUsername]) {
         rightPanelInitVGPAccount.hidden = NO;
+        rightPanelChangePassword.hidden = YES;
         [rightPanelInitVGPAccountCenterXAnchor setActive:NO];
         [rightPanelInitVGPAccountTopAnchor setActive:NO];
         [rightPanelInitVGPAccountWidthAnchor setActive:NO];
@@ -428,10 +433,51 @@
         [rightPanelInitVGPAccountHeightAnchor setActive:YES];
     } else {
         rightPanelInitVGPAccount.hidden = YES;
+        rightPanelChangePassword.hidden = NO;
+        [rightPanelChangePasswordCenterXAnchor setActive:NO];
+        [rightPanelChangePasswordTopAnchor setActive:NO];
+        [rightPanelChangePasswordWidthAnchor setActive:NO];
+        [rightPanelChangePasswordHeightAnchor setActive:NO];
+        rightPanelChangePasswordCenterXAnchor = [rightPanelChangePassword.centerXAnchor constraintEqualToAnchor:rightPanelLinkQuick.centerXAnchor];
+        rightPanelChangePasswordTopAnchor = [rightPanelChangePassword.topAnchor constraintEqualToAnchor:rightPanelLinkApple.bottomAnchor constant:padding];
+        rightPanelChangePasswordWidthAnchor = [rightPanelChangePassword.widthAnchor constraintEqualToAnchor:rightPanelLinkQuick.widthAnchor multiplier:1];
+        rightPanelChangePasswordHeightAnchor = [rightPanelChangePassword.heightAnchor constraintEqualToAnchor:rightPanelLinkQuick.heightAnchor multiplier:1];
+        [rightPanelChangePasswordCenterXAnchor setActive:YES];
+        [rightPanelChangePasswordTopAnchor setActive:YES];
+        [rightPanelChangePasswordWidthAnchor setActive:YES];
+        [rightPanelChangePasswordHeightAnchor setActive:YES];
+    }
+    
+    // iphone SE
+    if(VGP_SCREEN_WIDTH <= 320) {
+        [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_10];
+        rightPanelUsernameLabel.font = VGP_FONT_LABEL_13;
+        [rightPanelInitVGPAccount.titleLabel setFont:VGP_FONT_LABEL_10];
+        [rightPanelChangePassword.titleLabel setFont:VGP_FONT_LABEL_10];
+    }
+    // iphone 6 - 6s - 7 - 8 - X
+    else if(VGP_SCREEN_WIDTH > 320 && VGP_SCREEN_WIDTH <= 375) {
+        [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_15];
+        rightPanelUsernameLabel.font = VGP_FONT_LABEL_15;
+        [rightPanelInitVGPAccount.titleLabel setFont:VGP_FONT_LABEL_13];
+        [rightPanelChangePassword.titleLabel setFont:VGP_FONT_LABEL_13];
+    }
+    // iphone 7+ - 8+
+    else if(VGP_SCREEN_WIDTH > 375 && VGP_SCREEN_WIDTH <= 414) {
+        [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_15];
+        rightPanelUsernameLabel.font = VGP_FONT_LABEL_20;
+        [rightPanelInitVGPAccount.titleLabel setFont:VGP_FONT_LABEL_15];
+        [rightPanelChangePassword.titleLabel setFont:VGP_FONT_LABEL_15];
+    }
+    else {
+        [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_15];
+        rightPanelUsernameLabel.font = VGP_FONT_LABEL_20;
+        [rightPanelInitVGPAccount.titleLabel setFont:VGP_FONT_LABEL_15];
+        [rightPanelChangePassword.titleLabel setFont:VGP_FONT_LABEL_15];
     }
 }
 
-- (void)updateUIText{
+- (void)updateUIText {
     
     [leftBackButtonImg setImage:[VGPHelper getUIImageWithImageName:@"btn-back" andType:@"tiff"] forState:UIControlStateNormal];
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
@@ -455,15 +501,16 @@
     else
         [rightPanelLinkApple setImage:[VGPHelper getUIImageWithImageName:[NSString stringWithFormat:@"btn-apple-%@", lang] andType:@"tiff"] forState:UIControlStateNormal];
     
-    [rightPanelInitVGPAccount setTitle:[VGPHelper localizationForString:@"init.account"] forState:UIControlStateNormal];
+    [rightPanelInitVGPAccount setTitle:[VGPHelper localizationForString:@"profile.init.account"] forState:UIControlStateNormal];
+    [rightPanelChangePassword setTitle:[VGPHelper localizationForString:@"profile.change.password"] forState:UIControlStateNormal];
 }
 
-#pragma mark Link with Facebook
+#pragma mark -  Link with Facebook
 
-- (void)rightPanelLinkFacebookClick{
+- (void)rightPanelLinkFacebookClick {
     
     if([VGPUserData getCanUpdateUsername]) {
-        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[VGPHelper localizationForString:@"error.init.account.require"]];
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[VGPHelper localizationForString:@"error.profile.init.account.require"]];
         return;
     }
     
@@ -478,7 +525,7 @@
             [self hideLoadingView];
         } else {
             if([FBSDKAccessToken currentAccessToken]) {
-                [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me" parameters:@{@"fields":@"id,name,email"}] startWithCompletionHandler:^(FBSDKGraphRequestConnection* connection, id result, NSError* error) {
+                [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me" parameters:@ {@"fields":@"id,name,email"}] startWithCompletionHandler:^(FBSDKGraphRequestConnection* connection, id result, NSError* error) {
                     if (!error) {
                         NSLog(@"Facebook fetched user:%@", result);
                         NSDictionary *data = (NSDictionary*)result;
@@ -515,12 +562,12 @@
     }];
 }
 
-#pragma mark Link with Device
+#pragma mark -  Link with Device
 
-- (void)rightPanelLinkQuickClick{
+- (void)rightPanelLinkQuickClick {
     
     if([VGPUserData getCanUpdateUsername]) {
-        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[VGPHelper localizationForString:@"error.init.account.require"]];
+        [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[VGPHelper localizationForString:@"error.profile.init.account.require"]];
         return;
     }
     
@@ -548,13 +595,13 @@
     }
 }
 
-#pragma mark Link with Apple
+#pragma mark -  Link with Apple
 
-- (void)rightPanelLinkAppleClick{
+- (void)rightPanelLinkAppleClick {
     if (@available(iOS 13.0, *)) {
         
         if([VGPUserData getCanUpdateUsername]) {
-            [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[VGPHelper localizationForString:@"error.init.account.require"]];
+            [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[VGPHelper localizationForString:@"error.profile.init.account.require"]];
             return;
         }
         
@@ -610,9 +657,14 @@
     [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[NSString stringWithFormat:[VGPHelper localizationForString:@"login.apple.error"], (long)[error code]]];
 }
 
-- (void)rightPanelInitVGPAccountClick{
+- (void)rightPanelInitVGPAccountClick {
     SHOW_BACK_BUTTON = YES;
-    [[VGPUI sharedInstance] showInitProfileController];
+    [[VGPUI sharedInstance] showInitAccountController];
+}
+
+- (void)rightPanelChangePasswordClick {
+    SHOW_BACK_BUTTON = YES;
+    [[VGPUI sharedInstance] showChangePasswordController];
 }
 
 @end

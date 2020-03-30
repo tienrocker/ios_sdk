@@ -17,7 +17,7 @@ typedef void (^VGPConfigAPIFailure)(NSError *error);
 
 + (void)getServerInfo:(VGPConfigAPISuccess)success failure:(VGPConfigAPIFailure)failure;
 + (void)getServerSettings:(VGPConfigAPISuccess)success failure:(VGPConfigAPIFailure)failure;
-+ (void)getPaymentSettings:(NSString *)server_id character_id:(NSString *)character_id package_name:(NSString *)package_name success:(VGPConfigAPISuccess)success failure:(VGPConfigAPIFailure)failure;
++ (void)getPaymentSettings:(VGPConfigAPISuccess)success failure:(VGPConfigAPIFailure)failure;
 
 @end
 

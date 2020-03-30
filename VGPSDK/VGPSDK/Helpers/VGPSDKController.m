@@ -12,6 +12,7 @@
 #import "VGPUI.h"
 #import "UIData.h"
 #import "VGPLogger.h"
+#import "VGPInterface.h"
 
 @interface VGPSDKController()
 
@@ -19,9 +20,9 @@
 
 @implementation VGPSDKController
 
-BOOL SHOW_BACK_BUTTON = NO;
+BOOL SHOW_BACK_BUTTON = YES;
 
-- (instancetype)init{
+- (instancetype)init {
     self = [super init];
     if (@available(iOS 13.0, *)) {
         self.modalPresentationStyle = UIModalPresentationAutomatic;
@@ -31,33 +32,37 @@ BOOL SHOW_BACK_BUTTON = NO;
     return self;
 }
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor clearColor];
-    //self.view.layer.zPosition = 200;
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUIText) name:VGP_EVENT_UPDATE_LANGUAGE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUI) name:VGP_EVENT_UPDATE_LAYOUT object:nil];
-    
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess) name:VGP_EVENT_LOGIN_SUCCESS object:nil];
     
     UITapGestureRecognizer *cancelInput = [[UITapGestureRecognizer alloc] init];
     [cancelInput addTarget:self action:@selector(cancelInput:)];
     [self.view addGestureRecognizer:cancelInput];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.curentFrame = self.view.frame;
 }
 
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated {
     [[[VGPUI sharedInstance] FlyButton] hideButton];
     [super viewWillAppear:animated];
     [self updateUIText];
     [self updateUI];
 }
 
-- (void)showLoadingView{
+- (void)viewDidDisappear:(BOOL)animated {
+    if(SHOW_BACK_BUTTON == NO) {
+        [[VGPInterface sharedInstance] showFlyButton];
+    }
+}
+
+- (void)showLoadingView {
     
     self->_loadingView = [[UIView alloc] init];
     [self->_loadingView setFrame:CGRectMake(0, 0, [VGPHelper getScreenWidth], [VGPHelper getScreenHeight])];
@@ -73,7 +78,7 @@ BOOL SHOW_BACK_BUTTON = NO;
     
     self->_loadingIndicatorView.hidden = NO;
 }
-- (void)hideLoadingView{
+- (void)hideLoadingView {
     if(self->_loadingView) {
         self->_loadingView.hidden = YES;
         [self->_loadingView removeFromSuperview];
@@ -85,20 +90,20 @@ BOOL SHOW_BACK_BUTTON = NO;
     }
 }
 
-- (void)updateUI{}
+- (void)updateUI {}
 
-- (void)updateUIText{}
+- (void)updateUIText {}
 
-- (void)rightCloseButtonClick{
+- (void)rightCloseButtonClick {
     [[VGPUI sharedInstance] dismiss];
 }
 
-- (void)leftBackButtonClick{
-    MyLog(@"leftBackButtonClick");
+- (void)leftBackButtonClick {
+    if(SHOW_BACK_BUTTON == NO) return;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)leftSupportButtonClick{
+- (void)leftSupportButtonClick {
     if([[UIData getLocalization] isEqualToString:@"en"]) {
         [VGPHelper changeLocalization:@"vi"];
     } else {
@@ -107,22 +112,34 @@ BOOL SHOW_BACK_BUTTON = NO;
 }
 
 #pragma mark - TextField Delegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     MyLog(@"textField %@", textField);
     [textField resignFirstResponder];
     return YES;
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-    self.view.frame = CGRectOffset(self.view.frame, 0, DIS_MOVE_POPUP);
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    //[self animateTextField:textField up:YES withOffset:textField.frame.origin.y / 2];
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField{
-    self.view.frame = self.curentFrame;
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    //[self animateTextField:textField up:NO withOffset:textField.frame.origin.y / 2];
 }
 
-- (void)cancelInput:(UITapGestureRecognizer *)gesture{
+- (void)cancelInput:(UITapGestureRecognizer *)gesture {
     
+}
+
+-(void)animateTextField:(UITextField*)textField up:(BOOL)up withOffset:(CGFloat)offset
+ {
+    const int movementDistance = -offset;
+    const float movementDuration = 0.4f;
+    int movement = (up ? movementDistance : -movementDistance);
+    [UIView beginAnimations: @"animateTextField" context: nil];
+    [UIView setAnimationBeginsFromCurrentState: YES];
+    [UIView setAnimationDuration: movementDuration];
+    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
+    [UIView commitAnimations];
 }
 
 @end

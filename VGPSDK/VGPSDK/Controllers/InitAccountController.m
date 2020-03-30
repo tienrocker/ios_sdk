@@ -1,12 +1,12 @@
 //
-//  InitProfileController.m
+//  InitAccountController.m
 //  VGPSDK
 //
 //  Created by  Tien Tran on 2/11/20.
 //  Copyright © 2020  Tien Tran. All rights reserved.
 //
 
-#import "InitProfileController.h"
+#import "InitAccountController.h"
 #import "VGPInterface.h"
 #import "VGPHelper.h"
 #import "VGPUI.h"
@@ -14,7 +14,7 @@
 #import "VGPAPI.h"
 #import "VGPFBSDKLoginManager.h"
 
-@interface InitProfileController () {
+@interface InitAccountController () {
     UIImageView *imgLayout;
     UIView *panel;
     UIButton *rightCloseButton;
@@ -27,10 +27,10 @@
     
     UIView *rightPanel;
     UIImageView *rightPanelUsernameTextFieldBackground;
-    UITextField IBOutlet *rightPanelUsernameTextField;
+    UITextField *rightPanelUsernameTextField;
     UIImageView *rightPanelPasswordTextFieldBackground;
-    UITextField IBOutlet *rightPanelPasswordTextField;
-    UIButton *rightPanelInitVGPAccount;
+    UITextField *rightPanelPasswordTextField;
+    UIButton *rightPanelInitAccountButton;
     
     // ===================================
 
@@ -106,17 +106,17 @@
     NSLayoutConstraint *rightPanelPasswordTextFieldWidthAnchor;
     NSLayoutConstraint *rightPanelPasswordTextFieldHeightAnchor;
 
-    NSLayoutConstraint *rightPanelInitVGPAccountCenterXAnchor;
-    NSLayoutConstraint *rightPanelInitVGPAccountTopAnchor;
-    NSLayoutConstraint *rightPanelInitVGPAccountWidthAnchor;
-    NSLayoutConstraint *rightPanelInitVGPAccountHeightAnchor;
+    NSLayoutConstraint *rightPanelInitAccountButtonCenterXAnchor;
+    NSLayoutConstraint *rightPanelInitAccountButtonTopAnchor;
+    NSLayoutConstraint *rightPanelInitAccountButtonWidthAnchor;
+    NSLayoutConstraint *rightPanelInitAccountButtonHeightAnchor;
 }
 
 @end
 
-@implementation InitProfileController
+@implementation InitAccountController
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     // ===================================
@@ -188,8 +188,7 @@
     rightPanelUsernameTextField = [[UITextField alloc] init];
     rightPanelUsernameTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     if (@available(iOS 11.0, *)) rightPanelUsernameTextField.textContentType = UITextContentTypeUsername;
-    rightPanelUsernameTextField.placeholder = [VGPHelper localizationForString:@"login.right.username"];
-    rightPanelUsernameTextField.font = VGP_FONT_LABEL_13;
+    rightPanelUsernameTextField.textColor = [UIColor blackColor];
     rightPanelUsernameTextField.delegate = self;
     [rightPanel addSubview:rightPanelUsernameTextField];
     rightPanelUsernameTextField.translatesAutoresizingMaskIntoConstraints = NO;
@@ -202,29 +201,26 @@
     rightPanelPasswordTextField = [[UITextField alloc] init];
     rightPanelPasswordTextField.secureTextEntry = YES;
     if (@available(iOS 11.0, *)) rightPanelPasswordTextField.textContentType = UITextContentTypePassword;
-    rightPanelPasswordTextField.placeholder = [VGPHelper localizationForString:@"login.right.password"];
-    rightPanelPasswordTextField.font = VGP_FONT_LABEL_13;
+    rightPanelPasswordTextField.textColor = [UIColor blackColor];
     rightPanelPasswordTextField.delegate = self;
     [rightPanel addSubview:rightPanelPasswordTextField];
     rightPanelPasswordTextField.translatesAutoresizingMaskIntoConstraints = NO;
     
     // BUTTON
-    rightPanelInitVGPAccount = [[UIButton alloc] init];
-    [rightPanelInitVGPAccount setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-orange-big" andType:@"tiff"] forState:UIControlStateNormal];
-    [rightPanelInitVGPAccount setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
-    rightPanelInitVGPAccount.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [rightPanelInitVGPAccount.titleLabel setFont:VGP_FONT_LABEL_15];
-    rightPanelInitVGPAccount.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [rightPanel addSubview:rightPanelInitVGPAccount];
-    rightPanelInitVGPAccount.translatesAutoresizingMaskIntoConstraints = NO;
-    [rightPanelInitVGPAccount addTarget:self action:@selector(rightPanelInitVGPAccountClick) forControlEvents:UIControlEventTouchUpInside];
+    rightPanelInitAccountButton = [[UIButton alloc] init];
+    [rightPanelInitAccountButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-orange-big" andType:@"tiff"] forState:UIControlStateNormal];
+    [rightPanelInitAccountButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
+    rightPanelInitAccountButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    [rightPanelInitAccountButton.titleLabel setFont:VGP_FONT_LABEL_15];
+    rightPanelInitAccountButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    [rightPanel addSubview:rightPanelInitAccountButton];
+    rightPanelInitAccountButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [rightPanelInitAccountButton addTarget:self action:@selector(rightPanelInitAccountButtonClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)updateUI{
+- (void)updateUI {
 
-    CGFloat screenWidth = [VGPHelper getScreenWidth];
-    // CGFloat screenHeight = [VGPHelper getScreenHeight];
-    CGFloat width = LAYOUT_WIDTH < screenWidth ? LAYOUT_WIDTH : screenWidth - screenWidth * LAYOUT_OFFSET;
+    CGFloat width = LAYOUT_WIDTH < VGP_SCREEN_WIDTH ? LAYOUT_WIDTH : VGP_SCREEN_WIDTH - VGP_SCREEN_WIDTH * LAYOUT_OFFSET;
     CGFloat height = (LAYOUT_HEIGHT / LAYOUT_WIDTH) * width;
     CGFloat padding = width * 0.02;
     
@@ -366,9 +362,9 @@
     [rightPanelUsernameTextFieldBackgroundWidthAnchor setActive:NO];
     [rightPanelUsernameTextFieldBackgroundHeightAnchor setActive:NO];
     rightPanelUsernameTextFieldBackgroundLeftAnchor = [rightPanelUsernameTextFieldBackground.leftAnchor constraintEqualToAnchor:rightPanel.leftAnchor];
-       rightPanelUsernameTextFieldBackgroundTopAnchor = [rightPanelUsernameTextFieldBackground.topAnchor constraintEqualToAnchor:rightPanel.topAnchor constant:width*0.12];
-       rightPanelUsernameTextFieldBackgroundWidthAnchor = [rightPanelUsernameTextFieldBackground.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:.8];
-       rightPanelUsernameTextFieldBackgroundHeightAnchor = [rightPanelUsernameTextFieldBackground.heightAnchor constraintEqualToConstant:width*.077];
+    rightPanelUsernameTextFieldBackgroundTopAnchor = [rightPanelUsernameTextFieldBackground.topAnchor constraintEqualToAnchor:rightPanel.topAnchor constant:width*0.12];
+    rightPanelUsernameTextFieldBackgroundWidthAnchor = [rightPanelUsernameTextFieldBackground.widthAnchor constraintEqualToAnchor:rightPanel.widthAnchor multiplier:.8];
+    rightPanelUsernameTextFieldBackgroundHeightAnchor = [rightPanelUsernameTextFieldBackground.heightAnchor constraintEqualToConstant:width*.077];
     [rightPanelUsernameTextFieldBackgroundLeftAnchor setActive:YES];
     [rightPanelUsernameTextFieldBackgroundTopAnchor setActive:YES];
     [rightPanelUsernameTextFieldBackgroundWidthAnchor setActive:YES];
@@ -414,18 +410,18 @@
     [rightPanelPasswordTextFieldWidthAnchor setActive:YES];
     [rightPanelPasswordTextFieldHeightAnchor setActive:YES];
     
-    [rightPanelInitVGPAccountCenterXAnchor setActive:NO];
-    [rightPanelInitVGPAccountTopAnchor setActive:NO];
-    [rightPanelInitVGPAccountWidthAnchor setActive:NO];
-    [rightPanelInitVGPAccountHeightAnchor setActive:NO];
-    rightPanelInitVGPAccountCenterXAnchor = [rightPanelInitVGPAccount.centerXAnchor constraintEqualToAnchor:rightPanelPasswordTextField.centerXAnchor];
-    rightPanelInitVGPAccountTopAnchor = [rightPanelInitVGPAccount.topAnchor constraintEqualToAnchor:rightPanelPasswordTextField.bottomAnchor constant:padding];
-    rightPanelInitVGPAccountWidthAnchor = [rightPanelInitVGPAccount.widthAnchor constraintEqualToAnchor:rightPanelPasswordTextField.widthAnchor multiplier:1];
-    rightPanelInitVGPAccountHeightAnchor = [rightPanelInitVGPAccount.heightAnchor constraintEqualToAnchor:rightPanelPasswordTextField.heightAnchor multiplier:1];
-    [rightPanelInitVGPAccountCenterXAnchor setActive:YES];
-    [rightPanelInitVGPAccountTopAnchor setActive:YES];
-    [rightPanelInitVGPAccountWidthAnchor setActive:YES];
-    [rightPanelInitVGPAccountHeightAnchor setActive:YES];
+    [rightPanelInitAccountButtonCenterXAnchor setActive:NO];
+    [rightPanelInitAccountButtonTopAnchor setActive:NO];
+    [rightPanelInitAccountButtonWidthAnchor setActive:NO];
+    [rightPanelInitAccountButtonHeightAnchor setActive:NO];
+    rightPanelInitAccountButtonCenterXAnchor = [rightPanelInitAccountButton.centerXAnchor constraintEqualToAnchor:rightPanelPasswordTextField.centerXAnchor];
+    rightPanelInitAccountButtonTopAnchor = [rightPanelInitAccountButton.topAnchor constraintEqualToAnchor:rightPanelPasswordTextField.bottomAnchor constant:padding];
+    rightPanelInitAccountButtonWidthAnchor = [rightPanelInitAccountButton.widthAnchor constraintEqualToAnchor:rightPanelPasswordTextField.widthAnchor multiplier:1];
+    rightPanelInitAccountButtonHeightAnchor = [rightPanelInitAccountButton.heightAnchor constraintEqualToAnchor:rightPanelPasswordTextField.heightAnchor multiplier:1];
+    [rightPanelInitAccountButtonCenterXAnchor setActive:YES];
+    [rightPanelInitAccountButtonTopAnchor setActive:YES];
+    [rightPanelInitAccountButtonWidthAnchor setActive:YES];
+    [rightPanelInitAccountButtonHeightAnchor setActive:YES];
     
     if(SHOW_BACK_BUTTON) {
         leftBackButtonImg.hidden = NO;
@@ -436,14 +432,32 @@
     }
 }
 
-- (void)updateUIText{
+- (void)updateUIText {
     [leftBackButtonImg setImage:[VGPHelper getUIImageWithImageName:@"btn-back" andType:@"tiff"] forState:UIControlStateNormal];
     [leftBackButtonText setTitle:[VGPHelper localizationForString:@"back"] forState:UIControlStateNormal];
     [leftSupportButton setImage:[VGPHelper getUIImageWithImageName:[NSString stringWithFormat:@"btn-support-%@", [UIData getLocalization]] andType:@"tiff"] forState:UIControlStateNormal];
-    [rightPanelInitVGPAccount setTitle:[VGPHelper localizationForString:@"update"] forState:UIControlStateNormal];
+    
+    rightPanelUsernameTextField.font = VGP_FONT_LABEL_13;
+    rightPanelPasswordTextField.font = VGP_FONT_LABEL_13;
+    
+    rightPanelUsernameTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[VGPHelper localizationForString:@"login.right.username"]
+      attributes:@ {
+         NSForegroundColorAttributeName: [UIColor lightGrayColor],
+         NSFontAttributeName : VGP_FONT_LABEL_13
+      }
+    ];
+    rightPanelPasswordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[VGPHelper localizationForString:@"login.right.password"]
+      attributes:@ {
+         NSForegroundColorAttributeName: [UIColor lightGrayColor],
+         NSFontAttributeName : VGP_FONT_LABEL_13
+      }
+    ];
+    
+    [rightPanelInitAccountButton setTitle:[VGPHelper localizationForString:@"update"] forState:UIControlStateNormal];
+    [super updateUIText];
 }
 
-- (void)rightPanelInitVGPAccountClick{
+- (void)rightPanelInitAccountButtonClick {
     [self showLoadingView];
     
     NSString *username = [rightPanelUsernameTextField text];
@@ -470,16 +484,16 @@
 }
 
 #pragma mark - TextField Delegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     MyLog(@"textField %@", textField);
     [textField resignFirstResponder];
     if(textField == rightPanelUsernameTextField) [rightPanelPasswordTextField becomeFirstResponder];
-    if(textField == rightPanelPasswordTextField) [self rightPanelInitVGPAccountClick];
+    if(textField == rightPanelPasswordTextField) [self rightPanelInitAccountButtonClick];
     return YES;
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-    self.view.frame = CGRectOffset(self.view.frame, 0, DIS_MOVE_POPUP);
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [super textFieldDidBeginEditing:textField];
     if(textField == rightPanelPasswordTextField) {
         textField.returnKeyType = UIReturnKeySend;
     } else {
@@ -487,7 +501,7 @@
     }
 }
 
-- (void)cancelInput:(UITapGestureRecognizer *)gesture{
+- (void)cancelInput:(UITapGestureRecognizer *)gesture {
     [rightPanelUsernameTextField resignFirstResponder];
     [rightPanelPasswordTextField resignFirstResponder];
 }

@@ -114,7 +114,7 @@
 
 @implementation ProfileController
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     // ===================================
@@ -162,7 +162,6 @@
     leftBackButtonText.layer.zPosition = 3;
     [leftBackButtonText setTitleColor:VGP_MAIN_TEXT_COLOR forState:UIControlStateNormal];
     leftBackButtonText.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_15];
     leftBackButtonText.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [panel addSubview:leftBackButtonText];
     leftBackButtonText.translatesAutoresizingMaskIntoConstraints = NO;
@@ -180,7 +179,6 @@
     
     rightPanelUsernameLabel = [[UILabel alloc] init];
     rightPanelUsernameLabel.textColor = VGP_MAIN_TEXT_COLOR;
-    rightPanelUsernameLabel.font = VGP_FONT_LABEL_20;
     rightPanelUsernameLabel.numberOfLines = 0;
     rightPanelUsernameLabel.textAlignment = NSTextAlignmentCenter;
     [rightPanel addSubview:rightPanelUsernameLabel];
@@ -189,7 +187,6 @@
     rightPanelUserIDLabel = [[UILabel alloc] init];
     rightPanelUserIDLabel.text = [NSString stringWithFormat:@"Account ID %ld", (long)[VGPUserData getUserID]];
     rightPanelUserIDLabel.textColor = [UIColor grayColor];
-    rightPanelUserIDLabel.font = VGP_FONT_LABEL_13;
     rightPanelUserIDLabel.numberOfLines = 0;
     rightPanelUserIDLabel.textAlignment = NSTextAlignmentCenter;
     [rightPanel addSubview:rightPanelUserIDLabel];
@@ -197,8 +194,7 @@
     
     rightPanelEditProfileButton = [[UIButton alloc] init];
     [rightPanelEditProfileButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-blue-big" andType:@"tiff"] forState:UIControlStateNormal];
-    [rightPanelEditProfileButton setTitle:[VGPHelper localizationForString:@"profile.edit_profile"] forState:UIControlStateNormal];
-    rightPanelEditProfileButton.titleLabel.font = VGP_FONT_LABEL_13;
+    [rightPanelEditProfileButton setTitle:[VGPHelper localizationForString:@"profile.info"] forState:UIControlStateNormal];
     [rightPanelEditProfileButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     rightPanelEditProfileButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     [rightPanel addSubview:rightPanelEditProfileButton];
@@ -206,7 +202,6 @@
     
     rightPanelLinkButton = [[UIButton alloc] init];
     [rightPanelLinkButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-pink" andType:@"tiff"] forState:UIControlStateNormal];
-    rightPanelLinkButton.titleLabel.font = VGP_FONT_LABEL_13;
     [rightPanelLinkButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     rightPanelLinkButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     [rightPanel addSubview:rightPanelLinkButton];
@@ -214,7 +209,6 @@
     
     rightPanelLogoutButton = [[UIButton alloc] init];
     [rightPanelLogoutButton setBackgroundImage:[VGPHelper getUIImageWithImageName:@"btn-pink" andType:@"tiff"] forState:UIControlStateNormal];
-    rightPanelLogoutButton.titleLabel.font = VGP_FONT_LABEL_13;
     [rightPanelLogoutButton setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
     rightPanelLogoutButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     [rightPanel addSubview:rightPanelLogoutButton];
@@ -226,10 +220,9 @@
     [rightPanelLogoutButton addTarget:self action:@selector(rightPanelLogoutButtonClick) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)updateUI{
-    CGFloat screenWidth = [VGPHelper getScreenWidth];
-    // CGFloat screenHeight = [VGPHelper getScreenHeight];
-    CGFloat width = LAYOUT_WIDTH < screenWidth ? LAYOUT_WIDTH : screenWidth - screenWidth * LAYOUT_OFFSET;
+- (void)updateUI {
+    
+    CGFloat width = LAYOUT_WIDTH < VGP_SCREEN_WIDTH ? LAYOUT_WIDTH : VGP_SCREEN_WIDTH - VGP_SCREEN_WIDTH * LAYOUT_OFFSET;
     CGFloat height = (LAYOUT_HEIGHT / LAYOUT_WIDTH) * width;
     CGFloat padding = width * 0.02;
     
@@ -424,17 +417,54 @@
     [rightPanelLogoutButtonTopAnchor setActive:YES];
     [rightPanelLogoutButtonWidthAnchor setActive:YES];
     [rightPanelLogoutButtonHeightAnchor setActive:YES];
+    
+    // iphone SE
+    if(VGP_SCREEN_WIDTH <= 320) {
+        [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_10];
+        rightPanelUsernameLabel.font = VGP_FONT_LABEL_13;
+        rightPanelUserIDLabel.font = VGP_FONT_LABEL_08;
+        rightPanelEditProfileButton.titleLabel.font = VGP_FONT_LABEL_08;
+        rightPanelLinkButton.titleLabel.font = VGP_FONT_LABEL_08;
+        rightPanelLogoutButton.titleLabel.font = VGP_FONT_LABEL_08;
+    }
+    // iphone 6 - 6s - 7 - 8 - X
+    else if(VGP_SCREEN_WIDTH > 320 && VGP_SCREEN_WIDTH <= 375) {
+        [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_13];
+        rightPanelUsernameLabel.font = VGP_FONT_LABEL_15;
+        rightPanelUserIDLabel.font = VGP_FONT_LABEL_10;
+        rightPanelEditProfileButton.titleLabel.font = VGP_FONT_LABEL_10;
+        rightPanelLinkButton.titleLabel.font = VGP_FONT_LABEL_10;
+        rightPanelLogoutButton.titleLabel.font = VGP_FONT_LABEL_10;
+    }
+    // iphone 7+ - 8+
+    else if(VGP_SCREEN_WIDTH > 375 && VGP_SCREEN_WIDTH <= 414) {
+        [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_15];
+        rightPanelUsernameLabel.font = VGP_FONT_LABEL_20;
+        rightPanelUserIDLabel.font = VGP_FONT_LABEL_13;
+        rightPanelEditProfileButton.titleLabel.font = VGP_FONT_LABEL_13;
+        rightPanelLinkButton.titleLabel.font = VGP_FONT_LABEL_13;
+        rightPanelLogoutButton.titleLabel.font = VGP_FONT_LABEL_13;
+    }
+    else {
+        [leftBackButtonText.titleLabel setFont:VGP_FONT_LABEL_15];
+        rightPanelUsernameLabel.font = VGP_FONT_LABEL_20;
+        rightPanelUserIDLabel.font = VGP_FONT_LABEL_13;
+        rightPanelEditProfileButton.titleLabel.font = VGP_FONT_LABEL_13;
+        rightPanelLinkButton.titleLabel.font = VGP_FONT_LABEL_13;
+        rightPanelLogoutButton.titleLabel.font = VGP_FONT_LABEL_13;
+    }
 }
 
-- (void)updateUIText{
+- (void)updateUIText {
+    [leftSupportButton setImage:[VGPHelper getUIImageWithImageName:[NSString stringWithFormat:@"btn-support-%@", [UIData getLocalization]] andType:@"tiff"] forState:UIControlStateNormal];
     rightPanelUsernameLabel.text = [VGPUserData getUsername];
     rightPanelUserIDLabel.text = [NSString stringWithFormat:@"Account ID %ld", (long)[VGPUserData getUserID]];
-    [rightPanelEditProfileButton setTitle:[VGPHelper localizationForString:@"profile.edit_profile"] forState:UIControlStateNormal];
-    [rightPanelLinkButton setTitle:[VGPHelper localizationForString:@"profile.link"] forState:UIControlStateNormal];
+    [rightPanelEditProfileButton setTitle:[VGPHelper localizationForString:@"profile.info"] forState:UIControlStateNormal];
+    [rightPanelLinkButton setTitle:[VGPHelper localizationForString:@"profile.protect"] forState:UIControlStateNormal];
     [rightPanelLogoutButton setTitle:[VGPHelper localizationForString:@"profile.logout"] forState:UIControlStateNormal];
 }
 
-- (void)rightPanelEditProfileButtonClick{
+- (void)rightPanelEditProfileButtonClick {
     [self showLoadingView];
     [VGPAPI getProfile:^(id  _Nonnull responseObject) {
         [self hideLoadingView];
@@ -445,27 +475,26 @@
     }];
 }
 
-- (void)rightPanelLinkButtonClick{
+- (void)rightPanelLinkButtonClick {
     [self showLoadingView];
     [VGPAPI getProfile:^(id  _Nonnull responseObject) {
         [self hideLoadingView];
-        [[VGPUI sharedInstance] showLinkAccountController];
+        [[VGPUI sharedInstance] showProtectAccountController];
     } failure:^(NSError * _Nonnull error) {
         [self hideLoadingView];
         [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[error localizedDescription]];
     }];
 }
 
-- (void)rightPanelLogoutButtonClick{
+- (void)rightPanelLogoutButtonClick {
     /**
          @TODO:
          - CLEAR USER PROFILE
          - QUIT TO USER LOGIN
          */
-    [[VGPInterface sharedInstance] logoutGame:^{
+    [[VGPInterface sharedInstance] logoutGame:^ {
             MyLog(@"LOGOUT");
     }];
 }
-
 
 @end

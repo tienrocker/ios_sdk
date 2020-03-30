@@ -11,13 +11,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FlyButton : UIButton
-{
+ {
     BOOL isMoveLittle;
     CGPoint beginpoint;
     CGPoint endpoint;
 }
-
-@property(nonatomic)BOOL show;
 
 + (FlyButton *)sharedInstance;
 

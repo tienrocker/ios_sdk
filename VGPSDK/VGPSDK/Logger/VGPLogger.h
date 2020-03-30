@@ -16,13 +16,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #define LoggerLog(x, ...) NSLog(@"VGP-EVENTLOG %s %d: " x, __FUNCTION__, __LINE__, ##__VA_ARGS__)
-typedef enum VGPLoginType : NSUInteger{
+typedef enum VGPLoginType : NSUInteger {
     kLoginTypeNormal,
     kLoginTypeQuickplay,
     kLoginTypeFacebook,
     kLoginTypeApple
 } VGPLoginType;
-typedef enum VGPRegisterType : NSUInteger{
+typedef enum VGPRegisterType : NSUInteger {
     kRegisterTypeNormal,
     kRegisterTypeQuickplay,
     kRegisterTypeFacebook,
@@ -31,7 +31,7 @@ typedef enum VGPRegisterType : NSUInteger{
 
 @interface VGPLogger : NSObject
 
-#pragma mark Init
+#pragma mark -  Init
 
 @property NSString *game_code;
 @property NSString *game_version;
@@ -74,7 +74,7 @@ typedef enum VGPRegisterType : NSUInteger{
 */
 - (void)log:(NSString *)event_name parameters:(NSDictionary *)parameters;
 
-#pragma mark Resource Download
+#pragma mark -  Resource Download
 
 /*!
  @abstract This method can be used when init download resource pack.
@@ -100,7 +100,7 @@ typedef enum VGPRegisterType : NSUInteger{
 */
 - (void)resourceDownloadError;
 
-#pragma mark Resource Unpack
+#pragma mark -  Resource Unpack
 
 /*!
  @abstract This method can be used when start unpack resource pack.
@@ -120,7 +120,7 @@ typedef enum VGPRegisterType : NSUInteger{
 */
 - (void)resourceUnpackError;
 
-#pragma mark Login
+#pragma mark -  Login
 
 /*!
  @abstract This method can be used when VGP login view showup.
@@ -162,7 +162,7 @@ typedef enum VGPRegisterType : NSUInteger{
 */
 - (void)loginError:(nullable NSString *)provider;
 
-#pragma mark Register
+#pragma mark -  Register
 
 /*!
  @abstract This method can be used when click to VGP register button.
@@ -179,7 +179,7 @@ typedef enum VGPRegisterType : NSUInteger{
 */
 - (void)registerError:(nullable NSString *)provider;
 
-#pragma mark Login/Register
+#pragma mark -  Login/Register
 
 /*!
  @abstract This method can be used when login/register success.
@@ -191,14 +191,14 @@ typedef enum VGPRegisterType : NSUInteger{
 */
 - (void)callbackLoginRegister:(BOOL)isRegister provider:(nullable NSString *)provider;
 
-#pragma mark Logout
+#pragma mark -  Logout
 
 /*!
  @abstract This method can be used when click to VGP logout button.
 */
 - (void)logoutClick;
 
-#pragma mark Character
+#pragma mark -  Character
 
 /*!
  @abstract This method can be used when character created.
@@ -227,7 +227,7 @@ typedef enum VGPRegisterType : NSUInteger{
 */
 - (void)tutorialComplete;
 
-#pragma mark Purchase
+#pragma mark -  Purchase
 
 /*!
  @abstract This method can be used when game purchase view showup.

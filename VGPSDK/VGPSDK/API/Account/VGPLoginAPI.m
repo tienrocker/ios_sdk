@@ -17,9 +17,9 @@
 
 @implementation VGPLoginAPI
 
-+ (void)normalLogin:(NSString *)username password:(NSString *)password success:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure{
++ (void)normalLogin:(NSString *)username password:(NSString *)password success:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure {
     NSString *url = [NSString stringWithFormat:@"%@/account/signin", VGP_ENDPOINT];
-    NSDictionary *data = @{
+    NSDictionary *data = @ {
         @"username": username,
         @"password": password,
         @"agency": AGENCY,
@@ -29,9 +29,9 @@
     };
     [[VGPNetworkManager sharedManager] POST:url param:data success:success failure:failure];
 }
-+ (void)facebookLogin:(NSString *)facebook_id success:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure{
++ (void)facebookLogin:(NSString *)facebook_id success:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure {
     NSString *url = [NSString stringWithFormat:@"%@/account/social", VGP_ENDPOINT];
-    NSDictionary *data = @{
+    NSDictionary *data = @ {
         @"username": facebook_id,
         @"password": [FBSDKAccessToken currentAccessToken].tokenString,
         @"agency": AGENCY,
@@ -41,9 +41,9 @@
     };
     [[VGPNetworkManager sharedManager] POST:url param:data success:success failure:failure];
 }
-+ (void)quickplayLogin:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure{
++ (void)quickplayLogin:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure {
     NSString *url = [NSString stringWithFormat:@"%@/account/quick_play", VGP_ENDPOINT];
-    NSDictionary *data = @{
+    NSDictionary *data = @ {
         @"username": [VGPDeviceData getDeviceId],
         @"password": @"",
         @"agency": AGENCY,
@@ -53,9 +53,9 @@
     };
     [[VGPNetworkManager sharedManager] POST:url param:data success:success failure:failure];
 }
-+ (void)appleLogin:(NSString *)access_token success:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure{
++ (void)appleLogin:(NSString *)access_token success:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure {
     NSString *url = [NSString stringWithFormat:@"%@/account/ios", VGP_ENDPOINT];
-    NSDictionary *data = @{
+    NSDictionary *data = @ {
         @"username": access_token,
         @"password": @"",
         @"agency": AGENCY,
@@ -65,9 +65,9 @@
     };
     [[VGPNetworkManager sharedManager] POST:url param:data success:success failure:failure];
 }
-+ (void)tokenLogin:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure{
++ (void)tokenLogin:(VGPLoginAPISuccess)success failure:(VGPLoginAPIFailure)failure {
     NSString *url = [NSString stringWithFormat:@"%@/account/token", VGP_ENDPOINT];
-    NSDictionary *data = @{
+    NSDictionary *data = @ {
         @"username": @"",
         @"password": [VGPUserData getToken],
         @"agency": AGENCY,

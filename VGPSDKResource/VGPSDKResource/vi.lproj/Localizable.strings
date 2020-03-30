@@ -21,8 +21,6 @@
 "resend.success" = "Gửi lại mã thành công";
 "error" = "Lỗi";
 "error.ios13.require" = "Tính năng chỉ hỗ trợ trên iOS 13 trở lên";
-"init.account" = "Khởi tạo tài khoản";
-"error.init.account.require" = "Bạn cần khởi tạo tài khoản VGP để sử dụng tính năng này";
 "checkemail" = "Thư xác thực đã gửi vào hòm thư của bạn";
 
 // ===== CONFIG =====
@@ -34,6 +32,7 @@
 "server.error" = "Lỗi truy cập đến máy chủ VGP";
 "server.info.error" = "Lỗi không lấy được thông tin SDK";
 "server.setting.error" = "Lỗi không lấy được cấu hình SDK";
+"server.setting.payment.error" = "Lỗi không lấy được cấu hình gói IAP SDK";
 "server.checking" = "Đang kiểm tra cấu hình server, vui lòng thử lại sau.";
 
 // ===== SHARE FACEBOOK =====
@@ -64,10 +63,9 @@
 "forgot.right.phone.text1" = "Soạn tin theo cú pháp";
 
 // ===== PROFILE VIEW =====
-"profile.link" = "Liên kết tài khoản";
-"profile.logout" = "Đăng xuất";
-"profile.edit_profile" = "Chỉnh sửa thông tin";
 "profile.info" = "Thông tin cá nhân";
+"profile.account" = "Tài khoản";
+"profile.logout" = "Đăng xuất";
 "profile.fullname" = "Họ và tên";
 "profile.gender" = "Giới tính";
 "profile.gender.select"= "Mời bạn chọn giới tính";
@@ -82,6 +80,12 @@
 "profile.place_of_issue" = "Nơi cấp";
 "profile.phone" = "Điện thoại";
 "profile.email" = "Thư điện tử";
+"profile.init.account" = "Khởi tạo tài khoản";
+"profile.protect" = "Bảo mật tài khoản";
+"error.init.account.require" = "Bạn cần cập nhật tên đăng nhập và mật khẩu để sử dụng tính năng này";
+"profile.change.password" = "Đổi mật khẩu";
+"profile.new_password" = "Mật khẩu mới";
+"profile.old_password" = "Mật khẩu cũ";
 
 // ===== PROTECT VIEW =====
 "profile.protect.text" = "Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo Bla blo";

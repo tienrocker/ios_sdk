@@ -28,7 +28,7 @@ static CGFloat MARGIN_BOTTOM = 0;
 
 
 static FlyButton *sharedController = nil;
-+ (FlyButton *)sharedInstance{
++ (FlyButton *)sharedInstance {
     if (!sharedController) {
         sharedController = [FlyButton buttonWithType:UIButtonTypeCustom];
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -36,12 +36,13 @@ static FlyButton *sharedController = nil;
             DELTA = 2;
         }
         [sharedController createButton];
+        [sharedController hideButton];
     }
     
     return sharedController;
 }
 
-- (void)createButton{
+- (void)createButton {
     [self reFrame];
     
     if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0) {
@@ -64,7 +65,7 @@ static FlyButton *sharedController = nil;
     [self addTarget:self action:@selector(clickButton) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)reFrame{
+- (void)reFrame {
     MARGIN_LEFT = [VGPHelper getScreenWidth] * .03 + WH_BUTTON / 2; // 3%
     MARGIN_TOP = [VGPHelper getScreenHeight] * .03 + WH_BUTTON / 2;
     MARGIN_RIGHT = [VGPHelper getScreenWidth] - [VGPHelper getScreenWidth] * .03 - WH_BUTTON * 3 / 2;
@@ -72,13 +73,13 @@ static FlyButton *sharedController = nil;
     self.frame = [self convertRectWith:CGRectMake(MARGIN_LEFT, [VGPHelper getScreenHeight] / 2 - WH_BUTTON / 2, WH_BUTTON, WH_BUTTON)];
 }
 
-- (void)removeButton{
+- (void)removeButton {
     if (self != nil) {
         [self removeFromSuperview];
     }
 }
 
-- (void)initFrameIfNeed{
+- (void)initFrameIfNeed {
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 8.0) {
         if(([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft)||([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight)) {
             if (([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft)) {
@@ -90,7 +91,7 @@ static FlyButton *sharedController = nil;
     }
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     beginpoint = [touch locationInView:self];
     isMoveLittle = NO;
@@ -108,7 +109,7 @@ static FlyButton *sharedController = nil;
     [super touchesBegan:touches withEvent:event];
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     CGPoint currentPosition = [touch locationInView:self];
     if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0) {
@@ -146,7 +147,7 @@ static FlyButton *sharedController = nil;
     [super touchesMoved:touches withEvent:event];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     endpoint = [touch locationInView:self];
     [self moveButtonWhenEnTouch];
@@ -155,7 +156,7 @@ static FlyButton *sharedController = nil;
     [super touchesEnded: touches withEvent: event];
 }
 
-- (void)moveButtonWhenEnTouch{
+- (void)moveButtonWhenEnTouch {
     [UIView beginAnimations:@"move" context:nil];
     [UIView setAnimationDuration:0.3];
     [UIView setAnimationDelegate:self];
@@ -163,7 +164,7 @@ static FlyButton *sharedController = nil;
     [UIView commitAnimations];
 }
 
-- (CGRect)getFrameButton{
+- (CGRect)getFrameButton {
     float xP;
     float yP;
     
@@ -224,20 +225,20 @@ static FlyButton *sharedController = nil;
     return CGRectMake(xP , yP, WH_BUTTON, WH_BUTTON);
 }
 
-- (CGRect)convertRectWith:(CGRect)oRect{
+- (CGRect)convertRectWith:(CGRect)oRect {
     return oRect;
 }
 
-- (void)moveButtonIfNeed{
+- (void)moveButtonIfNeed {
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 8.0) {
         self.frame = CGRectMake(self.frame.origin.y ,self.frame.origin.x, WH_BUTTON,WH_BUTTON);
     }
 }
 
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event{
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
 }
 
-- (void)clickButton{
+- (void)clickButton {
     if (isMoveLittle) {
         /**
         @TODO: nếu người dùng đã lưu đăng nhập trước đó thì hiện profile view
@@ -250,14 +251,14 @@ static FlyButton *sharedController = nil;
     }
 }
 
-- (void)showButton{
+- (void)showButton {
     if(self.hidden == YES) {
         MyLog(@"showButton");
         self.hidden = NO;
     }
 }
 
-- (void)hideButton{
+- (void)hideButton {
     if(self.hidden == NO) {
         MyLog(@"hideButton");
         self.hidden = YES;
