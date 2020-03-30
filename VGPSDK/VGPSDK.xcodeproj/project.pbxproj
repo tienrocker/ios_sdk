@@ -69,6 +69,75 @@
 		FFBBFBD723EBFB4D0041364F /* UIData.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBBFBD523EBFB4D0041364F /* UIData.m */; };
 		FFC5E0BB242210C40087DCD7 /* VGPFBSDKLoginManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FFC5E0B9242210C40087DCD7 /* VGPFBSDKLoginManager.h */; };
 		FFC5E0BC242210C40087DCD7 /* VGPFBSDKLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC5E0BA242210C40087DCD7 /* VGPFBSDKLoginManager.m */; };
+		FFDB757D2431FD6C00FAA938 /* VGPDeviceData.h in Headers */ = {isa = PBXBuildFile; fileRef = FF9BF902241A45AE00DFCB5B /* VGPDeviceData.h */; };
+		FFDB757E2431FD6C00FAA938 /* VGPInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = FF769B0B23E7F93A007FAE7F /* VGPInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FFDB757F2431FD6C00FAA938 /* VGPConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1470592419FFFD00802877 /* VGPConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FFDB75802431FD6C00FAA938 /* VGPHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FF85148323E7CD640077F238 /* VGPHelper.h */; };
+		FFDB75812431FD6C00FAA938 /* UIData.h in Headers */ = {isa = PBXBuildFile; fileRef = FFBBFBD423EBFB4D0041364F /* UIData.h */; };
+		FFDB75822431FD6C00FAA938 /* ProfileEditController.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA8B6C623F299F400BD9A46 /* ProfileEditController.h */; };
+		FFDB75832431FD6C00FAA938 /* VGPLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = FF14705E241A02EC00802877 /* VGPLogger.h */; };
+		FFDB75842431FD6C00FAA938 /* VGPSDKController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF3E416723E9483100788AC6 /* VGPSDKController.h */; };
+		FFDB75852431FD6C00FAA938 /* VGPFBSDKLoginManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FFC5E0B9242210C40087DCD7 /* VGPFBSDKLoginManager.h */; };
+		FFDB75862431FD6C00FAA938 /* InitAccountController.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA8B6C223F2899600BD9A46 /* InitAccountController.h */; };
+		FFDB75872431FD6C00FAA938 /* VGPUserData.h in Headers */ = {isa = PBXBuildFile; fileRef = FF37FC7423EC093800BD7D64 /* VGPUserData.h */; };
+		FFDB75882431FD6C00FAA938 /* VGPIAPHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FF5AB1D52431A576002E75FE /* VGPIAPHelper.h */; };
+		FFDB75892431FD6C00FAA938 /* VGPPaymentAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF5AB1DA2431AF9E002E75FE /* VGPPaymentAPI.h */; };
+		FFDB758A2431FD6C00FAA938 /* VGPConfigAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = FFDBDC1D2420BAE300F37575 /* VGPConfigAPI.h */; };
+		FFDB758B2431FD6C00FAA938 /* VGPAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = FFDBDC252420BDF100F37575 /* VGPAPI.h */; };
+		FFDB758C2431FD6C00FAA938 /* ChangePasswordController.h in Headers */ = {isa = PBXBuildFile; fileRef = FFAE4A6E242DF44F00A5F80A /* ChangePasswordController.h */; };
+		FFDB758D2431FD6C00FAA938 /* VGPLoginAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF919C7224226D390087EC11 /* VGPLoginAPI.h */; };
+		FFDB758E2431FD6C00FAA938 /* ForgotController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF3E416F23E97E8700788AC6 /* ForgotController.h */; };
+		FFDB758F2431FD6C00FAA938 /* WelcomeController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF769B9A23E8232F007FAE7F /* WelcomeController.h */; };
+		FFDB75902431FD6C00FAA938 /* VGPSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = FF85146D23E7C9B60077F238 /* VGPSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FFDB75912431FD6C00FAA938 /* VGPUI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF6C26A923EA76AA0047B871 /* VGPUI.h */; };
+		FFDB75922431FD6C00FAA938 /* VGPNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FF147061241A39F300802877 /* VGPNetworkManager.h */; };
+		FFDB75932431FD6C00FAA938 /* LoginNormalController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF54344123E9410000CED1C9 /* LoginNormalController.h */; };
+		FFDB75942431FD6C00FAA938 /* FBSDKSharingCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = FFF53455241F2CA500E671B1 /* FBSDKSharingCallback.h */; };
+		FFDB75952431FD6C00FAA938 /* VGPProfileAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA0F09C2429F3C6001FD44E /* VGPProfileAPI.h */; };
+		FFDB75962431FD6C00FAA938 /* ProtectAccountController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF50E5DF242B3F0D0072D413 /* ProtectAccountController.h */; };
+		FFDB75972431FD6C00FAA938 /* ForgotPhoneController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF64709823FA8A1B005FC356 /* ForgotPhoneController.h */; };
+		FFDB75982431FD6C00FAA938 /* VGPRegisterAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF60AAB12428CF3C004283BD /* VGPRegisterAPI.h */; };
+		FFDB75992431FD6C00FAA938 /* VerifyPhoneController.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA0F0982429F0FC001FD44E /* VerifyPhoneController.h */; };
+		FFDB759A2431FD6C00FAA938 /* IAPHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FF5AB1D12431A51A002E75FE /* IAPHelper.h */; };
+		FFDB759B2431FD6C00FAA938 /* RegisterController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF3E416B23E9780B00788AC6 /* RegisterController.h */; };
+		FFDB759C2431FD6C00FAA938 /* VGPLinkAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF50E5E3242B457D0072D413 /* VGPLinkAPI.h */; };
+		FFDB759D2431FD6C00FAA938 /* ProfileController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF6C269E23EA677E0047B871 /* ProfileController.h */; };
+		FFDB759E2431FD6C00FAA938 /* FlyButton.h in Headers */ = {isa = PBXBuildFile; fileRef = FFBBFBD023EBCC860041364F /* FlyButton.h */; };
+		FFDB75A02431FD6C00FAA938 /* VGPAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = FFDBDC262420BDF100F37575 /* VGPAPI.m */; };
+		FFDB75A12431FD6C00FAA938 /* FBSDKSharingCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF53456241F2CA500E671B1 /* FBSDKSharingCallback.m */; };
+		FFDB75A22431FD6C00FAA938 /* VGPLinkAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = FF50E5E4242B457D0072D413 /* VGPLinkAPI.m */; };
+		FFDB75A32431FD6C00FAA938 /* WelcomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF769B9B23E8232F007FAE7F /* WelcomeController.m */; };
+		FFDB75A42431FD6C00FAA938 /* VGPIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5AB1D62431A576002E75FE /* VGPIAPHelper.m */; };
+		FFDB75A52431FD6C00FAA938 /* VGPRegisterAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = FF60AAB22428CF3C004283BD /* VGPRegisterAPI.m */; };
+		FFDB75A62431FD6C00FAA938 /* VerifyPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA0F0992429F0FC001FD44E /* VerifyPhoneController.m */; };
+		FFDB75A72431FD6C00FAA938 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5AB1D22431A51A002E75FE /* IAPHelper.m */; };
+		FFDB75A82431FD6C00FAA938 /* VGPConfigAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = FFDBDC1E2420BAE300F37575 /* VGPConfigAPI.m */; };
+		FFDB75A92431FD6C00FAA938 /* FlyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBBFBD123EBCC860041364F /* FlyButton.m */; };
+		FFDB75AA2431FD6C00FAA938 /* VGPUserData.m in Sources */ = {isa = PBXBuildFile; fileRef = FF37FC7523EC093800BD7D64 /* VGPUserData.m */; };
+		FFDB75AB2431FD6C00FAA938 /* VGPProfileAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA0F09D2429F3C6001FD44E /* VGPProfileAPI.m */; };
+		FFDB75AC2431FD6C00FAA938 /* RegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3E416C23E9780B00788AC6 /* RegisterController.m */; };
+		FFDB75AD2431FD6C00FAA938 /* ProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6C269F23EA677E0047B871 /* ProfileController.m */; };
+		FFDB75AE2431FD6C00FAA938 /* ProfileEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA8B6C723F299F400BD9A46 /* ProfileEditController.m */; };
+		FFDB75AF2431FD6C00FAA938 /* VGPSDKController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3E416823E9483100788AC6 /* VGPSDKController.m */; };
+		FFDB75B02431FD6C00FAA938 /* VGPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FF85148523E7CDB10077F238 /* VGPHelper.m */; };
+		FFDB75B12431FD6C00FAA938 /* ChangePasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFAE4A6F242DF44F00A5F80A /* ChangePasswordController.m */; };
+		FFDB75B22431FD6C00FAA938 /* VGPNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FF147062241A39F300802877 /* VGPNetworkManager.m */; };
+		FFDB75B32431FD6C00FAA938 /* VGPDeviceData.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9BF903241A45AE00DFCB5B /* VGPDeviceData.m */; };
+		FFDB75B42431FD6C00FAA938 /* InitAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA8B6C323F2899600BD9A46 /* InitAccountController.m */; };
+		FFDB75B52431FD6C00FAA938 /* ForgotController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3E417023E97E8700788AC6 /* ForgotController.m */; };
+		FFDB75B62431FD6C00FAA938 /* VGPLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = FF14705D241A02EC00802877 /* VGPLogger.m */; };
+		FFDB75B72431FD6C00FAA938 /* VGPLoginAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = FF919C7324226D390087EC11 /* VGPLoginAPI.m */; };
+		FFDB75B82431FD6C00FAA938 /* VGPConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = FF14705A2419FFFD00802877 /* VGPConfig.m */; };
+		FFDB75B92431FD6C00FAA938 /* ProtectAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF50E5E0242B3F0D0072D413 /* ProtectAccountController.m */; };
+		FFDB75BA2431FD6C00FAA938 /* VGPUI.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6C26AA23EA76AA0047B871 /* VGPUI.m */; };
+		FFDB75BB2431FD6C00FAA938 /* VGPFBSDKLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC5E0BA242210C40087DCD7 /* VGPFBSDKLoginManager.m */; };
+		FFDB75BC2431FD6C00FAA938 /* VGPInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = FF769B0923E7F90F007FAE7F /* VGPInterface.m */; };
+		FFDB75BD2431FD6C00FAA938 /* LoginNormalController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF54344223E9410000CED1C9 /* LoginNormalController.m */; };
+		FFDB75BE2431FD6C00FAA938 /* UIData.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBBFBD523EBFB4D0041364F /* UIData.m */; };
+		FFDB75BF2431FD6C00FAA938 /* VGPPaymentAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5AB1DB2431AF9E002E75FE /* VGPPaymentAPI.m */; };
+		FFDB75C02431FD6C00FAA938 /* ForgotPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF64709923FA8A1B005FC356 /* ForgotPhoneController.m */; };
+		FFDB75C22431FD6C00FAA938 /* Pods_VGPSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2F4DCBEA8D56DD5F0D91EDE /* Pods_VGPSDK.framework */; };
+		FFDB75CB2431FED900FAA938 /* VGPSDK-Universal.plist in Resources */ = {isa = PBXBuildFile; fileRef = FFDB75CA2431FED900FAA938 /* VGPSDK-Universal.plist */; };
 		FFDBDC1F2420BAE300F37575 /* VGPConfigAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = FFDBDC1D2420BAE300F37575 /* VGPConfigAPI.h */; };
 		FFDBDC202420BAE300F37575 /* VGPConfigAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = FFDBDC1E2420BAE300F37575 /* VGPConfigAPI.m */; };
 		FFDBDC272420BDF100F37575 /* VGPAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = FFDBDC252420BDF100F37575 /* VGPAPI.h */; };
@@ -122,7 +191,7 @@
 		FF769B9B23E8232F007FAE7F /* WelcomeController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WelcomeController.m; sourceTree = "<group>"; };
 		FF85146A23E7C9B60077F238 /* VGPSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VGPSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF85146D23E7C9B60077F238 /* VGPSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VGPSDK.h; sourceTree = "<group>"; };
-		FF85146E23E7C9B70077F238 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF85146E23E7C9B70077F238 /* VGPSDK.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = VGPSDK.plist; sourceTree = "<group>"; };
 		FF85148323E7CD640077F238 /* VGPHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VGPHelper.h; sourceTree = "<group>"; };
 		FF85148523E7CDB10077F238 /* VGPHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VGPHelper.m; sourceTree = "<group>"; };
 		FF919C7224226D390087EC11 /* VGPLoginAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VGPLoginAPI.h; sourceTree = "<group>"; };
@@ -145,6 +214,8 @@
 		FFBBFBD523EBFB4D0041364F /* UIData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIData.m; sourceTree = "<group>"; };
 		FFC5E0B9242210C40087DCD7 /* VGPFBSDKLoginManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VGPFBSDKLoginManager.h; sourceTree = "<group>"; };
 		FFC5E0BA242210C40087DCD7 /* VGPFBSDKLoginManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VGPFBSDKLoginManager.m; sourceTree = "<group>"; };
+		FFDB75C72431FD6C00FAA938 /* VGPSDK-Universal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "VGPSDK-Universal.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFDB75CA2431FED900FAA938 /* VGPSDK-Universal.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "VGPSDK-Universal.plist"; sourceTree = "<group>"; };
 		FFDBDC1D2420BAE300F37575 /* VGPConfigAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VGPConfigAPI.h; sourceTree = "<group>"; };
 		FFDBDC1E2420BAE300F37575 /* VGPConfigAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VGPConfigAPI.m; sourceTree = "<group>"; };
 		FFDBDC252420BDF100F37575 /* VGPAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VGPAPI.h; sourceTree = "<group>"; };
@@ -159,6 +230,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9D9D0895265DAA2961AAE09 /* Pods_VGPSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FFDB75C12431FD6C00FAA938 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFDB75C22431FD6C00FAA938 /* Pods_VGPSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,6 +310,7 @@
 			isa = PBXGroup;
 			children = (
 				FF85146A23E7C9B60077F238 /* VGPSDK.framework */,
+				FFDB75C72431FD6C00FAA938 /* VGPSDK-Universal.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -241,12 +321,13 @@
 				FFDBDC1B2420BABA00F37575 /* API */,
 				FF85147D23E7CC1E0077F238 /* Controllers */,
 				FF85148223E7CD2D0077F238 /* Helpers */,
-				FF85146E23E7C9B70077F238 /* Info.plist */,
 				FF1470372419DDB100802877 /* Logger */,
 				FF769B0C23E7FC1F007FAE7F /* Models */,
 				FF769B0B23E7F93A007FAE7F /* VGPInterface.h */,
 				FF769B0923E7F90F007FAE7F /* VGPInterface.m */,
+				FFDB75CA2431FED900FAA938 /* VGPSDK-Universal.plist */,
 				FF85146D23E7C9B60077F238 /* VGPSDK.h */,
+				FF85146E23E7C9B70077F238 /* VGPSDK.plist */,
 			);
 			path = VGPSDK;
 			sourceTree = "<group>";
@@ -385,6 +466,47 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FFDB757C2431FD6C00FAA938 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFDB757D2431FD6C00FAA938 /* VGPDeviceData.h in Headers */,
+				FFDB757E2431FD6C00FAA938 /* VGPInterface.h in Headers */,
+				FFDB757F2431FD6C00FAA938 /* VGPConfig.h in Headers */,
+				FFDB75802431FD6C00FAA938 /* VGPHelper.h in Headers */,
+				FFDB75812431FD6C00FAA938 /* UIData.h in Headers */,
+				FFDB75822431FD6C00FAA938 /* ProfileEditController.h in Headers */,
+				FFDB75832431FD6C00FAA938 /* VGPLogger.h in Headers */,
+				FFDB75842431FD6C00FAA938 /* VGPSDKController.h in Headers */,
+				FFDB75852431FD6C00FAA938 /* VGPFBSDKLoginManager.h in Headers */,
+				FFDB75862431FD6C00FAA938 /* InitAccountController.h in Headers */,
+				FFDB75872431FD6C00FAA938 /* VGPUserData.h in Headers */,
+				FFDB75882431FD6C00FAA938 /* VGPIAPHelper.h in Headers */,
+				FFDB75892431FD6C00FAA938 /* VGPPaymentAPI.h in Headers */,
+				FFDB758A2431FD6C00FAA938 /* VGPConfigAPI.h in Headers */,
+				FFDB758B2431FD6C00FAA938 /* VGPAPI.h in Headers */,
+				FFDB758C2431FD6C00FAA938 /* ChangePasswordController.h in Headers */,
+				FFDB758D2431FD6C00FAA938 /* VGPLoginAPI.h in Headers */,
+				FFDB758E2431FD6C00FAA938 /* ForgotController.h in Headers */,
+				FFDB758F2431FD6C00FAA938 /* WelcomeController.h in Headers */,
+				FFDB75902431FD6C00FAA938 /* VGPSDK.h in Headers */,
+				FFDB75912431FD6C00FAA938 /* VGPUI.h in Headers */,
+				FFDB75922431FD6C00FAA938 /* VGPNetworkManager.h in Headers */,
+				FFDB75932431FD6C00FAA938 /* LoginNormalController.h in Headers */,
+				FFDB75942431FD6C00FAA938 /* FBSDKSharingCallback.h in Headers */,
+				FFDB75952431FD6C00FAA938 /* VGPProfileAPI.h in Headers */,
+				FFDB75962431FD6C00FAA938 /* ProtectAccountController.h in Headers */,
+				FFDB75972431FD6C00FAA938 /* ForgotPhoneController.h in Headers */,
+				FFDB75982431FD6C00FAA938 /* VGPRegisterAPI.h in Headers */,
+				FFDB75992431FD6C00FAA938 /* VerifyPhoneController.h in Headers */,
+				FFDB759A2431FD6C00FAA938 /* IAPHelper.h in Headers */,
+				FFDB759B2431FD6C00FAA938 /* RegisterController.h in Headers */,
+				FFDB759C2431FD6C00FAA938 /* VGPLinkAPI.h in Headers */,
+				FFDB759D2431FD6C00FAA938 /* ProfileController.h in Headers */,
+				FFDB759E2431FD6C00FAA938 /* FlyButton.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -405,6 +527,26 @@
 			name = VGPSDK;
 			productName = VGPSDK;
 			productReference = FF85146A23E7C9B60077F238 /* VGPSDK.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		FFDB757A2431FD6C00FAA938 /* VGPSDK-Universal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FFDB75C42431FD6C00FAA938 /* Build configuration list for PBXNativeTarget "VGPSDK-Universal" */;
+			buildPhases = (
+				FFDB757B2431FD6C00FAA938 /* [CP] Check Pods Manifest.lock */,
+				FFDB757C2431FD6C00FAA938 /* Headers */,
+				FFDB759F2431FD6C00FAA938 /* Sources */,
+				FFDB75C12431FD6C00FAA938 /* Frameworks */,
+				FFDB75C32431FD6C00FAA938 /* Resources */,
+				FFDB75C92431FD8500FAA938 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "VGPSDK-Universal";
+			productName = VGPSDK;
+			productReference = FFDB75C72431FD6C00FAA938 /* VGPSDK-Universal.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -435,12 +577,21 @@
 			projectRoot = "";
 			targets = (
 				FF85146923E7C9B60077F238 /* VGPSDK */,
+				FFDB757A2431FD6C00FAA938 /* VGPSDK-Universal */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		FF85146823E7C9B60077F238 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFDB75CB2431FED900FAA938 /* VGPSDK-Universal.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FFDB75C32431FD6C00FAA938 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -471,6 +622,45 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		FFDB757B2431FD6C00FAA938 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VGPSDK-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FFDB75C92431FD8500FAA938 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "####################\n# Optional Value\n####################\nREVEAL_ARCHIVE_IN_FINDER=true\n\n####################\n# Required Values\n####################\nFRAMEWORK_NAME=\"${PROJECT_NAME}\"\nSIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${FRAMEWORK_NAME}.framework\"\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${FRAMEWORK_NAME}.framework\"\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\"\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${FRAMEWORK_NAME}.framework\"\n######################\n# Build Frameworks\n######################\nxcodebuild -target ${PROJECT_NAME} -sdk iphonesimulator -configuration ${CONFIGURATION} clean build BITCODE_GENERATION_MODE=bitcode CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator 2>&1\nxcodebuild -target ${PROJECT_NAME} -sdk iphoneos -configuration ${CONFIGURATION} clean build BITCODE_GENERATION_MODE=bitcode CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos 2>&1\n######################\n# Create directory for universal\n######################\nrm -rf \"${UNIVERSAL_LIBRARY_DIR}\"\nmkdir \"${UNIVERSAL_LIBRARY_DIR}\"\nmkdir \"${FRAMEWORK}\"\n######################\n# Copy files Framework\n######################\ncp -r \"${DEVICE_LIBRARY_PATH}/.\" \"${FRAMEWORK}\"\n######################\n# Printing Paths for your referance\n######################\necho SIMULATOR_LIBRARY_PATH\necho \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${FRAMEWORK_NAME}.framework\"\necho DEVICE_LIBRARY_PATH\necho \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${FRAMEWORK_NAME}.framework\"\necho UNIVERSAL_LIBRARY_DIR\necho \"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\"\n######################\n# Make an universal binary\n######################\nlipo \"${SIMULATOR_LIBRARY_PATH}/${FRAMEWORK_NAME}\" \"${DEVICE_LIBRARY_PATH}/${FRAMEWORK_NAME}\" -create -output \"${FRAMEWORK}/${FRAMEWORK_NAME}\" | echo\n######################\n# For Swift framework, Swiftmodule needs to be copied in the universal framework\n######################\nif [ -d \"${SIMULATOR_LIBRARY_PATH}/Modules/${FRAMEWORK_NAME}.swiftmodule/\" ]; then\ncp -f ${SIMULATOR_LIBRARY_PATH}/Modules/${FRAMEWORK_NAME}.swiftmodule/* \"${FRAMEWORK}/Modules/${FRAMEWORK_NAME}.swiftmodule/\" | echo\nfi\nif [ -d \"${DEVICE_LIBRARY_PATH}/Modules/${FRAMEWORK_NAME}.swiftmodule/\" ]; then\ncp -f ${DEVICE_LIBRARY_PATH}/Modules/${FRAMEWORK_NAME}.swiftmodule/* \"${FRAMEWORK}/Modules/${FRAMEWORK_NAME}.swiftmodule/\" | echo\nfi\n######################\n# On Release, copy the result to release directory\n######################\nOUTPUT_DIR=\"${PROJECT_DIR}/Output/${FRAMEWORK_NAME}-${CONFIGURATION}-iphoneuniversal/\"\nrm -rf \"$OUTPUT_DIR\"\nmkdir -p \"$OUTPUT_DIR\"\ncp -r \"${FRAMEWORK}\" \"$OUTPUT_DIR\"\nif [ ${REVEAL_ARCHIVE_IN_FINDER} = true ]; then\nopen \"${OUTPUT_DIR}/\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -512,6 +702,46 @@
 				FFBBFBD723EBFB4D0041364F /* UIData.m in Sources */,
 				FF5AB1DD2431AF9E002E75FE /* VGPPaymentAPI.m in Sources */,
 				FF64709B23FA8A1B005FC356 /* ForgotPhoneController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FFDB759F2431FD6C00FAA938 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFDB75A02431FD6C00FAA938 /* VGPAPI.m in Sources */,
+				FFDB75A12431FD6C00FAA938 /* FBSDKSharingCallback.m in Sources */,
+				FFDB75A22431FD6C00FAA938 /* VGPLinkAPI.m in Sources */,
+				FFDB75A32431FD6C00FAA938 /* WelcomeController.m in Sources */,
+				FFDB75A42431FD6C00FAA938 /* VGPIAPHelper.m in Sources */,
+				FFDB75A52431FD6C00FAA938 /* VGPRegisterAPI.m in Sources */,
+				FFDB75A62431FD6C00FAA938 /* VerifyPhoneController.m in Sources */,
+				FFDB75A72431FD6C00FAA938 /* IAPHelper.m in Sources */,
+				FFDB75A82431FD6C00FAA938 /* VGPConfigAPI.m in Sources */,
+				FFDB75A92431FD6C00FAA938 /* FlyButton.m in Sources */,
+				FFDB75AA2431FD6C00FAA938 /* VGPUserData.m in Sources */,
+				FFDB75AB2431FD6C00FAA938 /* VGPProfileAPI.m in Sources */,
+				FFDB75AC2431FD6C00FAA938 /* RegisterController.m in Sources */,
+				FFDB75AD2431FD6C00FAA938 /* ProfileController.m in Sources */,
+				FFDB75AE2431FD6C00FAA938 /* ProfileEditController.m in Sources */,
+				FFDB75AF2431FD6C00FAA938 /* VGPSDKController.m in Sources */,
+				FFDB75B02431FD6C00FAA938 /* VGPHelper.m in Sources */,
+				FFDB75B12431FD6C00FAA938 /* ChangePasswordController.m in Sources */,
+				FFDB75B22431FD6C00FAA938 /* VGPNetworkManager.m in Sources */,
+				FFDB75B32431FD6C00FAA938 /* VGPDeviceData.m in Sources */,
+				FFDB75B42431FD6C00FAA938 /* InitAccountController.m in Sources */,
+				FFDB75B52431FD6C00FAA938 /* ForgotController.m in Sources */,
+				FFDB75B62431FD6C00FAA938 /* VGPLogger.m in Sources */,
+				FFDB75B72431FD6C00FAA938 /* VGPLoginAPI.m in Sources */,
+				FFDB75B82431FD6C00FAA938 /* VGPConfig.m in Sources */,
+				FFDB75B92431FD6C00FAA938 /* ProtectAccountController.m in Sources */,
+				FFDB75BA2431FD6C00FAA938 /* VGPUI.m in Sources */,
+				FFDB75BB2431FD6C00FAA938 /* VGPFBSDKLoginManager.m in Sources */,
+				FFDB75BC2431FD6C00FAA938 /* VGPInterface.m in Sources */,
+				FFDB75BD2431FD6C00FAA938 /* LoginNormalController.m in Sources */,
+				FFDB75BE2431FD6C00FAA938 /* UIData.m in Sources */,
+				FFDB75BF2431FD6C00FAA938 /* VGPPaymentAPI.m in Sources */,
+				FFDB75C02431FD6C00FAA938 /* ForgotPhoneController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -645,7 +875,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = VGPSDK/Info.plist;
+				INFOPLIST_FILE = VGPSDK/VGPSDK.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -675,7 +905,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = VGPSDK/Info.plist;
+				INFOPLIST_FILE = VGPSDK/VGPSDK.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -687,6 +917,66 @@
 				NEW_SETTING1 = "";
 				PRODUCT_BUNDLE_IDENTIFIER = VGP.VGPSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FFDB75C52431FD6C00FAA938 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01DC5D66A4CB3F06F9721378 /* Pods-VGPSDK.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "VGPSDK/VGPSDK-Universal.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				NEW_SETTING = "";
+				NEW_SETTING1 = "";
+				PRODUCT_BUNDLE_IDENTIFIER = VGP.VGPSDK;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FFDB75C62431FD6C00FAA938 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 674A1AF2E1598E65ED61813D /* Pods-VGPSDK.release.xcconfig */;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "VGPSDK/VGPSDK-Universal.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				NEW_SETTING = "";
+				NEW_SETTING1 = "";
+				PRODUCT_BUNDLE_IDENTIFIER = VGP.VGPSDK;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SKIP_INSTALL = YES;
@@ -711,6 +1001,15 @@
 			buildConfigurations = (
 				FF85147323E7C9B70077F238 /* Debug */,
 				FF85147423E7C9B70077F238 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FFDB75C42431FD6C00FAA938 /* Build configuration list for PBXNativeTarget "VGPSDK-Universal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FFDB75C52431FD6C00FAA938 /* Debug */,
+				FFDB75C62431FD6C00FAA938 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

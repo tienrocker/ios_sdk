@@ -82,6 +82,8 @@ static VGPInterface *sharedController = nil;
     
     // enable chế độ đang thanh toán, không cho touch tiếp
     isPurchasing = YES;
+    [self hideFlyButton];
+    
     characterIDPurchasing = characterID;
     serverIDPurchasing = serverID;
     itemIDPurchasing = itemID;
@@ -89,10 +91,12 @@ static VGPInterface *sharedController = nil;
     
     [VGPAPI check:characterID andServerID:serverID andItemID:itemID andPartnerToken:partnerData success:^(id  _Nonnull responseObject) {
         self->isPurchasing = NO;
+        [self showFlyButton];
         NSString *message = [responseObject objectForKey:@"message"];
         if(message) [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"notification"] message:message];
     } failure:^(NSError * _Nonnull error) {
         self->isPurchasing = NO;
+        [self showFlyButton];
         [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[error localizedDescription]];
     }];
 }
@@ -489,6 +493,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
     
     if (!receipt) {
         isPurchasing = NO;
+        [self showFlyButton];
         MyLog(@"recept %@", receipt);
     } else {
         NSString *receiptData = [receipt base64EncodedStringWithOptions:0];
@@ -497,11 +502,14 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
         // trường hợp restore purchase
         if(characterIDPurchasing == nil || serverIDPurchasing == nil || itemIDPurchasing == nil) {
             self->isPurchasing = NO;
+            [self showFlyButton];
         } else {
             [VGPAPI iap:characterIDPurchasing andServerID:serverIDPurchasing andItemID:itemIDPurchasing andPartnerToken:partnerDataPurchasing andReceiptData:receiptData success:^(id  _Nonnull responseObject) {
                 self->isPurchasing = NO;
+                [self showFlyButton];
             } failure:^(NSError * _Nonnull error) {
                 self->isPurchasing = NO;
+                [self showFlyButton];
                 [VGPHelper alertControllerWithTitle:[VGPHelper localizationForString:@"error"] message:[error localizedDescription]];
             }];
         }
@@ -511,6 +519,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 -(void)IAPHelperProductPurchasedFailNotification:(NSNotification *)notification
 {
     isPurchasing = NO;
+    [self showFlyButton];
 }
 
 @end
